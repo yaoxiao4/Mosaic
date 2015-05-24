@@ -1,0 +1,2 @@
+# Mosaic
+Mosaic event app
