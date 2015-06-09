@@ -18,6 +18,14 @@ class ViewController: UIViewController {
         testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             println("Object has been saved.")
         }
+        
+        let button   = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        button.frame = CGRectMake(100, 100, 100, 50)
+        button.setTitle("Test Button", forState: .Normal)
+        
+        self.view.addSubview(button)
+        self.view.backgroundColor = UIColor.whiteColor()
+        button.addTarget(self, action: "eventDetailsPush:", forControlEvents: .TouchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,6 +33,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func eventDetailsPush(sender: AnyObject) {
+        let nextController = EventDetailsViewController(eventTitle: "HI")
+        self.navigationController?.pushViewController(nextController, animated: true)
+    }
 
 }
 
