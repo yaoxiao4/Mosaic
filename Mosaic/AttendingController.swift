@@ -1,16 +1,16 @@
 //
-//  ViewController.swift
+//  AttendingControlloer.swift
 //  Mosaic
 //
-//  Created by Ali on 2015-05-25.
+//  Created by Renato Fernandes on 2015-06-11.
 //  Copyright (c) 2015 CS446. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import Parse
 
-class ViewController: UIViewController {
-
+class AttendingController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let testObject = PFObject(className: "TestObject")
@@ -19,7 +19,7 @@ class ViewController: UIViewController {
             println("Object has been saved.")
         }
         
-        self.title = "Events"
+        self.title = "Attending"
         //self.navigationItem.hidesBackButton = true
         
         // Top Bar with Menu and Settings
@@ -28,23 +28,23 @@ class ViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = menu
         self.navigationItem.rightBarButtonItem = settings
         
-//        //Bottom Bar Buttons
-//        var buttons:[UIButton] = []
-//        
-//        var home = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        home.frame = CGRectMake(0, self.view.frame.size.height - 46, 100, 50)
-//        home.backgroundColor = UIColor.greenColor()
-//        home.setTitle("Home", forState: UIControlState.Normal)
-//        
-//        buttons.append(home)
-//        
-//        
-//        let bottombar = UIToolbar()
-//        bottombar.frame = CGRectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
-//        bottombar.sizeToFit()
-//        //bottombar.setItems(buttons, animated: true)
-//        bottombar.backgroundColor = UIColor.whiteColor()
-//        self.view.addSubview(bottombar)
+        //        //Bottom Bar Buttons
+        //        var buttons:[UIButton] = []
+        //
+        //        var home = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        //        home.frame = CGRectMake(0, self.view.frame.size.height - 46, 100, 50)
+        //        home.backgroundColor = UIColor.greenColor()
+        //        home.setTitle("Home", forState: UIControlState.Normal)
+        //
+        //        buttons.append(home)
+        //
+        //
+        //        let bottombar = UIToolbar()
+        //        bottombar.frame = CGRectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
+        //        bottombar.sizeToFit()
+        //        //bottombar.setItems(buttons, animated: true)
+        //        bottombar.backgroundColor = UIColor.whiteColor()
+        //        self.view.addSubview(bottombar)
         
         
         
@@ -56,16 +56,15 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         button.addTarget(self, action: "eventDetailsPush:", forControlEvents: .TouchUpInside)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func eventDetailsPush(sender: AnyObject) {
         let nextController = EventDetailsViewController(eventTitle: "HI")
         self.navigationController?.pushViewController(nextController, animated: true)
     }
-
+    
 }
-

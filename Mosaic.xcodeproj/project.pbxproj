@@ -26,6 +26,8 @@
 		415B27081B13B51D00ADBE22 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FD1B13B51D00ADBE22 /* Security.framework */; };
 		415B27091B13B51D00ADBE22 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FE1B13B51D00ADBE22 /* StoreKit.framework */; };
 		415B270A1B13B51D00ADBE22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */; };
+		63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383731B29430C00D7A0A1 /* FavouriteController.swift */; };
+		63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383751B294AC100D7A0A1 /* AttendingController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		415B26FD1B13B51D00ADBE22 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		415B26FE1B13B51D00ADBE22 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		63B383731B29430C00D7A0A1 /* FavouriteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteController.swift; sourceTree = "<group>"; };
+		63B383751B294AC100D7A0A1 /* AttendingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +104,8 @@
 			children = (
 				415B270B1B13B52C00ADBE22 /* Frameworks */,
 				415B26CE1B13AF5700ADBE22 /* Mosaic */,
-				415B26E41B13AF5700ADBE22 /* MosaicTests */,
 				415B26CD1B13AF5700ADBE22 /* Products */,
+				415B26E41B13AF5700ADBE22 /* MosaicTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +125,8 @@
 				415B26D31B13AF5700ADBE22 /* ViewController.swift */,
 				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 				415B26D81B13AF5700ADBE22 /* Images.xcassets */,
+				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
+				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				415B26CF1B13AF5700ADBE22 /* Supporting Files */,
 			);
@@ -142,7 +148,7 @@
 				415B26E51B13AF5700ADBE22 /* Supporting Files */,
 			);
 			path = MosaicTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		415B26E51B13AF5700ADBE22 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -272,7 +278,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
+				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
 				415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */,
+				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
