@@ -18,7 +18,7 @@ class EventDetailsViewController: UIViewController {
     }
     
     init(eventTitle: String) {
-        self.eventTitle = "Hi"
+        self.eventTitle = eventTitle
         self.eventDescription = "This is a test event"
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,7 +31,7 @@ class EventDetailsViewController: UIViewController {
         //self.navigationItem.hidesBackButton = true
         
         // This block handles the join button
-        let joinButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let joinButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         joinButton.frame = CGRectMake(100, 100, 100, 50)
         joinButton.setTitle("Join", forState: .Normal)
         joinButton.addTarget(self, action: "close:", forControlEvents: .TouchUpInside)
