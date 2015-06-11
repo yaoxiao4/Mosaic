@@ -59,7 +59,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        self.title = "Events"
+        self.title = "Favourites"
         //self.navigationItem.hidesBackButton = true
         
         // Top Bar with Menu and Settings

@@ -59,7 +59,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        self.title = "Events"
+        self.title = "Attending"
         //self.navigationItem.hidesBackButton = true
         
         // Top Bar with Menu and Settings
