@@ -12,21 +12,21 @@ class EventDetailsViewController: UIViewController {
     
     var eventTitle: String? = nil
     var eventDescription: String? = nil
+    var event: Event? = nil
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(eventTitle: String) {
-        self.eventTitle = eventTitle
-        self.eventDescription = "This is a test event"
+    init(event: Event) {
+        self.event = event
         super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.title = "Event Details"
         //self.navigationItem.hidesBackButton = true
         
@@ -40,7 +40,7 @@ class EventDetailsViewController: UIViewController {
         
         // This block handles the title
         let eventTitleLabel = UILabel(frame: CGRectMake(self.view.frame.width/2 - 80,80,200,80))
-        eventTitleLabel.text = self.eventTitle
+        eventTitleLabel.text =  self.event?.title
         eventTitleLabel.textAlignment = .Center;
         eventTitleLabel.lineBreakMode = .ByWordWrapping;
         eventTitleLabel.numberOfLines = 0;
