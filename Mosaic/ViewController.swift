@@ -77,11 +77,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    func eventDetailsPush(sender: AnyObject) {
-        let nextController = EventDetailsViewController(eventTitle: "HI")
-        self.navigationController?.pushViewController(nextController, animated: true)
-    }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,7 +99,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var event: Event = self.events[indexPath.row] as! Event
-        let eventDetailsViewController = EventDetailsViewController(eventTitle: event.title)
+        let eventDetailsViewController = EventDetailsViewController(event: event)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     
