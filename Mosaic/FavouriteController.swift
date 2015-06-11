@@ -9,17 +9,57 @@
 import Foundation
 import Parse
 
-class FavouriteController: UIViewController {
+class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var events: [PFObject] = []
+    let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let testObject = PFObject(className: "TestObject")
-        testObject["foo"] = "bar"
-        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            println("Object has been saved.")
+        
+        // Adding events
+        //        var event: Event = Event()
+        //        event.title = "Google Info Session"
+        //        event.fb_id = "125634fdvd"
+        //        event.location = "Waterloo, Canada"
+        //        event.weather = 99
+        //        event.picture_url = "http://ancurlfjfdkjvndfjkv.com"
+        //        event.details = "This is details"
+        //        event.date = NSDate()
+        //        event.saveInBackground()
+        
+        //        let tableView = UITableView()
+        //        self.view.addSubview(tableView)
+        
+        self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.view.addSubview(tableView)
+        
+        let eventObjectQuery = Event.query()
+        
+        eventObjectQuery?.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                println("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects as? [PFObject] {
+                    for object in objects {
+                        println(object.objectId)
+                        self.events.append(object)
+                        
+                    }
+                    self.tableView.reloadData()
+                }
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
         }
         
-        self.title = "Favourites"
+        self.title = "Events"
         //self.navigationItem.hidesBackButton = true
         
         // Top Bar with Menu and Settings
@@ -52,9 +92,18 @@ class FavouriteController: UIViewController {
         button.frame = CGRectMake(100, 100, 100, 50)
         button.setTitle("Test Button", forState: .Normal)
         
-        self.view.addSubview(button)
-        self.view.backgroundColor = UIColor.whiteColor()
-        button.addTarget(self, action: "eventDetailsPush:", forControlEvents: .TouchUpInside)
+        
+        
+        
+        
+        
+        //        let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        //        button.frame = CGRectMake(100, 100, 100, 50)
+        //        button.setTitle("Test Button", forState: .Normal)
+        //
+        //        self.view.addSubview(button)
+        //        self.view.backgroundColor = UIColor.whiteColor()
+        //        button.addTarget(self, action: "eventDetailsPush:", forControlEvents: .TouchUpInside)
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,9 +111,28 @@ class FavouriteController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func eventDetailsPush(sender: AnyObject) {
-        let nextController = EventDetailsViewController(eventTitle: "HI")
-        self.navigationController?.pushViewController(nextController, animated: true)
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.events.count
     }
     
+    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        var event: Event = self.events[indexPath.row] as! Event
+        cell.textLabel?.text = event.title
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.backgroundColor = UIColor.whiteColor()
+        return cell
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var event: Event = self.events[indexPath.row] as! Event
+        let eventDetailsViewController = EventDetailsViewController(event: event)
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
 }
