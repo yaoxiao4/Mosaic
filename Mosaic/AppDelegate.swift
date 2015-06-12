@@ -9,11 +9,12 @@
 import UIKit
 import Parse
 import Bolts
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
+    let googleMapsApiKey = "AIzaSyCwG0yXlBE_2t218SRoc2iUvJgjOALo1OQ"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // [Optional] Power your app with Local Datastore. For more info, go to
@@ -29,8 +30,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-        return true
+        // Override point for customization after application launch.
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let tabBarController = UITabBarController()
+        let viewController = ViewController()
+        let favController = FavouriteController()
+        let attendingController = AttendingController()
+        let navigationController1 = UINavigationController(rootViewController: viewController)
+        let navigationController2 = UINavigationController(rootViewController: favController)
+        let navigationController3 = UINavigationController(rootViewController: attendingController)
+        
+        navigationController1.tabBarItem.image = UIImage(named: "Home-25")
+        navigationController2.tabBarItem.image = UIImage(named: "Star-25")
+        navigationController3.tabBarItem.image = UIImage(named: "Checkmark-25")
+        
+        viewController.title = "Home"
+        favController.title = "Favourites"
+        attendingController.title = "Attending"
+        tabBarController.viewControllers = [navigationController1, navigationController2, navigationController3]
+        
+        self.window?.rootViewController = tabBarController
+        self.window?.makeKeyAndVisible()
+        GMSServices.provideAPIKey(googleMapsApiKey)
+        
+        // Override point for customization after application launch.
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
+    
+    func application(application: UIApplication,
+        openURL url: NSURL,
+        sourceApplication: String?,
+        annotation: AnyObject?) -> Bool {
+            return FBSDKApplicationDelegate.sharedInstance().application(
+                application,
+                openURL: url,
+                sourceApplication: sourceApplication,
+                annotation: annotation)
+    }
+
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

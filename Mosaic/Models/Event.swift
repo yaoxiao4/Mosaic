@@ -13,7 +13,7 @@ class Event: PFObject, PFSubclassing {
     @NSManaged var title : String
     @NSManaged var details: String
     @NSManaged var fb_id: String
-    @NSManaged var location: String
+    @NSManaged var location: Location?
     @NSManaged var weather: Int
     @NSManaged var picture_url: String
     @NSManaged var date: NSDate
