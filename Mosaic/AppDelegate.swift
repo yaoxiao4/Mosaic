@@ -28,29 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
-        // Override point for customization after application launch.
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let tabBarController = UITabBarController()
-        let viewController = ViewController()
-        let favController = FavouriteController()
-        let attendingController = AttendingController()
-        let navigationController1 = UINavigationController(rootViewController: viewController)
-        let navigationController2 = UINavigationController(rootViewController: favController)
-        let navigationController3 = UINavigationController(rootViewController: attendingController)
-        
-        navigationController1.tabBarItem.image = UIImage(named: "Home-25")
-        navigationController2.tabBarItem.image = UIImage(named: "Star-25")
-        navigationController3.tabBarItem.image = UIImage(named: "Checkmark-25")
-        
-        viewController.title = "Home"
-        favController.title = "Favourites"
-        attendingController.title = "Attending"
-        tabBarController.viewControllers = [navigationController1, navigationController2, navigationController3]
-        
-        self.window?.rootViewController = tabBarController
-        self.window?.makeKeyAndVisible()
-        
-        
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
         return true
     }
@@ -71,12 +49,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(
+            application,
+            openURL: url,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
+    }
+    
+    
 }
 
