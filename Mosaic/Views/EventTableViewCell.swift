@@ -31,8 +31,8 @@ class EventTableViewCell: UITableViewCell {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         
-        
-        self.info.text = "\(dateFormatter.stringFromDate(event.date)) at \(event.location)"
+//        TODO: Add location later
+        self.info.text = "\(dateFormatter.stringFromDate(event.date))"
         
     }
     

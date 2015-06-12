@@ -128,6 +128,8 @@
 		2563C3221B2935E700C7102F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
+				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				415B26D31B13AF5700ADBE22 /* ViewController.swift */,
 				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 			);
@@ -161,8 +163,6 @@
 				415B26D11B13AF5700ADBE22 /* AppDelegate.swift */,
 				2563C3221B2935E700C7102F /* View Controllers */,
 				415B26D81B13AF5700ADBE22 /* Images.xcassets */,
-				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
-				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				415B26CF1B13AF5700ADBE22 /* Supporting Files */,
 			);
