@@ -83,7 +83,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // For Location
         let eventLocationLabel = UILabel(frame: CGRectMake(95, 10, 200, 30))
-        eventLocationLabel.text = self.event!.location?.name
+//        eventLocationLabel.text = self.event!.location?.name
         eventLocationLabel.textAlignment = .Left;
         eventLocationLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
         eventDetailsBox.addSubview(eventLocationLabel)

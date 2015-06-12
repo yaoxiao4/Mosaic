@@ -16,6 +16,10 @@ class Location: PFObject, PFSubclassing{
     @NSManaged var longitude: Float
     @NSManaged var latitude: Float
     
+    override init(){
+        super.init();
+    }
+    
     init(name: String, city: String, country: String, longitude: Float, latitude: Float){
         super.init();
         self.name = name
@@ -40,7 +44,7 @@ class Location: PFObject, PFSubclassing{
         }
     }
     
-    static  func parseClassName() -> String {
+    static func parseClassName() -> String {
         return "Location"
     }
     
