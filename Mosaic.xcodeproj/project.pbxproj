@@ -135,11 +135,16 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		2563C31D1B292B7500C7102F /* Views */ = {
+		2563C31D1B292B7500C7102F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
+				4169984E1B2A9F42009C7A16 /* LoginViewController.swift */,
+				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
+				415B26D31B13AF5700ADBE22 /* ViewController.swift */,
+				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 			);
-			name = Views;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		415B26C31B13AF5700ADBE22 = {
@@ -165,15 +170,10 @@
 			isa = PBXGroup;
 			children = (
 				416998461B2A9C34009C7A16 /* Main.storyboard */,
-				2563C31D1B292B7500C7102F /* Views */,
+				2563C31D1B292B7500C7102F /* ViewControllers */,
 				2563C3181B29102600C7102F /* Models */,
 				415B26D11B13AF5700ADBE22 /* AppDelegate.swift */,
-				415B26D31B13AF5700ADBE22 /* ViewController.swift */,
-				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 				415B26D81B13AF5700ADBE22 /* Images.xcassets */,
-				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
-				4169984E1B2A9F42009C7A16 /* LoginViewController.swift */,
-				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				415B26CF1B13AF5700ADBE22 /* Supporting Files */,
 				416998561B2AABCC009C7A16 /* Mosaic-Bridging-Header.h */,

@@ -28,10 +28,10 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func fbLoginClick(sender: AnyObject) {
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(self.permissions, /*block; added*/block: {
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(self.permissions, block: {
             (user: PFUser?, error: NSError?) -> Void in
             if user == nil {
-                NSLog("Uh oh. The user cancelled the Facebook login.")
+                NSLog("The user cancelled the Facebook login.")
             } else if user!.isNew {
                 NSLog("User signed up and logged in through Facebook!")
                 self.loginSuccessful()
@@ -52,9 +52,9 @@ class LoginViewController: UIViewController {
                     let urlUserImg = "http://graph.facebook.com/" + fbID! + "/picture?type=large"
                     let firstName = result.valueForKey("first_name") as? String
                     let lastName = result.valueForKey("last_name") as? String
-                    println(firstName)
-                    println(lastName)
-                    println(urlUserImg)
+                    NSLog(firstName!)
+                    NSLog(lastName!)
+                    NSLog(urlUserImg)
                 }
         })
     }
@@ -82,7 +82,5 @@ class LoginViewController: UIViewController {
         tabBarController.viewControllers = [navigationController1, navigationController2, navigationController3]
         
         presentViewController(tabBarController, animated: true, completion: nil)
-
     }
-
 }
