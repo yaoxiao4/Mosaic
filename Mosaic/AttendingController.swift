@@ -15,7 +15,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Events"
+        self.title = "Attending"
 
         self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.tableView.dataSource = self
