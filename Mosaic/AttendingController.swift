@@ -16,47 +16,44 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Adding events
-        //        var event: Event = Event()
-        //        event.title = "Google Info Session"
-        //        event.fb_id = "125634fdvd"
-        //        event.location = "Waterloo, Canada"
-        //        event.weather = 99
-        //        event.picture_url = "http://ancurlfjfdkjvndfjkv.com"
-        //        event.details = "This is details"
-        //        event.date = NSDate()
-        //        event.saveInBackground()
-        
-        //        let tableView = UITableView()
-        //        self.view.addSubview(tableView)
-        
         self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
         
-        let eventObjectQuery = Event.query()
         
-        eventObjectQuery?.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                // The find succeeded.
-                println("Successfully retrieved \(objects!.count) scores.")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject] {
-                    for object in objects {
-                        println(object.objectId)
-                        self.events.append(object)
-                        
+        let RSVPObjectQuery = RSVP.query()
+        RSVPObjectQuery?.whereKey("status", equalTo: 1)
+        
+        PFUser.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
+            (user: PFObject?, error: NSError?) -> Void in
+            if error == nil && user != nil {
+                RSVPObjectQuery?.whereKey("user", equalTo: user!)
+                RSVPObjectQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        // The find succeeded.
+                        println("Successfully retrieved \(objects!.count) scores.")
+                        // Do something with the found objects
+                        if let objects = objects as? [RSVP] {
+                            for object in objects {
+                                self.events.append(object.event)
+                                
+                            }
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
                     }
-                    self.tableView.reloadData()
                 }
+
             } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                println(error)
             }
+            
         }
         
         self.title = "Attending"
@@ -68,43 +65,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationItem.leftBarButtonItem = menu
         self.navigationItem.rightBarButtonItem = settings
         
-        //        //Bottom Bar Buttons
-        //        var buttons:[UIButton] = []
-        //
-        //        var home = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        //        home.frame = CGRectMake(0, self.view.frame.size.height - 46, 100, 50)
-        //        home.backgroundColor = UIColor.greenColor()
-        //        home.setTitle("Home", forState: UIControlState.Normal)
-        //
-        //        buttons.append(home)
-        //
-        //
-        //        let bottombar = UIToolbar()
-        //        bottombar.frame = CGRectMake(0, self.view.frame.size.height - 46, self.view.frame.size.width, 46)
-        //        bottombar.sizeToFit()
-        //        //bottombar.setItems(buttons, animated: true)
-        //        bottombar.backgroundColor = UIColor.whiteColor()
-        //        self.view.addSubview(bottombar)
-        
-        
-        
-        let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        button.frame = CGRectMake(100, 100, 100, 50)
-        button.setTitle("Test Button", forState: .Normal)
-        
-        
-        
-        
-        
-        
-        //        let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        //        button.frame = CGRectMake(100, 100, 100, 50)
-        //        button.setTitle("Test Button", forState: .Normal)
-        //
-        //        self.view.addSubview(button)
-        //        self.view.backgroundColor = UIColor.whiteColor()
-        //        button.addTarget(self, action: "eventDetailsPush:", forControlEvents: .TouchUpInside)
-    }
+}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -112,28 +73,26 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    //    MARK: TableView methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.events.count
     }
     
-    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
         var event: Event = self.events[indexPath.row] as! Event
-        cell.textLabel?.text = event.title
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell.backgroundColor = UIColor.whiteColor()
+          cell.configureCellWithEvent(event)
         return cell
     }
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var event: Event = self.events[indexPath.row] as! Event
         let eventDetailsViewController = EventDetailsViewController(event: event)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70.0
     }
     
 }
