@@ -18,18 +18,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.title = "Events"
         
         // Adding events
-//        var event: Event = Event()
-//        event.title = "Google Info Session"
-//        event.fb_id = "125634fdvd"
-//        event.location = "Waterloo, Canada"
-//        event.weather = 99
-//        event.picture_url = "http://ancurlfjfdkjvndfjkv.com"
-//        event.details = "This is details"
-//        event.date = NSDate()
-//        event.saveInBackground()
+        var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
+        
+        var event: Event = Event()
+        event.title = "Ginger Info Session"
+        event.fb_id = "125634fdvd"
+        event.location = location
+        event.weather = 99
+        event.picture_url = "https://scontent-ord1-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11050684_946936308696701_7152001106456242296_n.jpg?oh=aecba138470a9e2e3fad36e8c7ce94aa&oe=563210F9"
+        event.details = "This is details"
+        event.date = NSDate()
+        event.saveInBackground()
+        
         
 //        let tableView = UITableView()
 //        self.view.addSubview(tableView)
+        
+//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "375003852708970", parameters: nil)
+//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+//            
+//            if ((error) != nil)
+//            {
+//                // Process error
+//                println("Error: \(error)")
+//            }
+//            else
+//            {
+//                println("fetched user: \(result)")
+//                let userName : NSString = result.valueForKey("name") as! NSString
+//                println("User Name is: \(userName)")
+//                let userEmail : NSString = result.valueForKey("email") as! NSString
+//                println("User Email is: \(userEmail)")
+//            }
+//        })
         
         self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.tableView.dataSource = self
@@ -38,6 +59,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.addSubview(tableView)
         
         let eventObjectQuery = Event.query()
+        eventObjectQuery?.includeKey("location")
+        eventObjectQuery?.orderByAscending("date")
         
         eventObjectQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
