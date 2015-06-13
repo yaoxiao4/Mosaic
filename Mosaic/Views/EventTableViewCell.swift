@@ -13,6 +13,7 @@ class EventTableViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
     @IBOutlet var info: UILabel!
+    @IBOutlet weak var thumbnail: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,10 +31,13 @@ class EventTableViewCell: UITableViewCell {
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        
-//        TODO: Add location later
         self.info.text = "\(dateFormatter.stringFromDate(event.date)) at \(event.location!.name)"
         
+        let coverURL = NSURL(string: event.picture_url)
+        let data = NSData(contentsOfURL: coverURL!)
+        let eventPhoto = UIImage(data: data!)
+        self.thumbnail.contentMode = .ScaleAspectFit
+        self.thumbnail.image = UIImage(data: data!)
     }
     
 }

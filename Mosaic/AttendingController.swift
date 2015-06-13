@@ -14,6 +14,11 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     let tableView = UITableView()
     var users: [PFUser] = []
     var favourites: [PFObject] = []
+    var rsvp: [Event] = []
+    var attending: [Event] = []
+    var notGoing: [Event] = []
+    var mayBe: [Event] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +34,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
         let RSVPObjectQuery = RSVP.query()
         RSVPObjectQuery?.whereKey("status", equalTo: 1)
         
-        PFUser.query()?.getObjectInBackgroundWithId("eWxDULn2UN"){
+        PFUser.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
             (user: PFObject?, error: NSError?) -> Void in
             if error == nil && user != nil {
                 RSVPObjectQuery?.whereKey("user", equalTo: user!)
@@ -37,12 +42,18 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
                     (objects: [AnyObject]?, error: NSError?) -> Void in
                     
                     if error == nil {
-                        // The find succeeded.
-                        println("Successfully retrieved \(objects!.count) scores.")
                         // Do something with the found objects
                         if let objects = objects as? [RSVP] {
                             for object in objects {
+                                self.rsvp.append(object.event)
                                 self.events.append(object.event)
+                                if (object.status == 1) {
+                                    self.attending.append(object.event)
+                                } else if(object.status == 2) {
+                                    self.notGoing.append(object.event)
+                                } else {
+                                    self.mayBe.append(object.event)
+                                }
                                 
                             }
                             self.tableView.reloadData()
@@ -59,11 +70,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
             
         }
         
-
-       /********* I don't think this will work since we are getting it from User object not PFUser ***************/
-        
-        let userQuery = User.query()
-        
+        let userQuery = PFUser.query()
         userQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -103,19 +110,6 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
-        /***************************************************************************************************/
-
-        self.title = "Attending"
-        //self.navigationItem.hidesBackButton = true
-        
-        // Top Bar with Menu and Settings
-        var settings : UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "")
-        var menu : UIBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "")
-        self.navigationItem.leftBarButtonItem = menu
-        self.navigationItem.rightBarButtonItem = settings
-
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,7 +126,6 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
         var event: Event = self.events[indexPath.row] as! Event
-
         cell.configureCellWithEvent(event)
         return cell
     }

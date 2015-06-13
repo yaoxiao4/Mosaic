@@ -14,6 +14,10 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
     var users: [PFUser] = []
     var favourites: [PFObject] = []
     let tableView = UITableView()
+    var rsvp: [Event] = []
+    var attending: [Event] = []
+    var notGoing: [Event] = []
+    var mayBe: [Event] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +53,45 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
+        
+        
+        let RSVPObjectQuery = RSVP.query()
+        RSVPObjectQuery?.whereKey("status", equalTo: 1)
+        
+        PFUser.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
+            (user: PFObject?, error: NSError?) -> Void in
+            if error == nil && user != nil {
+                RSVPObjectQuery?.whereKey("user", equalTo: user!)
+                RSVPObjectQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        // Do something with the found objects
+                        if let objects = objects as? [RSVP] {
+                            for object in objects {
+                                self.rsvp.append(object.event)
+                                if (object.status == 1) {
+                                    self.attending.append(object.event)
+                                } else if(object.status == 2) {
+                                    self.notGoing.append(object.event)
+                                } else {
+                                    self.mayBe.append(object.event)
+                                }
+                                
+                            }
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
+                
+            } else {
+                println(error)
+            }
+            
+        }
         
         let userQuery = PFUser.query()
         
