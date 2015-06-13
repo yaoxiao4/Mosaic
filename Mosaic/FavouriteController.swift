@@ -60,8 +60,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
-        
+
         self.title = "Favourites"
         //self.navigationItem.hidesBackButton = true
         
@@ -89,16 +88,9 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         //        bottombar.backgroundColor = UIColor.whiteColor()
         //        self.view.addSubview(bottombar)
         
-        
-        
         let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         button.frame = CGRectMake(100, 100, 100, 50)
         button.setTitle("Test Button", forState: .Normal)
-        
-        
-        
-        
-        
         
         //        let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         //        button.frame = CGRectMake(100, 100, 100, 50)
