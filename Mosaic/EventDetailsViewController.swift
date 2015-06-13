@@ -32,6 +32,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         ///////////////
         scrollView = UIScrollView(frame: CGRectMake(0,0, self.view.bounds.width, self.view.bounds.height))
         scrollView.backgroundColor = UIColor.blackColor()
+
         // 3
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.bounds.height - self.navigationController!.navigationBar.frame.height - 20)
         scrollView.delegate = self
@@ -83,7 +84,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // For Location
         let eventLocationLabel = UILabel(frame: CGRectMake(95, 10, 200, 30))
-//        eventLocationLabel.text = self.event!.location?.name
+        eventLocationLabel.text = self.event!.location?.name
         eventLocationLabel.textAlignment = .Left;
         eventLocationLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
         eventDetailsBox.addSubview(eventLocationLabel)
@@ -197,7 +198,6 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
             NSLog("Can't use comgooglemaps://");
         }
     }
-    
     
     @IBAction func pushOnMap(){
         let googleMapsController = GoogleMapsViewController(event: self.event!)

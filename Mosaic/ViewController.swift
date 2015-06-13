@@ -30,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         event.date = NSDate()
         event.saveInBackground()
         
+        
 //        let tableView = UITableView()
 //        self.view.addSubview(tableView)
         
@@ -58,6 +59,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.addSubview(tableView)
         
         let eventObjectQuery = Event.query()
+        eventObjectQuery?.includeKey("location")
+        eventObjectQuery?.orderByAscending("date")
         
         eventObjectQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in

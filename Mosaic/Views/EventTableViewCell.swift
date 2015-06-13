@@ -32,7 +32,7 @@ class EventTableViewCell: UITableViewCell {
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         
 //        TODO: Add location later
-        self.info.text = "\(dateFormatter.stringFromDate(event.date))"
+        self.info.text = "\(dateFormatter.stringFromDate(event.date)) at \(event.location!.name)"
         
     }
     

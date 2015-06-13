@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */; };
+		201AFD781B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */; };
 		203992651B2A2A1500ABDEF6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203992641B2A2A1500ABDEF6 /* Social.framework */; };
 		203992671B2A2A2300ABDEF6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203992661B2A2A2300ABDEF6 /* Accounts.framework */; };
-		2039926B1B2A322200ABDEF6 /* GoogleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2039926A1B2A322200ABDEF6 /* GoogleMapsViewController.swift */; };
 		203992711B2A566600ABDEF6 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203992701B2A566600ABDEF6 /* Location.swift */; };
 		20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20929EF51B16513700523691 /* EventDetailsViewController.swift */; };
 		20D630301B2B1FFB00EE9C59 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D6302D1B2B1FFB00EE9C59 /* FBSDKCoreKit.framework */; };
@@ -53,10 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewController.swift; sourceTree = "<group>"; };
+		201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		203992641B2A2A1500ABDEF6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		203992661B2A2A2300ABDEF6 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		2039926A1B2A322200ABDEF6 /* GoogleMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewController.swift; sourceTree = "<group>"; };
-		2039926C1B2A524100ABDEF6 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		203992701B2A566600ABDEF6 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		20929EF51B16513700523691 /* EventDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		20D6302D1B2B1FFB00EE9C59 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				201AFD781B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				20D630301B2B1FFB00EE9C59 /* FBSDKCoreKit.framework in Frameworks */,
 				20D630311B2B1FFB00EE9C59 /* FBSDKLoginKit.framework in Frameworks */,
 				20D630321B2B1FFB00EE9C59 /* FBSDKShareKit.framework in Frameworks */,
@@ -145,7 +147,7 @@
 		2563C3221B2935E700C7102F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4169984E1B2A9F42009C7A16 /* LoginViewController.swift */,
+				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
 				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
 				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				415B26D31B13AF5700ADBE22 /* ViewController.swift */,
@@ -157,7 +159,6 @@
 		25FF9BFB1B2B6F5A00885081 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				416998461B2A9C34009C7A16 /* Main.storyboard */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				25FF9C001B2B712900885081 /* EventTableViewCell.swift */,
 				25FF9C011B2B712900885081 /* EventTableViewCell.xib */,
@@ -226,6 +227,7 @@
 		415B270B1B13B52C00ADBE22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */,
 				20D6302D1B2B1FFB00EE9C59 /* FBSDKCoreKit.framework */,
 				20D6302E1B2B1FFB00EE9C59 /* FBSDKLoginKit.framework */,
 				20D6302F1B2B1FFB00EE9C59 /* FBSDKShareKit.framework */,
@@ -342,7 +344,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */,
-				416998471B2A9C34009C7A16 /* Main.storyboard in Resources */,
 				415B26DC1B13AF5700ADBE22 /* LaunchScreen.xib in Resources */,
 				415B26D91B13AF5700ADBE22 /* Images.xcassets in Resources */,
 			);
@@ -414,9 +415,9 @@
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
 				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
-				2039926B1B2A322200ABDEF6 /* GoogleMapsViewController.swift in Sources */,
 				415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */,
 				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
+				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
 				2563C31C1B2910B100C7102F /* Event.swift in Sources */,
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,

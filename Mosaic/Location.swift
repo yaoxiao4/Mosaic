@@ -13,14 +13,14 @@ class Location: PFObject, PFSubclassing{
     @NSManaged var name: String
     @NSManaged var city: String
     @NSManaged var country: String
-    @NSManaged var longitude: Float
-    @NSManaged var latitude: Float
+    @NSManaged var longitude: CLLocationDegrees
+    @NSManaged var latitude: CLLocationDegrees
     
     override init(){
         super.init();
     }
     
-    init(name: String, city: String, country: String, longitude: Float, latitude: Float){
+    init(name: String, city: String, country: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees){
         super.init();
         self.name = name
         self.city = city
@@ -29,7 +29,7 @@ class Location: PFObject, PFSubclassing{
         self.latitude = latitude
     }
     
-    init(name: String, longitude: Float, latitude: Float){
+    init(name: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees){
         super.init();
         self.name = name
         self.longitude = longitude
