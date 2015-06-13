@@ -60,7 +60,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
         
-        let userQuery = User.query()
+        let userQuery = PFUser.query()
         
         userQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in

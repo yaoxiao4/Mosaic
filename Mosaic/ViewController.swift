@@ -80,7 +80,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
    
-        let userQuery = User.query()
+        let userQuery = PFUser.query()
         
         userQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
