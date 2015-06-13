@@ -60,7 +60,7 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
+
         self.title = "Favourites"
         //self.navigationItem.hidesBackButton = true
         
