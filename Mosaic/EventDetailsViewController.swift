@@ -14,7 +14,8 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var event: Event? = nil
     var scrollView: UIScrollView!
     var segmentedControl: UISegmentedControl!
-    var isFavourite: Bool? = false
+    var isFavourite: Bool = false
+    var bookmarkView: UIImageView!
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
@@ -75,7 +76,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(fbIconView);
         
         // This block handles the bookmark icon
-        var bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
+        self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
         if (self.isFavourite == true) {
             bookmarkView.image = UIImage(named: "star-filled.png");
         } else {
@@ -221,6 +222,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
 
     @IBAction func bookmarkEvent(){
+        if (self.isFavourite){
+            self.bookmarkView.image = UIImage(named: "star-empty.png");
+        } else {
+            self.bookmarkView.image = UIImage(named: "star-filled.png");
+        }
+        
         var users: [PFUser] = []
         let userQuery = User.query()
         
@@ -235,11 +242,39 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
                 // REPLACE LATER
-                var favourite = Favourite()
-                favourite.event = self.event!
-                favourite.user = users[0] as! User
-                favourite.isFavourite = true
-                favourite.saveInBackground()
+                var favouriteQuery = Favourite.query()
+                var useraaa = users[0]
+                var storedFav: Favourite? = nil
+                favouriteQuery?.whereKey("event", equalTo: self.event!)
+                favouriteQuery?.whereKey("user", equalTo: users[0])
+                favouriteQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    if error == nil {
+                        if let objects = objects as? [PFObject] {
+                            for object in objects {
+                                storedFav = object as? Favourite
+                            }
+                            
+                            if (storedFav == nil){
+                                var favourite = Favourite()
+                                favourite.event = self.event!
+                                favourite.user = users[0];
+                                favourite.isFavourite = !self.isFavourite
+                            
+                                favourite.saveInBackground()
+                            } else {
+                                storedFav?.isFavourite = !self.isFavourite
+                                storedFav?.saveInBackground()
+                            }
+                            
+                            self.isFavourite = !self.isFavourite
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
+
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
