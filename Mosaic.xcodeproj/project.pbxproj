@@ -22,6 +22,7 @@
 		2563C31C1B2910B100C7102F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563C31B1B2910B100C7102F /* Event.swift */; };
 		25FF9C021B2B712900885081 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FF9C001B2B712900885081 /* EventTableViewCell.swift */; };
 		25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FF9C011B2B712900885081 /* EventTableViewCell.xib */; };
+		25FF9C071B2BB35400885081 /* RSVP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FF9C061B2BB35400885081 /* RSVP.swift */; };
 		415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B26D11B13AF5700ADBE22 /* AppDelegate.swift */; };
 		415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B26D31B13AF5700ADBE22 /* ViewController.swift */; };
 		415B26D91B13AF5700ADBE22 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415B26D81B13AF5700ADBE22 /* Images.xcassets */; };
@@ -72,6 +73,7 @@
 		2563C31B1B2910B100C7102F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = Models/Event.swift; sourceTree = "<group>"; };
 		25FF9C001B2B712900885081 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventTableViewCell.swift; path = Views/EventTableViewCell.swift; sourceTree = "<group>"; };
 		25FF9C011B2B712900885081 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventTableViewCell.xib; path = Views/EventTableViewCell.xib; sourceTree = "<group>"; };
+		25FF9C061B2BB35400885081 /* RSVP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSVP.swift; path = Models/RSVP.swift; sourceTree = "<group>"; };
 		415B26CC1B13AF5700ADBE22 /* Mosaic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mosaic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415B26D01B13AF5700ADBE22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		415B26D11B13AF5700ADBE22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				2563C3191B29106800C7102F /* User.swift */,
 				2563C31B1B2910B100C7102F /* Event.swift */,
 				203992701B2A566600ABDEF6 /* Location.swift */,
+				25FF9C061B2BB35400885081 /* RSVP.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
 				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
+				25FF9C071B2BB35400885081 /* RSVP.swift in Sources */,
 				415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */,
 				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
