@@ -43,7 +43,10 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.title = "Event Details"
-
+        
+        self.tabBarController?.tabBar.hidden = true
+        //self.navigationItem.hidesBackButton = true
+        
         // This block handles the join button
         let joinButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         joinButton.frame = CGRectMake(100, 100, 100, 50)
@@ -202,5 +205,10 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func pushOnMap(){
         let googleMapsController = GoogleMapsViewController(event: self.event!)
         self.navigationController?.pushViewController(googleMapsController, animated: true)
+    }
+
+    override func viewWillDisappear(animated:Bool) {
+        self.tabBarController?.tabBar.hidden = false
+        super.viewWillDisappear(animated)
     }
 }

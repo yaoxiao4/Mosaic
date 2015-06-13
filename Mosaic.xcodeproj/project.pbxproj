@@ -44,6 +44,7 @@
 		63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383731B29430C00D7A0A1 /* FavouriteController.swift */; };
 		63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383751B294AC100D7A0A1 /* AttendingController.swift */; };
 		67AE7FB10C59B3CBEE1B34B0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F99A55DFD46DF7D4A87EBB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383771B2BB15700D7A0A1 /* Favourite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		63B383751B294AC100D7A0A1 /* AttendingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendingController.swift; sourceTree = "<group>"; };
 		73F99A55DFD46DF7D4A87EBB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9973BDB2612A61E7FCF345F2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		63B383771B2BB15700D7A0A1 /* Favourite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				2563C31B1B2910B100C7102F /* Event.swift */,
 				203992701B2A566600ABDEF6 /* Location.swift */,
 				25FF9C061B2BB35400885081 /* RSVP.swift */,
+				63B383771B2BB15700D7A0A1 /* Favourite.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
 				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
 				25FF9C071B2BB35400885081 /* RSVP.swift in Sources */,
+				63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */,
 				415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */,
 				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,

@@ -15,7 +15,8 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Events"
+
         self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -65,7 +66,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationItem.leftBarButtonItem = menu
         self.navigationItem.rightBarButtonItem = settings
         
-}
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,7 +82,8 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
         var event: Event = self.events[indexPath.row] as! Event
-          cell.configureCellWithEvent(event)
+
+        cell.configureCellWithEvent(event)
         return cell
     }
     
