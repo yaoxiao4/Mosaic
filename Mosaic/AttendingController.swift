@@ -12,6 +12,8 @@ import Parse
 class AttendingController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var events: [PFObject] = []
     let tableView = UITableView()
+    var users: [PFUser] = []
+    var favourites: [PFObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,47 +62,47 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
 
        /********* I don't think this will work since we are getting it from User object not PFUser ***************/
         
-//        let userQuery = User.query()
-//        
-//        userQuery?.findObjectsInBackgroundWithBlock {
-//            (objects: [AnyObject]?, error: NSError?) -> Void in
-//            if error == nil {
-//                if let objects = objects as? [PFUser] {
-//                    for object in objects {
-//                        self.users.append(object)
-//                    }
-//                    
-//                    //Create Favourite Query Once we have queried all the users since
-//                    //Favourite Query is queried based on the current User
-//                    //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
-//                    
-//                    let favObjectQuery = Favourite.query()
-//                    favObjectQuery?.includeKey("location")
-//                    favObjectQuery?.orderByAscending("date")
-//                    favObjectQuery?.whereKey("isFavourite", equalTo: true)
-//                    favObjectQuery?.whereKey("user", equalTo: self.users[0])
-//                    
-//                    favObjectQuery?.findObjectsInBackgroundWithBlock {
-//                        (objects: [AnyObject]?, error: NSError?) -> Void in
-//                        if error == nil {
-//                            if let objects = objects as? [PFObject] {
-//                                for object in objects {
-//                                    self.favourites.append(object)
-//                                }
-//                                self.tableView.reloadData()
-//                            }
-//                        } else {
-//                            // Log details of the failure
-//                            println("Error: \(error!) \(error!.userInfo!)")
-//                        }
-//                    }
-//                }
-//                
-//            } else {
-//                // Log details of the failure
-//                println("Error: \(error!) \(error!.userInfo!)")
-//            }
-//        }
+        let userQuery = User.query()
+        
+        userQuery?.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFUser] {
+                    for object in objects {
+                        self.users.append(object)
+                    }
+                    
+                    //Create Favourite Query Once we have queried all the users since
+                    //Favourite Query is queried based on the current User
+                    //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
+                    
+                    let favObjectQuery = Favourite.query()
+                    favObjectQuery?.includeKey("location")
+                    favObjectQuery?.orderByAscending("date")
+                    favObjectQuery?.whereKey("isFavourite", equalTo: true)
+                    favObjectQuery?.whereKey("user", equalTo: self.users[0])
+                    
+                    favObjectQuery?.findObjectsInBackgroundWithBlock {
+                        (objects: [AnyObject]?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let objects = objects as? [PFObject] {
+                                for object in objects {
+                                    var favourite = object as! Favourite
+                                    self.favourites.append(favourite.event)
+                                }
+                            }
+                        } else {
+                            // Log details of the failure
+                            println("Error: \(error!) \(error!.userInfo!)")
+                        }
+                    }
+                }
+                
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
         
         /***************************************************************************************************/
 
@@ -137,7 +139,7 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var event: Event = self.events[indexPath.row] as! Event
-        let eventDetailsViewController = EventDetailsViewController(event: event)
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: true)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     

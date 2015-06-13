@@ -13,12 +13,15 @@ import GoogleMaps
 class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var event: Event? = nil
     var scrollView: UIScrollView!
+    var segmentedControl: UISegmentedControl!
+    var isFavourite: Bool? = false
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event) {
+    init(event: Event, isFavourite: Bool) {
+        self.isFavourite = isFavourite
         self.event = event
         super.init(nibName: nil, bundle: nil)
     }
@@ -73,9 +76,16 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // This block handles the bookmark icon
         var bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
-        var bookmarkIcon = UIImage(named: "star-empty.png");
-        bookmarkView.image = bookmarkIcon;
+        if (self.isFavourite == true) {
+            bookmarkView.image = UIImage(named: "star-filled.png");
+        } else {
+            bookmarkView.image = UIImage(named: "star-empty.png");
+        }
         scrollView.addSubview(bookmarkView);
+        
+        // Enable Touch
+        bookmarkView.userInteractionEnabled = true;
+        bookmarkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "bookmarkEvent"))
 
         
         ///////////////
@@ -96,10 +106,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         locationIconView.image = locationIcon
         eventDetailsBox.addSubview(locationIconView)
         
-        // Enable Touch
-        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "pushOnMap")
-        locationIconView.addGestureRecognizer(singleTap)
-        locationIconView.userInteractionEnabled = true
+        
+        var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        viewMapButton.frame = CGRectMake(295, 10, 50, 30)
+        viewMapButton.setTitle("Map", forState: .Normal)
+        viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
+        eventDetailsBox.addSubview(viewMapButton)
         
         // For Date
         let eventDateLabel = UILabel(frame: CGRectMake(95, eventLocationLabel.frame.origin.y + 35,200,30))
@@ -139,10 +151,11 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         actionButtonsBox.backgroundColor = UIColor.whiteColor()
         
         let items = ["Not Going", "Maybe", "Going"]
-        let segmentedControl = UISegmentedControl(items:items)
+        self.segmentedControl = UISegmentedControl(items:items)
         segmentedControl.frame.origin.x = (actionButtonsBox.frame.width - segmentedControl.frame.width) / 2
         segmentedControl.frame.origin.y = (actionButtonsBox.frame.height - segmentedControl.frame.height) / 2
         actionButtonsBox.addSubview(segmentedControl)
+        self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
         scrollView.addSubview(actionButtonsBox)
         //   END BUTTON GROUP
@@ -207,8 +220,53 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(googleMapsController, animated: true)
     }
 
+    @IBAction func bookmarkEvent(){
+        var users: [PFUser] = []
+        let userQuery = User.query()
+        
+        userQuery?.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFUser] {
+                    for object in objects {
+                        users.append(object)
+                        
+                    }
+                }
+                
+                // REPLACE LATER
+                var favourite = Favourite()
+                favourite.event = self.event!
+                favourite.user = users[0] as! User
+                favourite.isFavourite = true
+                favourite.saveInBackground()
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
     override func viewWillDisappear(animated:Bool) {
-        self.tabBarController?.tabBar.hidden = false
+        if (!(self.navigationController?.topViewController is GoogleMapsViewController)){
+            self.tabBarController?.tabBar.hidden = false
+        }
         super.viewWillDisappear(animated)
+    }
+    
+    @IBAction func indexChanged(sender: AnyObject) {
+        switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                // NOT GOING - 2
+                break;
+            case 1:
+                // MAYBE - 3
+                break;
+            case 2:
+                // GOING -1
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -22,15 +22,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
         
-        var event: Event = Event()
-        event.title = "Ginger Info Session"
-        event.fb_id = "125634fdvd"
-        event.location = location
-        event.weather = 99
-        event.picture_url = "https://scontent-ord1-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11050684_946936308696701_7152001106456242296_n.jpg?oh=aecba138470a9e2e3fad36e8c7ce94aa&oe=563210F9"
-        event.details = "This is details"
-        event.date = NSDate()
-        event.saveInBackground()
+//        var event: Event = Event()
+//        event.title = "Ginger Info Session"
+//        event.fb_id = "125634fdvd"
+//        event.location = location
+//        event.weather = 99
+//        event.picture_url = "https://scontent-ord1-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11050684_946936308696701_7152001106456242296_n.jpg?oh=aecba138470a9e2e3fad36e8c7ce94aa&oe=563210F9"
+//        event.details = "This is details"
+//        event.date = NSDate()
+//        event.saveInBackground()
         
         
 //        let tableView = UITableView()
@@ -105,7 +105,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if error == nil {
                             if let objects = objects as? [PFObject] {
                                 for object in objects {
-                                    self.favourites.append(object)
+                                    var favourite = object as! Favourite
+                                    self.favourites.append(favourite.event)
                                 }
                                 self.tableView.reloadData()
                             }
@@ -145,7 +146,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var event: Event = self.events[indexPath.row] as! Event
-        let eventDetailsViewController = EventDetailsViewController(event: event)
+        
+        var isFavourite = contains(self.favourites, event)
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     

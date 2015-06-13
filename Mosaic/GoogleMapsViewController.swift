@@ -21,6 +21,7 @@ class GoogleMapsViewController: UIViewController {
         self.longitute = event.location?.longitude
         self.latitude = event.location?.latitude
         super.init(nibName: nil, bundle: nil)
+        self.tabBarController?.tabBar.hidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
