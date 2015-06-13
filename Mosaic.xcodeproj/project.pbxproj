@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */; };
 		201AFD781B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */; };
+		201AFD7D1B2BB00400C4DBC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */; };
+		201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */; };
 		203992651B2A2A1500ABDEF6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203992641B2A2A1500ABDEF6 /* Social.framework */; };
 		203992671B2A2A2300ABDEF6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203992661B2A2A2300ABDEF6 /* Accounts.framework */; };
 		203992711B2A566600ABDEF6 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203992701B2A566600ABDEF6 /* Location.swift */; };
@@ -56,6 +58,9 @@
 /* Begin PBXFileReference section */
 		201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewController.swift; sourceTree = "<group>"; };
 		201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		201AFD7A1B2BAFC800C4DBC0 /* Mosaic-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mosaic-Bridging-Header.h"; sourceTree = "<group>"; };
+		201AFD7C1B2BB00400C4DBC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		203992641B2A2A1500ABDEF6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		203992661B2A2A2300ABDEF6 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		203992701B2A566600ABDEF6 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -147,6 +152,7 @@
 		2563C3221B2935E700C7102F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */,
 				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
 				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
 				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
@@ -159,6 +165,7 @@
 		25FF9BFB1B2B6F5A00885081 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				25FF9C001B2B712900885081 /* EventTableViewCell.swift */,
 				25FF9C011B2B712900885081 /* EventTableViewCell.xib */,
@@ -189,6 +196,7 @@
 		415B26CE1B13AF5700ADBE22 /* Mosaic */ = {
 			isa = PBXGroup;
 			children = (
+				201AFD7A1B2BAFC800C4DBC0 /* Mosaic-Bridging-Header.h */,
 				25FF9BFB1B2B6F5A00885081 /* Views */,
 				2563C3181B29102600C7102F /* Models */,
 				415B26D11B13AF5700ADBE22 /* AppDelegate.swift */,
@@ -346,6 +354,7 @@
 				25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */,
 				415B26DC1B13AF5700ADBE22 /* LaunchScreen.xib in Resources */,
 				415B26D91B13AF5700ADBE22 /* Images.xcassets in Resources */,
+				201AFD7D1B2BB00400C4DBC0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +430,7 @@
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
 				2563C31C1B2910B100C7102F /* Event.swift in Sources */,
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,
+				201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +453,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				201AFD7C1B2BB00400C4DBC0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -582,7 +600,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Mosaic-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -633,7 +651,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Mosaic-Bridging-Header.h";
 			};
 			name = Release;
 		};
