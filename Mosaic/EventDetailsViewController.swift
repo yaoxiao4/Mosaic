@@ -205,6 +205,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func pushOnMap(){
         let googleMapsController = GoogleMapsViewController(event: self.event!)
         self.navigationController?.pushViewController(googleMapsController, animated: true)
+    }
 
     override func viewWillDisappear(animated:Bool) {
         self.tabBarController?.tabBar.hidden = false
