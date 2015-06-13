@@ -28,6 +28,8 @@ class EventDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.title = "Event Details"
+        
+        self.tabBarController?.tabBar.hidden = true
         //self.navigationItem.hidesBackButton = true
         
         // This block handles the join button
@@ -72,5 +74,10 @@ class EventDetailsViewController: UIViewController {
     @IBAction func close(sender: AnyObject) {
         let nextController = ViewController()
         self.navigationController?.pushViewController(nextController, animated: true)
+    }
+    
+    override func viewWillDisappear(animated:Bool) {
+        self.tabBarController?.tabBar.hidden = false
+        super.viewWillDisappear(animated)
     }
 }

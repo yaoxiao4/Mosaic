@@ -30,6 +30,7 @@
 		415B270A1B13B51D00ADBE22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */; };
 		63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383731B29430C00D7A0A1 /* FavouriteController.swift */; };
 		63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383751B294AC100D7A0A1 /* AttendingController.swift */; };
+		63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383771B2BB15700D7A0A1 /* Favourite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63B383731B29430C00D7A0A1 /* FavouriteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteController.swift; sourceTree = "<group>"; };
 		63B383751B294AC100D7A0A1 /* AttendingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendingController.swift; sourceTree = "<group>"; };
+		63B383771B2BB15700D7A0A1 /* Favourite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				2563C3191B29106800C7102F /* User.swift */,
 				2563C31B1B2910B100C7102F /* Event.swift */,
+				63B383771B2BB15700D7A0A1 /* Favourite.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
 				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
+				63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */,
 				415B26D41B13AF5700ADBE22 /* ViewController.swift in Sources */,
 				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,

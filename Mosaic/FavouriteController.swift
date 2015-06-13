@@ -36,7 +36,8 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(tableView)
         
-        let eventObjectQuery = Event.query()
+        let eventObjectQuery = Favourite.query()
+        
         
         eventObjectQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -48,7 +49,8 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
                 if let objects = objects as? [PFObject] {
                     for object in objects {
                         println(object.objectId)
-                        self.events.append(object)
+                        var favourite = object as! Favourite
+                        self.events.append(favourite.event)
                         
                     }
                     self.tableView.reloadData()
@@ -59,7 +61,8 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        self.title = "Events"
+        
+        self.title = "Favourites"
         //self.navigationItem.hidesBackButton = true
         
         // Top Bar with Menu and Settings
