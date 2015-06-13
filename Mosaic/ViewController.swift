@@ -11,6 +11,8 @@ import Parse
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var events: [PFObject] = []
+    var users: [PFUser] = []
+    var favourites: [PFObject] = []
     let tableView = UITableView()
 
     override func viewDidLoad() {
@@ -72,6 +74,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                 self.tableView.reloadData()
                 }
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+   
+        let userQuery = User.query()
+        
+        userQuery?.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFUser] {
+                    for object in objects {
+                        self.users.append(object)
+                    }
+                    
+                    //Create Favourite Query Once we have queried all the users since
+                    //Favourite Query is queried based on the current User
+                    //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
+                    
+                    let favObjectQuery = Favourite.query()
+                    favObjectQuery?.includeKey("location")
+                    favObjectQuery?.orderByAscending("date")
+                    favObjectQuery?.whereKey("isFavourite", equalTo: true)
+                    favObjectQuery?.whereKey("user", equalTo: self.users[0])
+                    
+                    favObjectQuery?.findObjectsInBackgroundWithBlock {
+                        (objects: [AnyObject]?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let objects = objects as? [PFObject] {
+                                for object in objects {
+                                    self.favourites.append(object)
+                                }
+                                self.tableView.reloadData()
+                            }
+                        } else {
+                            // Log details of the failure
+                            println("Error: \(error!) \(error!.userInfo!)")
+                        }
+                    }
+                }
+                
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")

@@ -11,6 +11,8 @@ import Parse
 
 class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var events: [PFObject] = []
+    var users: [PFUser] = []
+    var favourites: [PFObject] = []
     let tableView = UITableView()
     
     override func viewDidLoad() {
@@ -58,26 +60,51 @@ class FavouriteController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
         
-        let eventObjectQuery = Favourite.query()
-        eventObjectQuery?.includeKey("location")
-        eventObjectQuery?.orderByAscending("date")
+        let userQuery = User.query()
         
-        eventObjectQuery?.findObjectsInBackgroundWithBlock {
+        userQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-                if let objects = objects as? [PFObject] {
+                if let objects = objects as? [PFUser] {
                     for object in objects {
-                        var favourite = object as! Favourite
-                        self.events.append(favourite.event)
-                        
+                        self.users.append(object)
                     }
-                    self.tableView.reloadData()
+                    
+                    //Create Favourite Query Once we have queried all the users since 
+                    //Favourite Query is queried based on the current User
+                    //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
+                    
+                    let favObjectQuery = Favourite.query()
+                    favObjectQuery?.includeKey("location")
+                    favObjectQuery?.orderByAscending("date")
+                    favObjectQuery?.whereKey("isFavourite", equalTo: true)
+                    favObjectQuery?.whereKey("user", equalTo: self.users[0])
+                    
+                    favObjectQuery?.findObjectsInBackgroundWithBlock {
+                        (objects: [AnyObject]?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let objects = objects as? [PFObject] {
+                                for object in objects {
+                                    var favourite = object as! Favourite
+                                    self.favourites.append(object)
+                                    self.events.append(favourite.event)
+                                }
+                                self.tableView.reloadData()
+                            }
+                        } else {
+                            // Log details of the failure
+                            println("Error: \(error!) \(error!.userInfo!)")
+                        }
+                    }
                 }
+                
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+        
+
         
     }
     

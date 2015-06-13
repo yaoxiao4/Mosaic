@@ -9,16 +9,12 @@
 
 import Parse
 
-class User: PFObject, PFSubclassing {
+class User: PFUser, PFSubclassing {
     
     override class func initialize() {
         var onceToken : dispatch_once_t = 0;
         dispatch_once(&onceToken) {
             self.registerSubclass()
         }
-    }
-    
-    static  func parseClassName() -> String {
-        return "User"
     }
 }
