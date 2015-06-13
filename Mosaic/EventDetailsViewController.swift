@@ -14,12 +14,14 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var event: Event? = nil
     var scrollView: UIScrollView!
     var segmentedControl: UISegmentedControl!
+    var isFavourite: Bool? = false
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event) {
+    init(event: Event, isFavourite: Bool) {
+        self.isFavourite = isFavourite
         self.event = event
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,8 +76,11 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // This block handles the bookmark icon
         var bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
-        var bookmarkIcon = UIImage(named: "star-empty.png");
-        bookmarkView.image = bookmarkIcon;
+        if (self.isFavourite == true) {
+            bookmarkView.image = UIImage(named: "star-filled.png");
+        } else {
+            bookmarkView.image = UIImage(named: "star-empty.png");
+        }
         scrollView.addSubview(bookmarkView);
         
         // Enable Touch

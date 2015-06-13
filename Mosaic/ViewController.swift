@@ -105,7 +105,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if error == nil {
                             if let objects = objects as? [PFObject] {
                                 for object in objects {
-                                    self.favourites.append(object)
+                                    var favourite = object as! Favourite
+                                    self.favourites.append(favourite.event)
                                 }
                                 self.tableView.reloadData()
                             }
@@ -145,7 +146,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var event: Event = self.events[indexPath.row] as! Event
-        let eventDetailsViewController = EventDetailsViewController(event: event)
+        
+        var isFavourite = contains(self.favourites, event)
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     
