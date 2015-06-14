@@ -61,17 +61,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            }
 //        })
         
+        
+        var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
+        
         let items = ["All Events", "Favourites", "Attending"]
         self.segmentedControl = UISegmentedControl(items:items)
         self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
-        self.segmentedControl.frame.origin.y = self.view.frame.height - self.segmentedControl.frame.height - 5
+        self.segmentedControl.frame.origin.y = navigationHeight + 25
         self.segmentedControl.selectedSegmentIndex = 0
         self.view.addSubview(self.segmentedControl)
         
         self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
-        self.tableView.frame = CGRect(x: 0, y: navigationHeight, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 10)
+   
+        self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 10)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
