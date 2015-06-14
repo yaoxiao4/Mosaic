@@ -13,6 +13,8 @@ class EventTableViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
     @IBOutlet var info: UILabel!
+    @IBOutlet var location: UILabel!
+    
     @IBOutlet weak var thumbnail: UIImageView!
     
     override func awakeFromNib() {
@@ -31,7 +33,9 @@ class EventTableViewCell: UITableViewCell {
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        self.info.text = "\(dateFormatter.stringFromDate(event.date)) at \(event.location!.name)"
+        self.info.text = "\(dateFormatter.stringFromDate(event.date))"
+        self.location.text = event.location!.name
+        self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
         
         let coverURL = NSURL(string: event.picture_url)
         let data = NSData(contentsOfURL: coverURL!)
