@@ -62,7 +62,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         //self.navigationItem.rightBarButtonItem = barButton
         
         // This block handles the title
-        let eventTitleLabel = UILabel(frame: CGRectMake(self.view.frame.width/2 - 90, 25, 225, 10))
+        let eventTitleLabel = UILabel(frame: CGRectMake(self.view.frame.width/2 - 90, 25, 200, 10))
         eventTitleLabel.text =  self.event?.title
         eventTitleLabel.textAlignment = NSTextAlignment.Left;
         eventTitleLabel.lineBreakMode = .ByWordWrapping;
@@ -78,7 +78,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(fbIconView);
         
         // This block handles the bookmark icon
-        self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
+        self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
         if (self.isFavourite == true) {
             bookmarkView.image = UIImage(named: "star-filled.png");
         } else {
@@ -140,7 +140,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // For Time
         let eventTimeLabel = UILabel(frame: CGRectMake(95, eventDateLabel.frame.origin.y + 35, 200, 30))
-        eventTimeLabel.text = "2:30PM - 3:30PM"
+        eventTimeLabel.text = "2:30PM"
         eventTimeLabel.textAlignment = .Left;
         eventTimeLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
         eventDetailsBox.addSubview(eventTimeLabel)
