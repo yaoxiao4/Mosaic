@@ -32,33 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        let tabBarController = UITabBarController()
         let viewController = ViewController()
-//        let favController = FavouriteController()
-//        let attendingController = AttendingController()
-//        let navigationController1 = UINavigationController(rootViewController: viewController)
-//        let navigationController2 = UINavigationController(rootViewController: favController)
-//        let navigationController3 = UINavigationController(rootViewController: attendingController)
-        
-//        navigationController1.tabBarItem.image = UIImage(named: "Home-25")
-//        navigationController2.tabBarItem.image = UIImage(named: "Star-25")
-//        navigationController3.tabBarItem.image = UIImage(named: "Checkmark-25")
-        
-//        viewController.title = "Home"
-//        favController.title = "Favourites"
-//        attendingController.title = "Attending"
-        //tabBarController.viewControllers = [navigationController1, navigationController2, navigationController3]
         let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.navigationBar.backgroundColor = UIColor.blueColor()
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         GMSServices.provideAPIKey(googleMapsApiKey)
         
         // Override point for customization after application launch.
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-
-        //return true
-        
     }
 
 

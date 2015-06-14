@@ -16,13 +16,15 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var segmentedControl: UISegmentedControl!
     var isFavourite: Bool = false
     var bookmarkView: UIImageView!
+    var parentController: ViewController!
     var RSVPStatus: Int = 0; // 0 no res, 1 attend, 2 no, 3 maybe
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event, isFavourite: Bool, rsvp: Int) {
+    init(event: Event, isFavourite: Bool, rsvp: Int, parentController: ViewController) {
+        self.parentController = parentController
         self.isFavourite = isFavourite
         self.RSVPStatus = rsvp
         self.event = event
@@ -80,9 +82,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         // This block handles the bookmark icon
         self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
         if (self.isFavourite == true) {
-            bookmarkView.image = UIImage(named: "star-filled.png");
+            bookmarkView.image = UIImage(named: "Bookmark-Filled.png");
         } else {
-            bookmarkView.image = UIImage(named: "star-empty.png");
+            bookmarkView.image = UIImage(named: "Bookmark-Empty.png");
         }
         scrollView.addSubview(bookmarkView);
         
@@ -246,9 +248,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     @IBAction func bookmarkEvent(){
         if (self.isFavourite){
-            self.bookmarkView.image = UIImage(named: "star-empty.png");
+            self.bookmarkView.image = UIImage(named: "Bookmark-Empty.png");
         } else {
-            self.bookmarkView.image = UIImage(named: "star-filled.png");
+            self.bookmarkView.image = UIImage(named: "Bookmark-Filled.png");
         }
         
         var users: [PFUser] = []
@@ -291,6 +293,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                             }
                             
                             self.isFavourite = !self.isFavourite
+                            self.parentController.fetch()
                         }
                     } else {
                         // Log details of the failure
@@ -306,9 +309,11 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillDisappear(animated:Bool) {
-        if (!(self.navigationController?.topViewController is GoogleMapsViewController)){
-            self.tabBarController?.tabBar.hidden = false
+        if (self.navigationController?.topViewController is ViewController){
+            var controller = self.navigationController?.topViewController as! ViewController
+            //controller.fetch()
         }
+
         super.viewWillDisappear(animated)
     }
     
@@ -358,8 +363,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                                 storedRSVP?.status = statusValue
                                 storedRSVP?.saveInBackground()
                             }
-                            
-                            self.isFavourite = !self.isFavourite
+                            self.parentController.fetch()
                         }
                     } else {
                         // Log details of the failure

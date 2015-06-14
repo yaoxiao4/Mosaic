@@ -60,7 +60,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                println("User Email is: \(userEmail)")
 //            }
 //        })
-        
+        fetch();
         
         var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
         
@@ -73,7 +73,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
    
-        self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 10)
+        self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height + 5, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 30)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
@@ -86,10 +86,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        fetch();
     }
     
     
@@ -117,7 +113,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if (contains(self.mayBe, event)){
             rsvp = 3
         }
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp)
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     
