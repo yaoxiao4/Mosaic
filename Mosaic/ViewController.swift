@@ -11,6 +11,7 @@ import Parse
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var events: [PFObject] = []
+    var allEvents: [PFObject] = []
     var users: [PFUser] = []
     var favourites: [PFObject] = []
     let tableView = UITableView()
@@ -18,6 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var attending: [Event] = []
     var notGoing: [Event] = []
     var mayBe: [Event] = []
+    var segmentedControl: UISegmentedControl!
 
 
     override func viewDidLoad() {
@@ -59,11 +61,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            }
 //        })
         
-        self.tableView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        let items = ["All Events", "Favourites", "Attending"]
+        self.segmentedControl = UISegmentedControl(items:items)
+        self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
+        self.segmentedControl.frame.origin.y = self.view.frame.height - self.segmentedControl.frame.height - 5
+        self.segmentedControl.selectedSegmentIndex = 0
+        self.view.addSubview(self.segmentedControl)
+        
+        self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
+        self.tableView.frame = CGRect(x: 0, y: navigationHeight, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 10)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
+ 
+        
+        self.view.backgroundColor = UIColor.whiteColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,6 +124,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func fetch(){
+        self.allEvents = []
         self.events = []
         self.users = []
         self.favourites = []
@@ -141,7 +157,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 }
                                 
                             }
-                            self.tableView.reloadData()
+                            if (self.segmentedControl.selectedSegmentIndex == 2){
+                                self.events = self.attending
+                                self.tableView.reloadData()
+                            }
                         }
                     } else {
                         // Log details of the failure
@@ -164,10 +183,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if error == nil {
                 if let objects = objects as? [PFObject] {
                     for object in objects {
-                        self.events.append(object)
+                        self.allEvents.append(object)
                         
                     }
-                    self.tableView.reloadData()
+                    if (self.segmentedControl.selectedSegmentIndex == 0){
+                        self.events = self.allEvents
+                        self.tableView.reloadData()
+                    }
                 }
             } else {
                 // Log details of the failure
@@ -203,7 +225,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     var favourite = object as! Favourite
                                     self.favourites.append(favourite.event)
                                 }
-                                self.tableView.reloadData()
+                                if (self.segmentedControl.selectedSegmentIndex == 1){
+                                    self.events = self.favourites
+                                    self.tableView.reloadData()
+                                }
                             }
                         } else {
                             // Log details of the failure
@@ -217,6 +242,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+    }
+    
+    @IBAction func indexChanged(sender: AnyObject) {
+        switch self.segmentedControl.selectedSegmentIndex {
+        case 0:
+            self.events = self.allEvents
+            break;
+        case 1:
+            self.events = self.favourites
+            break;
+        case 2:
+            self.events = self.attending
+            break;
+        default:
+            break;
+        }
+        
+        self.tableView.reloadData()
     }
 }
 
