@@ -109,6 +109,10 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         locationIconView.image = locationIcon
         eventDetailsBox.addSubview(locationIconView)
         
+        var locationSeparator = UIView(frame: CGRectMake(35, 40, self.view.frame.width - 70, 0.5))
+        locationSeparator.backgroundColor = UIColor.blackColor()
+        eventDetailsBox.addSubview(locationSeparator)
+        
         
         var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
@@ -130,6 +134,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         eventDetailsBox.addSubview(dateIconView)
 
         eventDetailsBox.addSubview(eventDateLabel)
+        var dateSeparator = UIView(frame: CGRectMake(35, eventLocationLabel.frame.origin.y + 67, self.view.frame.width - 70, 0.5))
+        dateSeparator.backgroundColor = UIColor.blackColor()
+        eventDetailsBox.addSubview(dateSeparator)
         
         // For Time
         let eventTimeLabel = UILabel(frame: CGRectMake(95, eventDateLabel.frame.origin.y + 35, 200, 30))
