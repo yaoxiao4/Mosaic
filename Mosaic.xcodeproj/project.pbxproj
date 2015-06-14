@@ -41,8 +41,6 @@
 		415B27081B13B51D00ADBE22 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FD1B13B51D00ADBE22 /* Security.framework */; };
 		415B27091B13B51D00ADBE22 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FE1B13B51D00ADBE22 /* StoreKit.framework */; };
 		415B270A1B13B51D00ADBE22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */; };
-		63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383731B29430C00D7A0A1 /* FavouriteController.swift */; };
-		63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383751B294AC100D7A0A1 /* AttendingController.swift */; };
 		63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383771B2BB15700D7A0A1 /* Favourite.swift */; };
 		67AE7FB10C59B3CBEE1B34B0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F99A55DFD46DF7D4A87EBB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -98,8 +96,6 @@
 		415B26FE1B13B51D00ADBE22 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6062083411CA79DF8E95328A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		63B383731B29430C00D7A0A1 /* FavouriteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouriteController.swift; sourceTree = "<group>"; };
-		63B383751B294AC100D7A0A1 /* AttendingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendingController.swift; sourceTree = "<group>"; };
 		63B383771B2BB15700D7A0A1 /* Favourite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		73F99A55DFD46DF7D4A87EBB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9973BDB2612A61E7FCF345F2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,8 +157,6 @@
 				201AFD801B2CFA3D00C4DBC0 /* ViewController.swift */,
 				201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */,
 				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
-				63B383751B294AC100D7A0A1 /* AttendingController.swift */,
-				63B383731B29430C00D7A0A1 /* FavouriteController.swift */,
 				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 			);
 			name = "View Controllers";
@@ -429,10 +423,8 @@
 				25FF9C021B2B712900885081 /* EventTableViewCell.swift in Sources */,
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
-				63B383741B29430C00D7A0A1 /* FavouriteController.swift in Sources */,
 				25FF9C071B2BB35400885081 /* RSVP.swift in Sources */,
 				63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */,
-				63B383761B294AC100D7A0A1 /* AttendingController.swift in Sources */,
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
 				201AFD811B2CFA3D00C4DBC0 /* ViewController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
