@@ -64,11 +64,63 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        fetch();
+    }
+    
+    
+//    MARK: TableView methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.events.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
+        var event: Event = self.events[indexPath.row] as! Event
+        cell.configureCellWithEvent(event)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var event: Event = self.events[indexPath.row] as! Event
+        var rsvp: Int = -1
+        var isFavourite = contains(self.favourites, event)
+        if (contains(self.attending, event)){
+            rsvp = 1
+        } else if (contains(self.notGoing, event)){
+            rsvp = 2
+        } else if (contains(self.mayBe, event)){
+            rsvp = 3
+        }
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp)
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70.0
+    }
+    
+    func fetch(){
+        self.events = []
+        self.users = []
+        self.favourites = []
+        self.rsvp = []
+        self.attending = []
+        self.notGoing = []
+        self.mayBe = []
         
         let RSVPObjectQuery = RSVP.query()
         RSVPObjectQuery?.whereKey("status", equalTo: 1)
         
-        PFUser.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
+        User.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
             (user: PFObject?, error: NSError?) -> Void in
             if error == nil && user != nil {
                 RSVPObjectQuery?.whereKey("user", equalTo: user!)
@@ -115,15 +167,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.events.append(object)
                         
                     }
-                self.tableView.reloadData()
+                    self.tableView.reloadData()
                 }
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-   
-        let userQuery = PFUser.query()
+        
+        let userQuery = User.query()
         
         userQuery?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -165,42 +217,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-//    MARK: TableView methods
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as! Event
-        cell.configureCellWithEvent(event)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var event: Event = self.events[indexPath.row] as! Event
-        
-        var isFavourite = contains(self.favourites, event)
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite)
-        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 70.0
-    }
-    
-    
-    
-
 }
 
