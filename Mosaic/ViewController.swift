@@ -106,6 +106,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var event: Event = self.events[indexPath.row] as! Event
         var rsvp: Int = -1
         var isFavourite = contains(self.favourites, event)
+        var lala = self.mayBe
         if (contains(self.attending, event)){
             rsvp = 1
         } else if (contains(self.notGoing, event)){
@@ -132,7 +133,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.mayBe = []
         
         let RSVPObjectQuery = RSVP.query()
-        RSVPObjectQuery?.whereKey("status", equalTo: 1)
         
         User.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
             (user: PFObject?, error: NSError?) -> Void in
