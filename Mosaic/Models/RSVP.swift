@@ -11,7 +11,7 @@ import Parse
 class RSVP: PFObject, PFSubclassing {
     
     @NSManaged var event : Event
-    @NSManaged var user: User
+    @NSManaged var user: PFUser
     @NSManaged var status: Int // 1 - Attending, 2 - Decline, 3 - Maybe
     
     override class func initialize() {

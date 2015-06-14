@@ -14,14 +14,17 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var event: Event? = nil
     var scrollView: UIScrollView!
     var segmentedControl: UISegmentedControl!
-    var isFavourite: Bool? = false
+    var isFavourite: Bool = false
+    var bookmarkView: UIImageView!
+    var RSVPStatus: Int = 0; // 0 no res, 1 attend, 2 no, 3 maybe
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event, isFavourite: Bool) {
+    init(event: Event, isFavourite: Bool, rsvp: Int) {
         self.isFavourite = isFavourite
+        self.RSVPStatus = rsvp
         self.event = event
         super.init(nibName: nil, bundle: nil)
     }
@@ -75,7 +78,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(fbIconView);
         
         // This block handles the bookmark icon
-        var bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
+        self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + eventTitleLabel.frame.width + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
         if (self.isFavourite == true) {
             bookmarkView.image = UIImage(named: "star-filled.png");
         } else {
@@ -155,6 +158,20 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         segmentedControl.frame.origin.x = (actionButtonsBox.frame.width - segmentedControl.frame.width) / 2
         segmentedControl.frame.origin.y = (actionButtonsBox.frame.height - segmentedControl.frame.height) / 2
         actionButtonsBox.addSubview(segmentedControl)
+        
+        switch self.RSVPStatus {
+            case 1:
+                self.segmentedControl.selectedSegmentIndex = 2
+                break;
+            case 2:
+                self.segmentedControl.selectedSegmentIndex = 0
+                break;
+            case 3:
+                self.segmentedControl.selectedSegmentIndex = 1
+                break;
+            default:
+                break;
+        }
         self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
         scrollView.addSubview(actionButtonsBox)
@@ -221,6 +238,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
 
     @IBAction func bookmarkEvent(){
+        if (self.isFavourite){
+            self.bookmarkView.image = UIImage(named: "star-empty.png");
+        } else {
+            self.bookmarkView.image = UIImage(named: "star-filled.png");
+        }
+        
         var users: [PFUser] = []
         let userQuery = User.query()
         
@@ -235,11 +258,39 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
                 // REPLACE LATER
-                var favourite = Favourite()
-                favourite.event = self.event!
-                favourite.user = users[0] as! User
-                favourite.isFavourite = true
-                favourite.saveInBackground()
+                var favouriteQuery = Favourite.query()
+                var useraaa = users[0]
+                var storedFav: Favourite? = nil
+                favouriteQuery?.whereKey("event", equalTo: self.event!)
+                favouriteQuery?.whereKey("user", equalTo: users[0])
+                favouriteQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    if error == nil {
+                        if let objects = objects as? [PFObject] {
+                            for object in objects {
+                                storedFav = object as? Favourite
+                            }
+                            
+                            if (storedFav == nil){
+                                var favourite = Favourite()
+                                favourite.event = self.event!
+                                favourite.user = users[0];
+                                favourite.isFavourite = !self.isFavourite
+                            
+                                favourite.saveInBackground()
+                            } else {
+                                storedFav?.isFavourite = !self.isFavourite
+                                storedFav?.saveInBackground()
+                            }
+                            
+                            self.isFavourite = !self.isFavourite
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
+
             } else {
                 // Log details of the failure
                 println("Error: \(error!) \(error!.userInfo!)")
@@ -255,18 +306,64 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
-        switch segmentedControl.selectedSegmentIndex {
-            case 0:
-                // NOT GOING - 2
-                break;
-            case 1:
-                // MAYBE - 3
-                break;
-            case 2:
-                // GOING -1
-                break;
-            default:
-                break;
+        var users: [PFUser] = []
+        let userQuery = User.query()
+        
+        userQuery?.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [PFUser] {
+                    for object in objects {
+                        users.append(object)
+                        
+                    }
+                }
+                
+                // REPLACE LATER
+                var rsvpQuery = RSVP.query()
+                var storedRSVP: RSVP? = nil
+                rsvpQuery?.whereKey("event", equalTo: self.event!)
+                rsvpQuery?.whereKey("user", equalTo: users[0])
+                rsvpQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    if error == nil {
+                        if let objects = objects as? [PFObject] {
+                            for object in objects {
+                                storedRSVP = object as? RSVP
+                            }
+                            
+                            var statusValue = -1
+                            if (self.segmentedControl.selectedSegmentIndex == 0){
+                                statusValue = 2
+                            } else if (self.segmentedControl.selectedSegmentIndex == 1) {
+                                statusValue = 3
+                            } else if (self.segmentedControl.selectedSegmentIndex == 2) {
+                                statusValue = 1
+                            }
+                            
+                            if (storedRSVP == nil){
+                                var newRSVP = RSVP()
+                                newRSVP.event = self.event!
+                                newRSVP.user = users[0];
+                                newRSVP.status = statusValue                                
+                                newRSVP.saveInBackground()
+                            } else {
+                                storedRSVP?.status = statusValue
+                                storedRSVP?.saveInBackground()
+                            }
+                            
+                            self.isFavourite = !self.isFavourite
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
+                
+            } else {
+                // Log details of the failure
+                println("Error: \(error!) \(error!.userInfo!)")
+            }
         }
     }
 }

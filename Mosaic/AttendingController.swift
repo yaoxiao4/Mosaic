@@ -15,10 +15,6 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
     var users: [PFUser] = []
     var favourites: [PFObject] = []
     var rsvp: [Event] = []
-    var attending: [Event] = []
-    var notGoing: [Event] = []
-    var mayBe: [Event] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +25,50 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
-        
-        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        fetch();
+    }
+    
+    //    MARK: TableView methods
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.events.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
+        var event: Event = self.events[indexPath.row] as! Event
+        cell.configureCellWithEvent(event)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var event: Event = self.events[indexPath.row] as! Event
+        var isFavourite = contains(self.favourites, event)
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: 1)
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70.0
+    }
+    
+    func fetch(){
+        self.events = []
+        self.users = []
+        self.favourites = []
+        self.rsvp = []
+        let userQuery = User.query()
         let RSVPObjectQuery = RSVP.query()
         RSVPObjectQuery?.whereKey("status", equalTo: 1)
         
-        PFUser.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
+        userQuery?.getObjectInBackgroundWithId("rdgLaK2buR"){
             (user: PFObject?, error: NSError?) -> Void in
             if error == nil && user != nil {
                 RSVPObjectQuery?.whereKey("user", equalTo: user!)
@@ -47,14 +81,6 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
                             for object in objects {
                                 self.rsvp.append(object.event)
                                 self.events.append(object.event)
-                                if (object.status == 1) {
-                                    self.attending.append(object.event)
-                                } else if(object.status == 2) {
-                                    self.notGoing.append(object.event)
-                                } else {
-                                    self.mayBe.append(object.event)
-                                }
-                                
                             }
                             self.tableView.reloadData()
                         }
@@ -63,15 +89,14 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
                         println("Error: \(error!) \(error!.userInfo!)")
                     }
                 }
-
+                
             } else {
                 println(error)
             }
             
         }
         
-        let userQuery = PFUser.query()
-        userQuery?.findObjectsInBackgroundWithBlock {
+        User.query()?.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
                 if let objects = objects as? [PFUser] {
@@ -110,34 +135,6 @@ class AttendingController: UIViewController, UITableViewDelegate, UITableViewDat
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
+    
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    //    MARK: TableView methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as! Event
-        cell.configureCellWithEvent(event)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var event: Event = self.events[indexPath.row] as! Event
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: true)
-        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 70.0
-    }
-    
 }
