@@ -14,7 +14,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet var title: UILabel!
     @IBOutlet var info: UILabel!
     @IBOutlet var location: UILabel!
-    
+    var imageCache = [String:UIImage]()
     @IBOutlet weak var thumbnail: UIImageView!
     
     override func awakeFromNib() {
@@ -28,7 +28,7 @@ class EventTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCellWithEvent(event: Event)->Void {
+    func configureCellWithEvent(event: Event) {
         self.title.text = event.title
         
         let dateFormatter = NSDateFormatter()
@@ -38,10 +38,34 @@ class EventTableViewCell: UITableViewCell {
         self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
         
         let coverURL = NSURL(string: event.picture_url)
-        let data = NSData(contentsOfURL: coverURL!)
-        let eventPhoto = UIImage(data: data!)
+        
+        // If this image is already cached, don't re-download
+        if let img = imageCache[event.picture_url] {
+            self.thumbnail.image = img
+        }
+        else {
+            // The image isn't cached, download the img data
+            // We should perform this in a background thread
+            let request: NSURLRequest = NSURLRequest(URL: coverURL!)
+            let mainQueue = NSOperationQueue.mainQueue()
+            NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                if error == nil {
+                    // Convert the downloaded data in to a UIImage object
+                    let image = UIImage(data: data)
+                    // Store the image in to our cache
+                    self.imageCache[event.picture_url] = image
+                    // Update the cell
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.thumbnail.image = image
+                    })
+                }
+                else {
+                    println("Error: \(error.localizedDescription)")
+                }
+            })
+        }
+        
         self.thumbnail.contentMode = .ScaleAspectFit
-        self.thumbnail.image = UIImage(data: data!)
     }
     
 }
