@@ -17,6 +17,7 @@ class Event: PFObject, PFSubclassing {
     @NSManaged var weather: Int
     @NSManaged var picture_url: String
     @NSManaged var date: NSDate
+    @NSManaged var hasStartDate: Bool
     
     override class func initialize() {
         var onceToken : dispatch_once_t = 0;

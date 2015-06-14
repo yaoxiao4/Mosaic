@@ -142,7 +142,13 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // For Time
         let eventTimeLabel = UILabel(frame: CGRectMake(95, eventDateLabel.frame.origin.y + 35, 200, 30))
-        eventTimeLabel.text = "2:30PM"
+        if (self.event!.hasStartDate == true){
+            var timeFormatter = NSDateFormatter()
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            eventTimeLabel.text = timeFormatter.stringFromDate(self.event!.date)
+        } else {
+            eventTimeLabel.text = "Unspecified"
+        }
         eventTimeLabel.textAlignment = .Left;
         eventTimeLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
         eventDetailsBox.addSubview(eventTimeLabel)
