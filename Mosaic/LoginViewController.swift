@@ -25,9 +25,28 @@ class LoginViewController: UIViewController {
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             self.loginSuccessful()
         }
+        
+        self.view.backgroundColor = UIColor.grayColor()
+        
+        var label = UILabel(frame: CGRectMake(0, 0, 200, 25))
+        label.center = CGPointMake(160, 284)
+        label.textAlignment = NSTextAlignment.Center
+        label.text = "Mosaic"
+        label.textColor = UIColor.whiteColor()
+        self.view.addSubview(label)
+        
+        let signInButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        signInButton.frame = CGRectMake(100, 100, 200, 50)
+        signInButton.backgroundColor = UIColor.blueColor()
+        signInButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        signInButton.setTitle("Login with Facebook", forState: UIControlState.Normal)
+        signInButton.addTarget(self, action: "fbLoginClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        signInButton.center = self.view.center
+        
+        self.view.addSubview(signInButton)
     }
     
-    @IBAction func fbLoginClick(sender: AnyObject) {
+    func fbLoginClick(sender: AnyObject) {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(self.permissions, block: {
             (user: PFUser?, error: NSError?) -> Void in
             if user == nil {

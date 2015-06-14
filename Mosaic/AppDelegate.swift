@@ -32,10 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let viewController = ViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.navigationBar.backgroundColor = UIColor.blueColor()
-        self.window?.rootViewController = navigationController
+        let loginViewController = LoginViewController()
+        
+        //let viewController = ViewController()
+        //let navigationController = UINavigationController(rootViewController: loginViewController)
+        //navigationController.navigationBar.backgroundColor = UIColor.blueColor()
+        self.window?.rootViewController = loginViewController
         self.window?.makeKeyAndVisible()
         GMSServices.provideAPIKey(googleMapsApiKey)
         

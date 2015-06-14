@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */; };
 		201AFD781B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */; };
-		201AFD7D1B2BB00400C4DBC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */; };
 		201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */; };
 		201AFD811B2CFA3D00C4DBC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201AFD801B2CFA3D00C4DBC0 /* ViewController.swift */; };
 		203992651B2A2A1500ABDEF6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 203992641B2A2A1500ABDEF6 /* Social.framework */; };
@@ -59,7 +58,6 @@
 		201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewController.swift; sourceTree = "<group>"; };
 		201AFD771B2B961300C4DBC0 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		201AFD7A1B2BAFC800C4DBC0 /* Mosaic-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mosaic-Bridging-Header.h"; sourceTree = "<group>"; };
-		201AFD7C1B2BB00400C4DBC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		201AFD801B2CFA3D00C4DBC0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		203992641B2A2A1500ABDEF6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -165,7 +163,6 @@
 		25FF9BFB1B2B6F5A00885081 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */,
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				25FF9C001B2B712900885081 /* EventTableViewCell.swift */,
 				25FF9C011B2B712900885081 /* EventTableViewCell.xib */,
@@ -354,7 +351,6 @@
 				25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */,
 				415B26DC1B13AF5700ADBE22 /* LaunchScreen.xib in Resources */,
 				415B26D91B13AF5700ADBE22 /* Images.xcassets in Resources */,
-				201AFD7D1B2BB00400C4DBC0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,14 +449,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		201AFD7B1B2BB00400C4DBC0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				201AFD7C1B2BB00400C4DBC0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
