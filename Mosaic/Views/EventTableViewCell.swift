@@ -40,7 +40,7 @@ class EventTableViewCell: UITableViewCell {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         self.info.text = "\(dateFormatter.stringFromDate(event.date))"
-        self.location.text = event.location!.name
+        self.location.text = event.location?.name
         self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
         
         let coverURL = NSURL(string: event.picture_url)

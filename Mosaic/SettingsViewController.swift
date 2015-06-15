@@ -17,7 +17,7 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         self.title = "Settings"
         self.view.backgroundColor = UIColor.whiteColor()
 
-        var profileImageView = UIImageView(frame: CGRectMake(20, 80, 150, 150))
+        var profileImageView = UIImageView(frame: CGRectMake(20, 100, 150, 150))
         profileImageView.contentMode = .ScaleAspectFit
         
         //profileImageView.layer.cornerRadius =  profileImageView.frame.size.height / 2
@@ -27,15 +27,15 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         self.view.addSubview(profileImageView)
         
         // First Name Label
-        var firstNameLabel = UILabel(frame: CGRectMake(185, 120, 180, 40))
+        var firstNameLabel = UILabel(frame: CGRectMake(175, 140, 180, 40))
         firstNameLabel.text = GlobalVariables.firstName! + " " + GlobalVariables.lastName!
-        firstNameLabel.font = UIFont(name:"HelveticaNeue", size: 17.0)
+        firstNameLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
         firstNameLabel.textColor = UIColor.blackColor()
         self.view.addSubview(firstNameLabel)
         // End First Name Label
         
         // Last Name Label
-        var lastNameLabel = UILabel(frame: CGRectMake(185, 150, 190, 40))
+        var lastNameLabel = UILabel(frame: CGRectMake(175, 170, 190, 40))
         lastNameLabel.text = "ravanchi@hotmail.com"
         lastNameLabel.font = UIFont(name:"HelveticaNeue", size: 17.0)
         lastNameLabel.textColor = UIColor.blackColor()
