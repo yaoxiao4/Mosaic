@@ -9,14 +9,17 @@
 import UIKit
 import Foundation
 
+struct GlobalVariables {
+    static var imageCache = [String:UIImage]()
+}
+
 class EventTableViewCell: UITableViewCell {
 
     @IBOutlet var title: UILabel!
     @IBOutlet var info: UILabel!
     @IBOutlet var location: UILabel!
-    var imageCache = [String:UIImage]()
     @IBOutlet weak var thumbnail: UIImageView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -40,7 +43,7 @@ class EventTableViewCell: UITableViewCell {
         let coverURL = NSURL(string: event.picture_url)
         
         // If this image is already cached, don't re-download
-        if let img = imageCache[event.picture_url] {
+        if let img = GlobalVariables.imageCache[event.picture_url] {
             self.thumbnail.image = img
         }
         else {
@@ -53,7 +56,7 @@ class EventTableViewCell: UITableViewCell {
                     // Convert the downloaded data in to a UIImage object
                     let image = UIImage(data: data)
                     // Store the image in to our cache
-                    self.imageCache[event.picture_url] = image
+                    GlobalVariables.imageCache[event.picture_url] = image
                     // Update the cell
                     dispatch_async(dispatch_get_main_queue(), {
                         self.thumbnail.image = image

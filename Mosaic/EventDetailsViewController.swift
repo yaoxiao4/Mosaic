@@ -192,13 +192,15 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         let eventPhotoView = UIImageView(frame: CGRectMake(0, actionButtonsBox.frame.origin.y + actionButtonsBox.frame.height, self.view.frame.width, 0))
         if (event?.picture_url != nil){
             let coverURL = NSURL(string: event!.picture_url)
-            let data = NSData(contentsOfURL: coverURL!) //make sure image in this url does exist, otherwise unwrap in a if let check
-            if (data != nil){
-                let eventPhoto = UIImage(data: data!)
-                eventPhotoView.frame.size.height = (self.view.frame.width / eventPhoto!.size.width) * eventPhoto!.size.height
-                eventPhotoView.contentMode = .ScaleAspectFit
-                eventPhotoView.image = UIImage(data: data!)
-            }
+//            let data = NSData(contentsOfURL: coverURL!) //make sure image in this url does exist, otherwise unwrap in a if let check
+//            if (data != nil){
+            //                let eventPhoto = UIImage(data: data!)
+            let img = GlobalVariables.imageCache[event!.picture_url]
+            eventPhotoView.frame.size.height = (self.view.frame.width / img!.size.width) * img!.size.height
+            eventPhotoView.contentMode = .ScaleAspectFit
+//                eventPhotoView.image = UIImage(data: data!)
+//            }
+            eventPhotoView.image = img
         }
         
         scrollView.addSubview(eventPhotoView)
