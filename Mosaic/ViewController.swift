@@ -80,9 +80,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.addSubview(tableView)
  
         // Settings Button
+        let image = UIImage(named: "Settings-25") as UIImage?
         let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        settingsButton.frame = CGRectMake(0, 0, 65, 40)
-        settingsButton.setTitle("Settings", forState: .Normal)
+        settingsButton.frame = CGRectMake(0, 0, 25, 25)
+        settingsButton.setImage(image, forState: .Normal)
         settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
         var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
         self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
