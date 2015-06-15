@@ -259,25 +259,16 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
             self.bookmarkView.image = UIImage(named: "Bookmark-Filled.png");
         }
         
-        var users: [PFUser] = []
-        let userQuery = User.query()
+        let userId = PFUser.currentUser()?.objectId
         
-        userQuery?.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            if error == nil {
-                if let objects = objects as? [PFUser] {
-                    for object in objects {
-                        users.append(object)
-                        
-                    }
-                }
-                
+        User.query()?.getObjectInBackgroundWithId(userId!){
+            (user: PFObject?, error: NSError?) -> Void in
+            if error == nil && user != nil {
                 // REPLACE LATER
                 var favouriteQuery = Favourite.query()
-                var useraaa = users[0]
                 var storedFav: Favourite? = nil
                 favouriteQuery?.whereKey("event", equalTo: self.event!)
-                favouriteQuery?.whereKey("user", equalTo: users[0])
+                favouriteQuery?.whereKey("user", equalTo: user!)
                 favouriteQuery?.findObjectsInBackgroundWithBlock {
                     (objects: [AnyObject]?, error: NSError?) -> Void in
                     if error == nil {
@@ -289,9 +280,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                             if (storedFav == nil){
                                 var favourite = Favourite()
                                 favourite.event = self.event!
-                                favourite.user = users[0];
+                                favourite.user = user!;
                                 favourite.isFavourite = !self.isFavourite
-                            
+                                
                                 favourite.saveInBackground()
                             } else {
                                 storedFav?.isFavourite = !self.isFavourite
@@ -306,12 +297,13 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                         println("Error: \(error!) \(error!.userInfo!)")
                     }
                 }
-
+                
             } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                println(error)
             }
+            
         }
+        
     }
     
     override func viewWillDisappear(animated:Bool) {
@@ -324,24 +316,17 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
-        var users: [PFUser] = []
-        let userQuery = User.query()
         
-        userQuery?.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            if error == nil {
-                if let objects = objects as? [PFUser] {
-                    for object in objects {
-                        users.append(object)
-                        
-                    }
-                }
-                
+        let userId = PFUser.currentUser()?.objectId
+        
+        User.query()?.getObjectInBackgroundWithId(userId!){
+            (user: PFObject?, error: NSError?) -> Void in
+            if error == nil && user != nil {
                 // REPLACE LATER
                 var rsvpQuery = RSVP.query()
                 var storedRSVP: RSVP? = nil
                 rsvpQuery?.whereKey("event", equalTo: self.event!)
-                rsvpQuery?.whereKey("user", equalTo: users[0])
+                rsvpQuery?.whereKey("user", equalTo: user!)
                 rsvpQuery?.findObjectsInBackgroundWithBlock {
                     (objects: [AnyObject]?, error: NSError?) -> Void in
                     if error == nil {
@@ -362,8 +347,8 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                             if (storedRSVP == nil){
                                 var newRSVP = RSVP()
                                 newRSVP.event = self.event!
-                                newRSVP.user = users[0];
-                                newRSVP.status = statusValue                                
+                                newRSVP.user = user!;
+                                newRSVP.status = statusValue
                                 newRSVP.saveInBackground()
                             } else {
                                 storedRSVP?.status = statusValue
@@ -378,9 +363,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                println(error)
             }
+            
         }
     }
 }

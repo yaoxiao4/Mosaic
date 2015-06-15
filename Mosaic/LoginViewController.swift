@@ -22,22 +22,18 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         let currentUser: PFUser? = PFUser.currentUser()
         super.viewDidLoad()
-        if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
-            self.loginSuccessful()
-        }
         
-        self.view.backgroundColor = UIColor.grayColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         
-        var label = UILabel(frame: CGRectMake(0, 0, 200, 25))
-        label.center = CGPointMake(160, 284)
+        var label = UILabel(frame: CGRectMake(0, 0, 100, 25))
+        label.center = CGPointMake(180, 280)
         label.textAlignment = NSTextAlignment.Center
         label.text = "Mosaic"
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.blackColor()
         self.view.addSubview(label)
         
-        let signInButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        signInButton.frame = CGRectMake(100, 100, 200, 50)
-        signInButton.backgroundColor = UIColor.blueColor()
+        let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 100, 200, 50))
+        signInButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
         signInButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         signInButton.setTitle("Login with Facebook", forState: UIControlState.Normal)
         signInButton.addTarget(self, action: "fbLoginClick:", forControlEvents: UIControlEvents.TouchUpInside)

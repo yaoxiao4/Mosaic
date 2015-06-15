@@ -37,7 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let viewController = ViewController()
         //let navigationController = UINavigationController(rootViewController: loginViewController)
         //navigationController.navigationBar.backgroundColor = UIColor.blueColor()
-        self.window?.rootViewController = loginViewController
+        let currentUser: PFUser? = PFUser.currentUser()
+        
+        let viewController = ViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
+            self.window?.rootViewController = navigationController
+        } else {
+            self.window?.rootViewController = loginViewController
+        }
+ 
         self.window?.makeKeyAndVisible()
         GMSServices.provideAPIKey(googleMapsApiKey)
         

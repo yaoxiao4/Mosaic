@@ -11,7 +11,7 @@ import Parse
 class Favourite: PFObject, PFSubclassing {
     
     @NSManaged var event: Event
-    @NSManaged var user: PFUser
+    @NSManaged var user: PFObject
     @NSManaged var isFavourite: Bool
     
     override class func initialize() {

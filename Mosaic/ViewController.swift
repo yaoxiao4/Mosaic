@@ -134,7 +134,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let RSVPObjectQuery = RSVP.query()
         
-        User.query()?.getObjectInBackgroundWithId("rdgLaK2buR"){
+        let userId = PFUser.currentUser()?.objectId
+        
+        User.query()?.getObjectInBackgroundWithId(userId!){
             (user: PFObject?, error: NSError?) -> Void in
             if error == nil && user != nil {
                 RSVPObjectQuery?.whereKey("user", equalTo: user!)
@@ -157,6 +159,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             }
                             if (self.segmentedControl.selectedSegmentIndex == 2){
                                 self.events = self.attending
+                                self.tableView.reloadData()
+                            }
+                        }
+                    } else {
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
+                
+                
+                //Create Favourite Query Once we have queried all the users since
+                //Favourite Query is queried based on the current User
+                //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
+                
+                let favObjectQuery = Favourite.query()
+                favObjectQuery?.includeKey("location")
+                favObjectQuery?.orderByAscending("date")
+                favObjectQuery?.whereKey("isFavourite", equalTo: true)
+                favObjectQuery?.whereKey("user", equalTo: user!)
+                
+                favObjectQuery?.findObjectsInBackgroundWithBlock {
+                    (objects: [AnyObject]?, error: NSError?) -> Void in
+                    if error == nil {
+                        if let objects = objects as? [PFObject] {
+                            for object in objects {
+                                var favourite = object as! Favourite
+                                self.favourites.append(favourite.event)
+                            }
+                            if (self.segmentedControl.selectedSegmentIndex == 1){
+                                self.events = self.favourites
                                 self.tableView.reloadData()
                             }
                         }
@@ -194,52 +226,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
-        let userQuery = User.query()
-        
-        userQuery?.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
-            if error == nil {
-                if let objects = objects as? [PFUser] {
-                    for object in objects {
-                        self.users.append(object)
-                    }
-                    
-                    //Create Favourite Query Once we have queried all the users since
-                    //Favourite Query is queried based on the current User
-                    //REMOVE ONCE WE FIND A BETTER WAY TO FETCH CURRENT USER
-                    
-                    let favObjectQuery = Favourite.query()
-                    favObjectQuery?.includeKey("location")
-                    favObjectQuery?.orderByAscending("date")
-                    favObjectQuery?.whereKey("isFavourite", equalTo: true)
-                    favObjectQuery?.whereKey("user", equalTo: self.users[0])
-                    
-                    favObjectQuery?.findObjectsInBackgroundWithBlock {
-                        (objects: [AnyObject]?, error: NSError?) -> Void in
-                        if error == nil {
-                            if let objects = objects as? [PFObject] {
-                                for object in objects {
-                                    var favourite = object as! Favourite
-                                    self.favourites.append(favourite.event)
-                                }
-                                if (self.segmentedControl.selectedSegmentIndex == 1){
-                                    self.events = self.favourites
-                                    self.tableView.reloadData()
-                                }
-                            }
-                        } else {
-                            // Log details of the failure
-                            println("Error: \(error!) \(error!.userInfo!)")
-                        }
-                    }
-                }
-                
-            } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
-            }
-        }
+    
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
