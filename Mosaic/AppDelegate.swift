@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = ViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
+            loginViewController.getUserInfo()
             self.window?.rootViewController = navigationController
         } else {
             self.window?.rootViewController = loginViewController

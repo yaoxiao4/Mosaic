@@ -16,5 +16,13 @@ class SettingsViewController: UIViewController {
         self.title = "Settings"
         self.view.backgroundColor = UIColor.whiteColor()
 
+        var profileImageView = UIImageView(frame: CGRectMake(25, 80, 150, 150))
+        profileImageView.contentMode = .ScaleAspectFit
+        
+//        profileImageView.layer.cornerRadius =  profileImageView.frame.size.height / 2
+//        profileImageView.clipsToBounds = true
+        
+        profileImageView.image = GlobalVariables.picture
+        self.view.addSubview(profileImageView)
     }
 }

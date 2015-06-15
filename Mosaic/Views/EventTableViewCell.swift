@@ -11,6 +11,9 @@ import Foundation
 
 struct GlobalVariables {
     static var imageCache = [String:UIImage]()
+    static var firstName:String?
+    static var lastName:String?
+    static var picture: UIImage?
 }
 
 class EventTableViewCell: UITableViewCell {
