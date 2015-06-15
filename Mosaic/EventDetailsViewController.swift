@@ -286,7 +286,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                             }
                             
                             self.isFavourite = !self.isFavourite
-                            //self.parentController.fetch()
+                            self.parentController.fetch()
                         }
                     } else {
                         // Log details of the failure
@@ -305,7 +305,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(animated:Bool) {
         if (self.navigationController?.topViewController is ViewController){
             var controller = self.navigationController?.topViewController as! ViewController
-            controller.fetch()
+            //controller.fetch()
         }
 
         super.viewWillDisappear(animated)
@@ -350,7 +350,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                                 storedRSVP?.status = statusValue
                                 storedRSVP?.saveInBackground()
                             }
-                            //self.parentController.fetch()
+                            self.parentController.fetch()
                         }
                     } else {
                         // Log details of the failure
