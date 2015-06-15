@@ -74,6 +74,14 @@ class LoginViewController: UIViewController {
                     let urlUserImg = "http://graph.facebook.com/" + fbID! + "/picture?type=large"
                     let firstName = result.valueForKey("first_name") as? String
                     let lastName = result.valueForKey("last_name") as? String
+                    
+                    GlobalVariables.firstName = firstName
+                    GlobalVariables.lastName = lastName
+                    let coverURL = NSURL(string: urlUserImg)
+                    let data = NSData(contentsOfURL: coverURL!)
+                    let image = UIImage(data: data!)
+                    GlobalVariables.picture = image
+                    
                     NSLog(firstName!)
                     NSLog(lastName!)
                     NSLog(urlUserImg)
