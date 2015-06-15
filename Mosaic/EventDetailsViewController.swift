@@ -32,52 +32,48 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
-        ///////////////
+        let scrollViewHeight: CGFloat = self.view.bounds.height - self.navigationController!.navigationBar.frame.height - 20
+        
+        self.title = "Event Details"
+        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        self.tabBarController?.tabBar.hidden = true
+        
         // Scroll View
-        ///////////////
         scrollView = UIScrollView(frame: CGRectMake(0,0, self.view.bounds.width, self.view.bounds.height))
         scrollView.backgroundColor = UIColor.blackColor()
-
-        // 3
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.bounds.height - self.navigationController!.navigationBar.frame.height - 20)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: scrollViewHeight)
         scrollView.delegate = self
-        
         scrollView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.view.addSubview(scrollView)
-        //// END SCROLL VIEW
+        // End Scroll View
         
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.title = "Event Details"
-        
-        self.tabBarController?.tabBar.hidden = true
-        //self.navigationItem.hidesBackButton = true
-        
-        // This block handles the join button
+        // Join Button
         let joinButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         joinButton.frame = CGRectMake(100, 100, 100, 50)
         joinButton.setTitle("Join", forState: .Normal)
         joinButton.addTarget(self, action: "close:", forControlEvents: .TouchUpInside)
         let barButton = UIBarButtonItem(customView: joinButton)
-        //self.navigationItem.rightBarButtonItem = barButton
+        // End Join Button
         
-        // This block handles the title
+        // Title
         let eventTitleLabel = UILabel(frame: CGRectMake(self.view.frame.width/2 - 90, 25, 200, 10))
         eventTitleLabel.text =  self.event?.title
         eventTitleLabel.textAlignment = NSTextAlignment.Left;
         eventTitleLabel.lineBreakMode = .ByWordWrapping;
         eventTitleLabel.numberOfLines = 0;
         eventTitleLabel.sizeToFit();
-        eventTitleLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
+        eventTitleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.0)
         scrollView.addSubview(eventTitleLabel)
+        // End Title
         
-        // This block handles the FB icon (if it is a FB Event)
+        // FB Icon
         var fbIconView = UIImageView(frame: CGRectMake(self.view.frame.width/8 - 20, 10 + eventTitleLabel.frame.height/2, 40, 40));
         var fbIcon = UIImage(named: "facebook-icon.png");
         fbIconView.image = fbIcon;
         scrollView.addSubview(fbIconView);
+        // End FB Icon
         
         // This block handles the bookmark icon
         self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));

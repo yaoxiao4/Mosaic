@@ -25,34 +25,41 @@ class LoginViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var label = UILabel(frame: CGRectMake(0, 0, 100, 25))
-        label.center = CGPointMake(180, 280)
-        label.textAlignment = NSTextAlignment.Center
-        label.text = "Mosaic"
-        label.textColor = UIColor.blackColor()
-        self.view.addSubview(label)
-        
-        let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 100, 200, 50))
-        signInButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+        //let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 100, 200, 50))
+        //signInButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+
+        // Title Label
+        var titleLabel = UILabel(frame: CGRectMake(0, 100, self.view.frame.width, 25))
+        titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.text = "Mosaic"
+        titleLabel.textColor = UIColor.whiteColor()
+        self.view.addSubview(titleLabel)
+        // End Title Label
+
+        // Sign In Button
+        let signInButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        signInButton.frame = CGRectMake(100, 100, 200, 50)
+        signInButton.backgroundColor = UIColor.blueColor()
         signInButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         signInButton.setTitle("Login with Facebook", forState: UIControlState.Normal)
         signInButton.addTarget(self, action: "fbLoginClick:", forControlEvents: UIControlEvents.TouchUpInside)
         signInButton.center = self.view.center
-        
         self.view.addSubview(signInButton)
+        // End Sign In Button
     }
     
     func fbLoginClick(sender: AnyObject) {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(self.permissions, block: {
             (user: PFUser?, error: NSError?) -> Void in
-            if user == nil {
-                NSLog("The user cancelled the Facebook login.")
-            } else if user!.isNew {
-                NSLog("User signed up and logged in through Facebook!")
+            if user != nil {
+                if user!.isNew {
+                    NSLog("User signed up and logged in through Facebook!")
+                } else {
+                    NSLog("User logged in through Facebook! \(user!.username)")
+                }
                 self.loginSuccessful()
             } else {
-                NSLog("User logged in through Facebook! \(user!.username)")
-                self.loginSuccessful()
+                NSLog("The user cancelled the Facebook login.")
             }
         })
     }
@@ -77,8 +84,6 @@ class LoginViewController: UIViewController {
     func loginSuccessful() {
         self.getUserInfo()
         
-        // Override point for customization after application launch.
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let viewController = ViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         
