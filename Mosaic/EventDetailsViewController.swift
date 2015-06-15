@@ -82,9 +82,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         // This block handles the bookmark icon
         self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
         if (self.isFavourite == true) {
-            bookmarkView.image = UIImage(named: "Bookmark-Filled.png");
+            bookmarkView.image = UIImage(named: "star-filled.png");
         } else {
-            bookmarkView.image = UIImage(named: "Bookmark-Empty.png");
+            bookmarkView.image = UIImage(named: "star-empty.png");
         }
         scrollView.addSubview(bookmarkView);
         
@@ -254,9 +254,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     @IBAction func bookmarkEvent(){
         if (self.isFavourite){
-            self.bookmarkView.image = UIImage(named: "Bookmark-Empty.png");
+            self.bookmarkView.image = UIImage(named: "star-empty.png");
         } else {
-            self.bookmarkView.image = UIImage(named: "Bookmark-Filled.png");
+            self.bookmarkView.image = UIImage(named: "star-filled.png");
         }
         
         let userId = PFUser.currentUser()?.objectId
