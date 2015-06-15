@@ -25,19 +25,18 @@ class LoginViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        //let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 100, 200, 50))
-        //signInButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+        let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 100, 200, 50))
+        signInButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
 
         // Title Label
         var titleLabel = UILabel(frame: CGRectMake(0, 100, self.view.frame.width, 25))
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.text = "Mosaic"
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.blackColor()
         self.view.addSubview(titleLabel)
         // End Title Label
 
         // Sign In Button
-        let signInButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         signInButton.frame = CGRectMake(100, 100, 200, 50)
         signInButton.backgroundColor = UIColor.blueColor()
         signInButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
