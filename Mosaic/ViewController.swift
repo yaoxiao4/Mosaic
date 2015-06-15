@@ -79,16 +79,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
  
+        // Settings Button
+        let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        settingsButton.frame = CGRectMake(0, 0, 65, 40)
+        settingsButton.setTitle("Settings", forState: .Normal)
+        settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
+        var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
+        self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+        
         
         self.view.backgroundColor = UIColor.whiteColor()
+        
+    }
+    
+    func onSettingsClick(sender: AnyObject) {
+        let settingsViewController = SettingsViewController()
+        let navigationController = UINavigationController(rootViewController: settingsViewController)
+        
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 //    MARK: TableView methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
