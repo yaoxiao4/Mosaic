@@ -33,17 +33,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let loginViewController = LoginViewController()
-        
-        //let viewController = ViewController()
-        //let navigationController = UINavigationController(rootViewController: loginViewController)
-        //navigationController.navigationBar.backgroundColor = UIColor.blueColor()
         let currentUser: PFUser? = PFUser.currentUser()
+        var usertype = currentUser?.objectForKey("usertype") as! Int
+        GlobalVariables.usertype = usertype
         
-        let viewController = ViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             loginViewController.getUserInfo()
-            self.window?.rootViewController = navigationController
+            if (usertype == 2){
+                let viewController = ViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                
+                self.window?.rootViewController = navigationController
+            } else if (usertype == 1){
+                let viewController = ViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                
+                self.window?.rootViewController = navigationController
+            }
+            
         } else {
             self.window?.rootViewController = loginViewController
         }

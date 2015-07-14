@@ -12,6 +12,7 @@ import Parse
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var events: [PFObject] = []
     var allEvents: [PFObject] = []
+    var pastEvents: [PFObject] = []
     var users: [PFUser] = []
     var favourites: [PFObject] = []
     let tableView = UITableView()
@@ -24,8 +25,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Events"
-        
+        if (GlobalVariables.usertype == 2) {
+            self.title = "Events"
+        } else {
+            self.title = "Admin Events"
+        }
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
         
@@ -64,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
         
-        let items = ["All Events", "Favourites", "Attending"]
+        let items = ["All Events", "Favourites", "Attending", "Past Events"]
         self.segmentedControl = UISegmentedControl(items:items)
         self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
         self.segmentedControl.frame.origin.y = navigationHeight + 25
@@ -125,7 +129,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if (contains(self.mayBe, event)){
             rsvp = 3
         }
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self)
+        
+        var isPastEvent = false;
+        if (event.date.compare(NSDate()) == NSComparisonResult.OrderedAscending){
+            isPastEvent = true;
+        }
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self, isPast: isPastEvent)
         self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     
@@ -159,12 +168,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if let objects = objects as? [RSVP] {
                             for object in objects {
                                 self.rsvp.append(object.event)
-                                if (object.status == 1) {
-                                    self.attending.append(object.event)
-                                } else if(object.status == 2) {
-                                    self.notGoing.append(object.event)
-                                } else {
-                                    self.mayBe.append(object.event)
+                                var date = NSDate()
+                                var curEvent = object.event
+                                if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
+                                    if (object.status == 1) {
+                                        self.attending.append(object.event)
+                                    } else if(object.status == 2) {
+                                        self.notGoing.append(object.event)
+                                    } else {
+                                        self.mayBe.append(object.event)
+                                    }
                                 }
                                 
                             }
@@ -196,7 +209,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if let objects = objects as? [PFObject] {
                             for object in objects {
                                 var favourite = object as! Favourite
-                                self.favourites.append(favourite.event)
+                                var date = NSDate()
+                                var curEvent = favourite.event
+                                if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
+                                    self.favourites.append(curEvent)
+                                }
                             }
                             if (self.segmentedControl.selectedSegmentIndex == 1){
                                 self.events = self.favourites
@@ -224,7 +241,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if error == nil {
                 if let objects = objects as? [PFObject] {
                     for object in objects {
-                        self.allEvents.append(object)
+                        var date = NSDate()
+                        var curEvent = object as! Event
+                        if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
+                            self.allEvents.append(object)
+                        } else {
+                            self.pastEvents.append(object)
+                        }
                         
                     }
                     if (self.segmentedControl.selectedSegmentIndex == 0){
@@ -250,6 +273,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             break;
         case 2:
             self.events = self.attending
+            break;
+        case 3:
+            self.events = self.pastEvents
             break;
         default:
             break;

@@ -14,6 +14,7 @@ struct GlobalVariables {
     static var firstName:String?
     static var lastName:String?
     static var picture: UIImage?
+    static var usertype: Int = 1
 }
 
 class EventTableViewCell: UITableViewCell {
