@@ -320,6 +320,7 @@
 				TargetAttributes = {
 					415B26CB1B13AF5700ADBE22 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5BLS4CR795;
 					};
 					415B26E01B13AF5700ADBE22 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -550,6 +551,8 @@
 			baseConfigurationReference = 6062083411CA79DF8E95328A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -592,6 +595,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Mosaic-Bridging-Header.h";
 			};
 			name = Debug;
@@ -601,6 +605,8 @@
 			baseConfigurationReference = 9973BDB2612A61E7FCF345F2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -643,6 +649,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mosaic/Mosaic-Bridging-Header.h";
 			};
 			name = Release;
