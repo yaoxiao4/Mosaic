@@ -16,6 +16,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var segmentedControl: UISegmentedControl!
     var isFavourite: Bool = false
     var bookmarkView: UIImageView!
+    var isPastEvent: Bool = false
     var parentController: ViewController!
     var RSVPStatus: Int = 0; // 0 no res, 1 attend, 2 no, 3 maybe
     
@@ -23,14 +24,15 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event, isFavourite: Bool, rsvp: Int, parentController: ViewController) {
+    init(event: Event, isFavourite: Bool, rsvp: Int, parentController: ViewController, isPast: Bool) {
         self.parentController = parentController
         self.isFavourite = isFavourite
         self.RSVPStatus = rsvp
         self.event = event
+        self.isPastEvent = isPast
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -229,7 +231,14 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
 
         /////////// RESIZE SCROLL VIEW TO FIT THE DESCRIPTION
         self.scrollView.contentSize.height = eventDescriptionBox.frame.height + eventDescriptionBox.frame.origin.y
+        
+        if (self.isPastEvent) {
+            self.bookmarkView.hidden = true;
+            self.segmentedControl.hidden = true;
+        }
     }
+    
+    //comgooglemaps://?saddr=Google+Inc,+8th+Avenue,+New+York,+NY&daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York&directionsmode=transit
     
     @IBAction func close(sender: AnyObject) {
         let nextController = ViewController()
@@ -238,8 +247,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-            UIApplication.sharedApplication().openURL(NSURL(string:
-                "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
+            var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"
+            var urlstringTwo = urlstringOne + "," + "\(self.event?.location?.longitude)" + "&directionsmode=driving"
+            UIApplication.sharedApplication().openURL(NSURL(string:urlstringTwo)!)
         } else {
             NSLog("Can't use comgooglemaps://");
         }
@@ -334,13 +344,29 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
                             }
                             
                             var statusValue = -1
+                            var eventId = self.event?.fb_id
+                            var rsvpResponse: String?
+                            
                             if (self.segmentedControl.selectedSegmentIndex == 0){
                                 statusValue = 2
+                                rsvpResponse = "declined"
                             } else if (self.segmentedControl.selectedSegmentIndex == 1) {
                                 statusValue = 3
+                                rsvpResponse = "maybe"
                             } else if (self.segmentedControl.selectedSegmentIndex == 2) {
                                 statusValue = 1
+                                rsvpResponse = "attending"
                             }
+                            
+                            
+                            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: eventId! + "/" + rsvpResponse!, parameters: nil, HTTPMethod: "Post")
+                            graphRequest.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+                                if error != nil {
+                                    println("facebook has the following error on trying to change rsvp")
+                                } else {
+                                    
+                                }
+                            })
                             
                             if (storedRSVP == nil){
                                 var newRSVP = RSVP()

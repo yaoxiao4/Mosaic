@@ -11,6 +11,7 @@ import Parse
 
 class User: PFUser, PFSubclassing {
     
+    @NSManaged var usertype: Int
     override class func initialize() {
         var onceToken : dispatch_once_t = 0;
         dispatch_once(&onceToken) {
