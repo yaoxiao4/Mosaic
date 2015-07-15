@@ -49,6 +49,9 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
         UWOpenDataAPIManager.sharedInstance.getEvents { json in
             let results = json["data"]
             for (index: String, subJson: JSON) in results {
+                if(self.items.count >= 40){
+                    break;
+                }
                 self.items.addObject(subJson.object)
                 dispatch_async(dispatch_get_main_queue(),{
                     tableView?.reloadData()
