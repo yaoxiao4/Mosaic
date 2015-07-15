@@ -23,6 +23,8 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView?.delegate = self
         self.view.addSubview(self.tableView!)
         
+        self.tableView!.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
+        
         // Settings Button
         let image = UIImage(named: "Settings-25") as UIImage?
         let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
@@ -48,11 +50,30 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
     func addDummyData() {
         UWOpenDataAPIManager.sharedInstance.getEvents { json in
             let results = json["data"]
+            let dateFormatter = NSDateFormatter()
+            
+            // Check date
+            var today = NSDate()
+            dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
+            
             for (index: String, subJson: JSON) in results {
                 if(self.items.count >= 40){
                     break;
                 }
-                self.items.addObject(subJson.object)
+                var object = JSON(subJson.object)
+                
+                for (var a = 0; a <  object["times"].count; a++){
+                    let dateString = object["times"][a]["start"].string!
+                    
+                    let date = dateString.substringWithRange(Range(start: dateString.startIndex,
+                        end: advance(dateString.startIndex, 19)))
+                    var realDate = dateFormatter.dateFromString(date)!
+                    if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+                        self.items.addObject(subJson.object)
+                        break;
+                    }
+                }
+                
                 dispatch_async(dispatch_get_main_queue(),{
                     tableView?.reloadData()
                 })
@@ -65,26 +86,26 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? UITableViewCell
-        
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
-        }
-        
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
         let event:JSON =  JSON(self.items[indexPath.row])
+        cell.configureJsonEvent(event)
         
-//        let picURL = user["picture"]["medium"].string
-//        let url = NSURL(string: picURL!)
-//        let data = NSData(contentsOfURL: url!)
+
         
         var s = event["title"].string as String?
         var s1 = s?.stringByReplacingOccurrencesOfString("&#039;", withString: "'", options: NSStringCompareOptions.LiteralSearch, range: nil)
         var s2 = s1?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
 
         
-        cell!.textLabel?.text = s2
+//        cell.textLabel?.text = s2
+
         //cell?.imageView?.image = UIImage(data: data!)
         
-        return cell!
+        return cell
+    }
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80.0
     }
 }
