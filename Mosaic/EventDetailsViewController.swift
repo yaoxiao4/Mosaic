@@ -317,6 +317,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(animated:Bool) {
         if (self.navigationController?.topViewController is ViewController){
             var controller = self.navigationController?.topViewController as! ViewController
+            self.tabBarController?.tabBar.hidden = false
             //controller.fetch()
         }
 

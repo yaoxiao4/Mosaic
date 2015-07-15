@@ -42,6 +42,9 @@
 		415B27091B13B51D00ADBE22 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FE1B13B51D00ADBE22 /* StoreKit.framework */; };
 		415B270A1B13B51D00ADBE22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */; };
 		63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383771B2BB15700D7A0A1 /* Favourite.swift */; };
+		63C98B8F1B55E89D00964DED /* UWOpenDataAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C98B8E1B55E89D00964DED /* UWOpenDataAPIManager.swift */; };
+		63C98B931B560FBE00964DED /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C98B921B560FBE00964DED /* SwiftyJSON.swift */; };
+		63C98B971B56138700964DED /* UWOpenDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C98B961B56138700964DED /* UWOpenDataViewController.swift */; };
 		67AE7FB10C59B3CBEE1B34B0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F99A55DFD46DF7D4A87EBB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -97,6 +100,9 @@
 		415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6062083411CA79DF8E95328A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		63B383771B2BB15700D7A0A1 /* Favourite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
+		63C98B8E1B55E89D00964DED /* UWOpenDataAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UWOpenDataAPIManager.swift; sourceTree = "<group>"; };
+		63C98B921B560FBE00964DED /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		63C98B961B56138700964DED /* UWOpenDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UWOpenDataViewController.swift; sourceTree = "<group>"; };
 		73F99A55DFD46DF7D4A87EBB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9973BDB2612A61E7FCF345F2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,6 +165,7 @@
 				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
 				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 				4145B26D1B2E5FBB00F5A3C7 /* SettingsViewController.swift */,
+				63C98B961B56138700964DED /* UWOpenDataViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -196,6 +203,7 @@
 		415B26CE1B13AF5700ADBE22 /* Mosaic */ = {
 			isa = PBXGroup;
 			children = (
+				63C98B921B560FBE00964DED /* SwiftyJSON.swift */,
 				201AFD7A1B2BAFC800C4DBC0 /* Mosaic-Bridging-Header.h */,
 				25FF9BFB1B2B6F5A00885081 /* Views */,
 				2563C3181B29102600C7102F /* Models */,
@@ -203,6 +211,7 @@
 				2563C3221B2935E700C7102F /* View Controllers */,
 				415B26D81B13AF5700ADBE22 /* Images.xcassets */,
 				415B26CF1B13AF5700ADBE22 /* Supporting Files */,
+				63C98B8E1B55E89D00964DED /* UWOpenDataAPIManager.swift */,
 			);
 			path = Mosaic;
 			sourceTree = "<group>";
@@ -422,7 +431,9 @@
 				25FF9C021B2B712900885081 /* EventTableViewCell.swift in Sources */,
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
+				63C98B931B560FBE00964DED /* SwiftyJSON.swift in Sources */,
 				25FF9C071B2BB35400885081 /* RSVP.swift in Sources */,
+				63C98B8F1B55E89D00964DED /* UWOpenDataAPIManager.swift in Sources */,
 				63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */,
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
 				201AFD811B2CFA3D00C4DBC0 /* ViewController.swift in Sources */,
@@ -431,6 +442,7 @@
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,
 				201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */,
 				4145B26E1B2E5FBB00F5A3C7 /* SettingsViewController.swift in Sources */,
+				63C98B971B56138700964DED /* UWOpenDataViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,8 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         self.title = "Settings"
         self.view.backgroundColor = UIColor.whiteColor()
+        
+        self.tabBarController?.tabBar.hidden = true
 
         var profileImageView = UIImageView(frame: CGRectMake(20, 100, 150, 150))
         profileImageView.contentMode = .ScaleAspectFit
@@ -69,6 +71,16 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
                 // Do work
             }
         }
+    }
+    
+    override func viewWillDisappear(animated:Bool) {
+        if (self.navigationController?.topViewController is ViewController){
+            var controller = self.navigationController?.topViewController as! ViewController
+            self.tabBarController?.tabBar.hidden = false
+            //controller.fetch()
+        }
+        
+        super.viewWillDisappear(animated)
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
