@@ -74,12 +74,7 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     override func viewWillDisappear(animated:Bool) {
-        if (self.navigationController?.topViewController is ViewController){
-            var controller = self.navigationController?.topViewController as! ViewController
-            self.tabBarController?.tabBar.hidden = false
-            //controller.fetch()
-        }
-        
+        self.tabBarController?.tabBar.hidden = false
         super.viewWillDisappear(animated)
     }
     
