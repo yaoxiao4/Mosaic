@@ -75,4 +75,16 @@ class EventTableViewCell: UITableViewCell {
         self.thumbnail.contentMode = .ScaleAspectFit
     }
     
+    func configureJsonEvent(event: JSON){
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        self.info.text = "\(dateFormatter.stringFromDate(date))"
+        self.location.text = event["site_name"].string
+        self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
+        self.thumbnail.image =  UIImage(named: "uwlogo_20.png");
+        self.title.text = event["title"].string
+        
+    }
+    
 }
