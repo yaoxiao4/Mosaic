@@ -92,7 +92,7 @@ class LoginViewController: UIViewController {
     func loginSuccessful() {
         self.getUserInfo()
         
-        let viewController = ViewController()
+        let viewController = ViewController(isSegment: true, viewTitle: "Events")
         let navigationController = UINavigationController(rootViewController: viewController)
         
         presentViewController(navigationController, animated: true, completion: nil)

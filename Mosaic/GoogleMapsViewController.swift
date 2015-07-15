@@ -24,6 +24,7 @@ class GoogleMapsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.tabBarController?.tabBar.hidden = true
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
