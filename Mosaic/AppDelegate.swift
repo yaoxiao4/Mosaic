@@ -47,8 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let navigationController2 = UINavigationController(rootViewController: uwOpenDataController)
                 let controllers = [navigationController1,navigationController2]
                 tabBarController.viewControllers = controllers
-                navigationController1.tabBarItem = UITabBarItem(title: "Events", image: nil, tag: 1)
-                navigationController2.tabBarItem = UITabBarItem(title: "UW Events", image: nil, tag: 2)
+                let firstImage = UIImage(named: "Calendar-25")
+                let secondImage = UIImage(named: "University-25")
+                navigationController1.tabBarItem = UITabBarItem(title: "Events", image: firstImage, tag: 1)
+                navigationController2.tabBarItem = UITabBarItem(title: "UW Events", image: secondImage, tag: 2)
                 
                 self.window?.rootViewController = tabBarController
                 

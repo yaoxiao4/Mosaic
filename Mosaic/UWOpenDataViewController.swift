@@ -77,7 +77,12 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
 //        let url = NSURL(string: picURL!)
 //        let data = NSData(contentsOfURL: url!)
         
-        cell!.textLabel?.text = event["title"].string
+        var s = event["title"].string as String?
+        var s1 = s?.stringByReplacingOccurrencesOfString("&#039;", withString: "'", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        var s2 = s1?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
+
+        
+        cell!.textLabel?.text = s2
         //cell?.imageView?.image = UIImage(data: data!)
         
         return cell!
