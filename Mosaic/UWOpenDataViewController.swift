@@ -50,8 +50,30 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
     func addDummyData() {
         UWOpenDataAPIManager.sharedInstance.getEvents { json in
             let results = json["data"]
+            let dateFormatter = NSDateFormatter()
+            
+            // Check date
+            var today = NSDate()
+            dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
+            
             for (index: String, subJson: JSON) in results {
-                self.items.addObject(subJson.object)
+                if(self.items.count >= 40){
+                    break;
+                }
+                var object = JSON(subJson.object)
+                
+                for (var a = 0; a <  object["times"].count; a++){
+                    let dateString = object["times"][a]["start"].string!
+                    
+                    let date = dateString.substringWithRange(Range(start: dateString.startIndex,
+                        end: advance(dateString.startIndex, 19)))
+                    var realDate = dateFormatter.dateFromString(date)!
+                    if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+                        self.items.addObject(subJson.object)
+                        break;
+                    }
+                }
+                
                 dispatch_async(dispatch_get_main_queue(),{
                     tableView?.reloadData()
                 })

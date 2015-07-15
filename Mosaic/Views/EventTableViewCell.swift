@@ -76,10 +76,23 @@ class EventTableViewCell: UITableViewCell {
     }
     
     func configureJsonEvent(event: JSON){
-        let date = NSDate()
+        var today = NSDate()
+        
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        self.info.text = "\(dateFormatter.stringFromDate(date))"
+        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
+        for (var a = 0; a <  event["times"].count; a++){
+            let dateString = event["times"][a]["start"].string!
+            
+            let date = dateString.substringWithRange(Range(start: dateString.startIndex,
+                end: advance(dateString.startIndex, 19)))
+            var realDate = dateFormatter.dateFromString(date)!
+            if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+                dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                self.info.text = "\(dateFormatter.stringFromDate(realDate))"
+                break;
+            }
+        }
+        
         self.location.text = event["site_name"].string
         self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
         self.thumbnail.image =  UIImage(named: "uwlogo_20.png");
