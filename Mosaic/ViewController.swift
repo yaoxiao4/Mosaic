@@ -10,11 +10,11 @@ import UIKit
 import Parse
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var events: [PFObject] = []
-    var allEvents: [PFObject] = []
-    var pastEvents: [PFObject] = []
+    var events: [Event] = []
+    var allEvents: [Event] = []
+    var pastEvents: [Event] = []
     var users: [PFUser] = []
-    var favourites: [PFObject] = []
+    var favourites: [Event] = []
     let tableView = UITableView()
     var rsvp: [Event] = []
     var attending: [Event] = []
@@ -132,13 +132,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as! Event
+        var event: Event = self.events[indexPath.row] as Event
         cell.configureCellWithEvent(event)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var event: Event = self.events[indexPath.row] as! Event
+        var event: Event = self.events[indexPath.row] as Event
         var rsvp: Int = -1
         var isFavourite = contains(self.favourites, event)
         var lala = self.mayBe
@@ -189,7 +189,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             for object in objects {
                                 self.rsvp.append(object.event)
                                 var date = NSDate()
-                                var curEvent = object.event
+                                var curEvent = object.event as Event
                                 if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
                                     if (object.status == 1) {
                                         self.attending.append(object.event)
@@ -237,7 +237,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             for object in objects {
                                 var favourite = object as! Favourite
                                 var date = NSDate()
-                                var curEvent = favourite.event
+                                var curEvent = favourite.event as Event
                                 if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
                                     self.favourites.append(curEvent)
                                 }
@@ -271,9 +271,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         var date = NSDate()
                         var curEvent = object as! Event
                         if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
-                            self.allEvents.append(object)
+                            self.allEvents.append(curEvent)
                         } else {
-                            self.pastEvents.append(object)
+                            self.pastEvents.append(curEvent)
                         }
                         
                     }
@@ -287,7 +287,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-    
     }
     
     @IBAction func indexChanged(sender: AnyObject) {

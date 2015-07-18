@@ -112,7 +112,7 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                         newEvent.hasStartDate = true
                     }
                     
-                    let eventDetailsRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/" + newEvent.fb_id + "?fields=cover,description,place", parameters: nil)
+                    let eventDetailsRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/" + newEvent.fb_id + "?fields=cover,description,place,start_time", parameters: nil)
                     eventDetailsRequest.startWithCompletionHandler({ (conn1: FBSDKGraphRequestConnection!, res: AnyObject!, err1: NSError!) -> Void in
                         
                         if (err1 != nil) {
@@ -121,29 +121,36 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                         } else {
                             
                             // Event details
-                            newEvent.details = res.valueForKey("description") as! String
+                            if (res.valueForKey("description") != nil){
+                                newEvent.details = res.valueForKey("description") as! String
+                            } else {
+                                newEvent.details = "No Description Available"
+                            }
                             
                             // Event cover photos
-                            var cover = res.valueForKey("cover") as! NSDictionary
-                            newEvent.picture_url = cover.valueForKey("source") as! String
+                            if var cover = res.valueForKey("cover") as? NSDictionary {
+                                newEvent.picture_url = cover.valueForKey("source") as! String
+                            }
+                            
                             
                             // Location
                             var place = res.valueForKey("place") as! NSDictionary
                             var locName = place.valueForKey("name") as! String
-                            var loc = place.valueForKey("location") as! NSDictionary
-                            
-                            var city = loc.valueForKey("city") as! String
-                            var country = loc.valueForKey("country") as! String
-                            var longitude = loc.valueForKey("longitude") as! CLLocationDegrees
-                            var latitude = loc.valueForKey("latitude") as! CLLocationDegrees
+                            if var loc = place.valueForKey("location") as? NSDictionary {
+                                var city = loc.valueForKey("city") as! String
+                                var country = loc.valueForKey("country") as! String
+                                var longitude = loc.valueForKey("longitude") as! CLLocationDegrees
+                                var latitude = loc.valueForKey("latitude") as! CLLocationDegrees
+                                
+                                newEvent.location = Location(name: locName, city: city, country: country, longitude: longitude, latitude: latitude)
+                            }
 
-                            newEvent.location = Location(name: locName, city: city, country: country, longitude: longitude, latitude: latitude)
                             
                         }
                     
                     })
                     
-                    newEvent.location = nil
+
                     self.rsvpStatus.addObject(event.valueForKey("rsvp_status") as! String)
                     self.events.addObject(newEvent)
                 }
