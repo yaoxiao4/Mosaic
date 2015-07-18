@@ -63,7 +63,7 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
+        return 70.0
     }
     
     
