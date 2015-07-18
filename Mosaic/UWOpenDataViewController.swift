@@ -89,21 +89,62 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
         var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
         let event:JSON =  JSON(self.items[indexPath.row])
         cell.configureJsonEvent(event)
-        
 
         
         var s = event["title"].string as String?
         var s1 = s?.stringByReplacingOccurrencesOfString("&#039;", withString: "'", options: NSStringCompareOptions.LiteralSearch, range: nil)
         var s2 = s1?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
-
-        
-//        cell.textLabel?.text = s2
-
-        //cell?.imageView?.image = UIImage(data: data!)
         
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var realEvent: Event = createEvent(JSON(self.items[indexPath.row]));
+        var rsvp: Int = -1;
+        var isFavourite = false;
+        var isPastEvent = false;
+
+        let eventDetailsViewController = EventDetailsViewController(event: realEvent, isFavourite: false, rsvp: rsvp, parentController: nil, isPast: false);
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func createEvent(JSONEvent: JSON) -> Event {
+        var location: Location = Location(name: JSONEvent["site_name"].string!, city: "Waterloo", country: "Canada", longitude: -80.540, latitude: 43.468)
+        
+        var s = JSONEvent["title"].string as String?
+        var s1 = s?.stringByReplacingOccurrencesOfString("&#039;", withString: "'", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        var s2 = s1?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        var event: Event = Event()
+        
+        var today = NSDate()
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
+        for (var a = 0; a <  JSONEvent["times"].count; a++){
+            let dateString = JSONEvent["times"][a]["start"].string!
+            
+            let date = dateString.substringWithRange(Range(start: dateString.startIndex,
+                end: advance(dateString.startIndex, 19)))
+            var realDate = dateFormatter.dateFromString(date)!
+            if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+                dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                event.date = realDate
+                break;
+            }
+        }
+        
+        event.title = s2!
+        event.fb_id = ""
+        event.location = location
+        event.weather = 99
+        event.picture_url = ""
+        event.details = (JSONEvent["link"].string as String?)!
+        event.hasStartDate = true
+        event.isUWEvent = true
+
+        return event;
+    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80.0

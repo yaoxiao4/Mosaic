@@ -24,7 +24,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(event: Event, isFavourite: Bool, rsvp: Int, parentController: ViewController, isPast: Bool) {
+    init(event: Event, isFavourite: Bool, rsvp: Int, parentController: ViewController!, isPast: Bool) {
         self.parentController = parentController
         self.isFavourite = isFavourite
         self.RSVPStatus = rsvp
@@ -77,19 +77,20 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(fbIconView);
         // End FB Icon
         
-        // This block handles the bookmark icon
-        self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
-        if (self.isFavourite == true) {
-            bookmarkView.image = UIImage(named: "star-filled.png");
-        } else {
-            bookmarkView.image = UIImage(named: "star-empty.png");
-        }
-        scrollView.addSubview(bookmarkView);
+        if (event?.isUWEvent == false) {
+            // This block handles the bookmark icon
+            self.bookmarkView = UIImageView(frame: CGRectMake(eventTitleLabel.frame.origin.x + 150 + 55, 13 + eventTitleLabel.frame.height/2, 30, 30));
+            if (self.isFavourite == true) {
+                bookmarkView.image = UIImage(named: "star-filled.png");
+            } else {
+                bookmarkView.image = UIImage(named: "star-empty.png");
+            }
+            scrollView.addSubview(bookmarkView);
         
-        // Enable Touch
-        bookmarkView.userInteractionEnabled = true;
-        bookmarkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "bookmarkEvent"))
-
+            // Enable Touch
+            bookmarkView.userInteractionEnabled = true;
+            bookmarkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "bookmarkEvent"))
+        }
         
         ///////////////
         //   BEGIN DETAILS
@@ -112,7 +113,6 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         var locationSeparator = UIView(frame: CGRectMake(35, 40, self.view.frame.width - 70, 0.5))
         locationSeparator.backgroundColor = UIColor.blackColor()
         eventDetailsBox.addSubview(locationSeparator)
-        
         
         var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
@@ -160,55 +160,58 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         //   END EVENT DETAILS
         
-        ///////////////
-        //   BEGIN BUTTON GROUP
-        ///////////////
-        let actionButtonsBox = UIView(frame: CGRectMake(0, 20 + eventDetailsBox.frame.origin.y + eventDetailsBox.frame.height, self.view.frame.width, 50))
-        actionButtonsBox.backgroundColor = UIColor.whiteColor()
+        var photoViewY: CGFloat = eventDetailsBox.frame.origin.y + eventDetailsBox.frame.height
+        var photoViewHeight: CGFloat = 0.0
         
-        let items = ["Not Going", "Maybe", "Going"]
-        self.segmentedControl = UISegmentedControl(items:items)
-        segmentedControl.frame.origin.x = (actionButtonsBox.frame.width - segmentedControl.frame.width) / 2
-        segmentedControl.frame.origin.y = (actionButtonsBox.frame.height - segmentedControl.frame.height) / 2
-        actionButtonsBox.addSubview(segmentedControl)
+        if (event?.isUWEvent == false) {
+            ///////////////
+            //   BEGIN BUTTON GROUP
+            ///////////////
+            
+            let actionButtonsBox = UIView(frame: CGRectMake(0, 20 + eventDetailsBox.frame.origin.y + eventDetailsBox.frame.height, self.view.frame.width, 50))
+            actionButtonsBox.backgroundColor = UIColor.whiteColor()
+            
+            let items = ["Not Going", "Maybe", "Going"]
+            self.segmentedControl = UISegmentedControl(items:items)
+            segmentedControl.frame.origin.x = (actionButtonsBox.frame.width - segmentedControl.frame.width) / 2
+            segmentedControl.frame.origin.y = (actionButtonsBox.frame.height - segmentedControl.frame.height) / 2
+            actionButtonsBox.addSubview(segmentedControl)
+            
+            switch self.RSVPStatus {
+                case 1:
+                    self.segmentedControl.selectedSegmentIndex = 2
+                    break;
+                case 2:
+                    self.segmentedControl.selectedSegmentIndex = 0
+                    break;
+                case 3:
+                    self.segmentedControl.selectedSegmentIndex = 1
+                    break;
+                default:
+                    break;
+            }
+            self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
+            
+            scrollView.addSubview(actionButtonsBox)
+            //   END BUTTON GROUP
+
         
-        switch self.RSVPStatus {
-            case 1:
-                self.segmentedControl.selectedSegmentIndex = 2
-                break;
-            case 2:
-                self.segmentedControl.selectedSegmentIndex = 0
-                break;
-            case 3:
-                self.segmentedControl.selectedSegmentIndex = 1
-                break;
-            default:
-                break;
+            // This block handles the cover photo
+            let eventPhotoView = UIImageView(frame: CGRectMake(0, actionButtonsBox.frame.origin.y + actionButtonsBox.frame.height, self.view.frame.width, 0))
+            if (event?.picture_url != nil){
+                let coverURL = NSURL(string: event!.picture_url)
+                let img = GlobalVariables.imageCache[event!.picture_url]
+                eventPhotoView.frame.size.height = (self.view.frame.width / img!.size.width) * img!.size.height
+                eventPhotoView.contentMode = .ScaleAspectFit
+                eventPhotoView.image = img
+            }
+            
+            scrollView.addSubview(eventPhotoView)
+            photoViewY = eventPhotoView.frame.origin.y;
+            photoViewHeight = eventPhotoView.frame.height;
         }
-        self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        scrollView.addSubview(actionButtonsBox)
-        //   END BUTTON GROUP
-        
-        // This block handles the cover photo
-        let eventPhotoView = UIImageView(frame: CGRectMake(0, actionButtonsBox.frame.origin.y + actionButtonsBox.frame.height, self.view.frame.width, 0))
-        if (event?.picture_url != nil){
-            let coverURL = NSURL(string: event!.picture_url)
-//            let data = NSData(contentsOfURL: coverURL!) //make sure image in this url does exist, otherwise unwrap in a if let check
-//            if (data != nil){
-            //                let eventPhoto = UIImage(data: data!)
-            let img = GlobalVariables.imageCache[event!.picture_url]
-            eventPhotoView.frame.size.height = (self.view.frame.width / img!.size.width) * img!.size.height
-            eventPhotoView.contentMode = .ScaleAspectFit
-//                eventPhotoView.image = UIImage(data: data!)
-//            }
-            eventPhotoView.image = img
-        }
-        
-        scrollView.addSubview(eventPhotoView)
         
         // This block handles the description
-        
         let eventDescriptionLabel = UILabel(frame: CGRectMake(25, 20, self.view.frame.width - 50, 30))
        
         if (self.event?.details == ""){
@@ -223,7 +226,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         eventDescriptionLabel.sizeToFit();
         
         // This block handles the details box
-        let eventDescriptionBox = UIView(frame: CGRectMake(0, eventPhotoView.frame.origin.y + eventPhotoView.frame.height + 20, self.view.frame.width, eventDescriptionLabel.bounds.height + 40))
+        let eventDescriptionBox = UIView(frame: CGRectMake(0, photoViewY + photoViewHeight + 20, self.view.frame.width, eventDescriptionLabel.bounds.height + 40))
         eventDescriptionBox.backgroundColor = UIColor.whiteColor()
         
         eventDescriptionBox.addSubview(eventDescriptionLabel)
@@ -237,8 +240,6 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
             self.segmentedControl.hidden = true;
         }
     }
-    
-    //comgooglemaps://?saddr=Google+Inc,+8th+Avenue,+New+York,+NY&daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York&directionsmode=transit
     
     @IBAction func close(sender: AnyObject) {
         let nextController = ViewController()
@@ -317,80 +318,82 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(animated:Bool) {
         if (self.navigationController?.topViewController is ViewController){
             var controller = self.navigationController?.topViewController as! ViewController
-            self.tabBarController?.tabBar.hidden = false
-            //controller.fetch()
+        } else if (self.navigationController?.topViewController is UWOpenDataViewController) {
+            var controller = self.navigationController?.topViewController as! UWOpenDataViewController
         }
 
+        self.tabBarController?.tabBar.hidden = false
         super.viewWillDisappear(animated)
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
-        
-        let userId = PFUser.currentUser()?.objectId
-        
-        User.query()?.getObjectInBackgroundWithId(userId!){
-            (user: PFObject?, error: NSError?) -> Void in
-            if error == nil && user != nil {
-                // REPLACE LATER
-                var rsvpQuery = RSVP.query()
-                var storedRSVP: RSVP? = nil
-                rsvpQuery?.whereKey("event", equalTo: self.event!)
-                rsvpQuery?.whereKey("user", equalTo: user!)
-                rsvpQuery?.findObjectsInBackgroundWithBlock {
-                    (objects: [AnyObject]?, error: NSError?) -> Void in
-                    if error == nil {
-                        if let objects = objects as? [PFObject] {
-                            for object in objects {
-                                storedRSVP = object as? RSVP
-                            }
-                            
-                            var statusValue = -1
-                            var eventId = self.event?.fb_id
-                            var rsvpResponse: String?
-                            
-                            if (self.segmentedControl.selectedSegmentIndex == 0){
-                                statusValue = 2
-                                rsvpResponse = "declined"
-                            } else if (self.segmentedControl.selectedSegmentIndex == 1) {
-                                statusValue = 3
-                                rsvpResponse = "maybe"
-                            } else if (self.segmentedControl.selectedSegmentIndex == 2) {
-                                statusValue = 1
-                                rsvpResponse = "attending"
-                            }
-                            
-                            
-                            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: eventId! + "/" + rsvpResponse!, parameters: nil, HTTPMethod: "Post")
-                            graphRequest.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-                                if error != nil {
-                                    println("facebook has the following error on trying to change rsvp")
-                                } else {
-                                    
+        if (event?.isUWEvent == false) {
+            let userId = PFUser.currentUser()?.objectId
+            
+            User.query()?.getObjectInBackgroundWithId(userId!){
+                (user: PFObject?, error: NSError?) -> Void in
+                if error == nil && user != nil {
+                    // REPLACE LATER
+                    var rsvpQuery = RSVP.query()
+                    var storedRSVP: RSVP? = nil
+                    rsvpQuery?.whereKey("event", equalTo: self.event!)
+                    rsvpQuery?.whereKey("user", equalTo: user!)
+                    rsvpQuery?.findObjectsInBackgroundWithBlock {
+                        (objects: [AnyObject]?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let objects = objects as? [PFObject] {
+                                for object in objects {
+                                    storedRSVP = object as? RSVP
                                 }
-                            })
-                            
-                            if (storedRSVP == nil){
-                                var newRSVP = RSVP()
-                                newRSVP.event = self.event!
-                                newRSVP.user = user!;
-                                newRSVP.status = statusValue
-                                newRSVP.saveInBackground()
-                            } else {
-                                storedRSVP?.status = statusValue
-                                storedRSVP?.saveInBackground()
+                                
+                                var statusValue = -1
+                                var eventId = self.event?.fb_id
+                                var rsvpResponse: String?
+                                
+                                if (self.segmentedControl.selectedSegmentIndex == 0){
+                                    statusValue = 2
+                                    rsvpResponse = "declined"
+                                } else if (self.segmentedControl.selectedSegmentIndex == 1) {
+                                    statusValue = 3
+                                    rsvpResponse = "maybe"
+                                } else if (self.segmentedControl.selectedSegmentIndex == 2) {
+                                    statusValue = 1
+                                    rsvpResponse = "attending"
+                                }
+                                
+                                
+                                let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: eventId! + "/" + rsvpResponse!, parameters: nil, HTTPMethod: "Post")
+                                graphRequest.startWithCompletionHandler({ (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+                                    if error != nil {
+                                        println("facebook has the following error on trying to change rsvp")
+                                    } else {
+                                        
+                                    }
+                                })
+                                
+                                if (storedRSVP == nil){
+                                    var newRSVP = RSVP()
+                                    newRSVP.event = self.event!
+                                    newRSVP.user = user!;
+                                    newRSVP.status = statusValue
+                                    newRSVP.saveInBackground()
+                                } else {
+                                    storedRSVP?.status = statusValue
+                                    storedRSVP?.saveInBackground()
+                                }
+                                self.parentController.fetch()
                             }
-                            self.parentController.fetch()
+                        } else {
+                            // Log details of the failure
+                            println("Error: \(error!) \(error!.userInfo!)")
                         }
-                    } else {
-                        // Log details of the failure
-                        println("Error: \(error!) \(error!.userInfo!)")
                     }
+                    
+                } else {
+                    println(error)
                 }
                 
-            } else {
-                println(error)
             }
-            
         }
     }
 }

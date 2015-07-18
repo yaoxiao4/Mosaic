@@ -22,7 +22,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var mayBe: [Event] = []
     var segmentedControl: UISegmentedControl!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         if (GlobalVariables.usertype == 2) {
@@ -103,44 +102,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let navigationController = UINavigationController(rootViewController: settingsViewController)
         
         self.navigationController?.pushViewController(settingsViewController, animated: true)
-    }
-
-//    MARK: TableView methods
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as! Event
-        cell.configureCellWithEvent(event)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var event: Event = self.events[indexPath.row] as! Event
-        var rsvp: Int = -1
-        var isFavourite = contains(self.favourites, event)
-        var lala = self.mayBe
-        if (contains(self.attending, event)){
-            rsvp = 1
-        } else if (contains(self.notGoing, event)){
-            rsvp = 2
-        } else if (contains(self.mayBe, event)){
-            rsvp = 3
-        }
-        
-        var isPastEvent = false;
-        if (event.date.compare(NSDate()) == NSComparisonResult.OrderedAscending){
-            isPastEvent = true;
-        }
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self, isPast: isPastEvent)
-        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
     }
     
     func fetch(){
@@ -261,7 +222,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-    
+        
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
@@ -283,6 +244,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         self.tableView.reloadData()
+    }
+
+//    MARK: TableView methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.events.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
+        var event: Event = self.events[indexPath.row] as! Event
+        cell.configureCellWithEvent(event)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var event: Event = self.events[indexPath.row] as! Event
+        var rsvp: Int = -1
+        var isFavourite = contains(self.favourites, event)
+        var lala = self.mayBe
+        if (contains(self.attending, event)){
+            rsvp = 1
+        } else if (contains(self.notGoing, event)){
+            rsvp = 2
+        } else if (contains(self.mayBe, event)){
+            rsvp = 3
+        }
+        
+        var isPastEvent = false;
+        if (event.date.compare(NSDate()) == NSComparisonResult.OrderedAscending){
+            isPastEvent = true;
+        }
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self, isPast: isPastEvent)
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80.0
     }
 }
 
