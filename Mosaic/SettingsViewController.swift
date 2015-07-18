@@ -29,18 +29,25 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         // First Name Label
         var firstNameLabel = UILabel(frame: CGRectMake(175, 140, 180, 40))
         firstNameLabel.text = GlobalVariables.firstName! + " " + GlobalVariables.lastName!
-        firstNameLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
+        firstNameLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 20.0)
         firstNameLabel.textColor = UIColor.blackColor()
         self.view.addSubview(firstNameLabel)
         // End First Name Label
+       
+        // Past Events
+        let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        settingsButton.frame = CGRectMake(175, 170, 110, 50)
+        settingsButton.addTarget(self, action: "viewPastEvents", forControlEvents: .TouchUpInside)
+        settingsButton.setTitle("My Past Events", forState: UIControlState.Normal)
+        self.view.addSubview(settingsButton)
         
-        // Last Name Label
-        var lastNameLabel = UILabel(frame: CGRectMake(175, 170, 190, 40))
-        lastNameLabel.text = "ravanchi@hotmail.com"
-        lastNameLabel.font = UIFont(name:"HelveticaNeue", size: 17.0)
-        lastNameLabel.textColor = UIColor.blackColor()
-        self.view.addSubview(lastNameLabel)
-        // End Last Name Label
+//        // Last Name Label
+//        var lastNameLabel = UILabel(frame: CGRectMake(175, 170, 190, 40))
+//        lastNameLabel.text = "ravanchi@hotmail.com"
+//        lastNameLabel.font = UIFont(name:"HelveticaNeue", size: 17.0)
+//        lastNameLabel.textColor = UIColor.blackColor()
+//        self.view.addSubview(lastNameLabel)
+//        // End Last Name Label
         
         // Sign In Button
         let signInButton = FBSDKLoginButton(frame: CGRectMake(100, 200, 200, 50))
@@ -82,12 +89,17 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         //navigationController.navigationBar.backgroundColor = UIColor.blueColor()
         let currentUser: PFUser? = PFUser.currentUser()
         
-        let viewController = ViewController()
+        let viewController = ViewController(isSegment: false, viewTitle: "Events")
         let navigationController = UINavigationController(rootViewController: viewController)
 
         self.window?.rootViewController = loginViewController
 
         presentViewController(navigationController, animated: true, completion: nil)
         println("User Logged Out")
+    }
+    
+    @IBAction func viewPastEvents(){
+        let viewController = ViewController(isSegment: false, viewTitle: "Past Events")
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -41,12 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             loginViewController.getUserInfo()
             if (usertype == 2){
-                let viewController = ViewController()
+                let viewController = ViewController(isSegment: true, viewTitle: "Events")
                 let navigationController = UINavigationController(rootViewController: viewController)
                 
                 self.window?.rootViewController = navigationController
             } else if (usertype == 1){
-                let viewController = ViewController()
+                let viewController = ViewController(isSegment: true, viewTitle: "Events")
                 let navigationController = UINavigationController(rootViewController: viewController)
                 
                 self.window?.rootViewController = navigationController
