@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var debugLabel: UILabel!
     var window: UIWindow?
-    let permissions = ["public_profile", "email", "user_friends"]
+    let permissions = ["public_profile", "email", "user_friends", "user_events"]
     
     override func viewDidLoad() {
         let currentUser: PFUser? = PFUser.currentUser()
@@ -75,6 +75,7 @@ class LoginViewController: UIViewController {
                     let firstName = result.valueForKey("first_name") as? String
                     let lastName = result.valueForKey("last_name") as? String
                     
+                    GlobalVariables.fbID = result.valueForKey("id") as? String
                     GlobalVariables.firstName = firstName
                     GlobalVariables.lastName = lastName
                     let coverURL = NSURL(string: urlUserImg)

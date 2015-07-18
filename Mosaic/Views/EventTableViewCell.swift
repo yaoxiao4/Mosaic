@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 struct GlobalVariables {
+    static var fbID: String?
     static var imageCache = [String:UIImage]()
     static var firstName:String?
     static var lastName:String?

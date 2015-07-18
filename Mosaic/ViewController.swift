@@ -85,12 +85,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
         // Settings Button
         let image = UIImage(named: "Settings-25") as UIImage?
-        let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        settingsButton.frame = CGRectMake(0, 0, 25, 25)
-        settingsButton.setImage(image, forState: .Normal)
-        settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
-        var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
-        self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+        let settingsButton = UIBarButtonItem(image: image, landscapeImagePhone: image, style: .Plain, target: self, action: "onSettingsClick:")
+        
+        // Add Button
+        let addButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onAddEventClick:")
+       
+        // Adding buttons to the top right
+        var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
+        
+        if (GlobalVariables.usertype != 2) {
+            btnArray.addObject(addButton)
+        }
+        
+        var btns:NSArray = btnArray
+        
+        self.navigationItem.setRightBarButtonItems(btns as! [UIBarButtonItem], animated: false)
         
         
         self.view.backgroundColor = UIColor.whiteColor()
@@ -102,6 +111,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let navigationController = UINavigationController(rootViewController: settingsViewController)
         
         self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
+    func onAddEventClick(sender: AnyObject) {
+        let newEventViewController =  NewEventViewController()
+        let navigationController = UINavigationController(rootViewController: newEventViewController)
+        self.navigationController?.pushViewController(newEventViewController, animated: true)
+        
     }
 
 //    MARK: TableView methods
