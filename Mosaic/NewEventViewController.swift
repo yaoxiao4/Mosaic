@@ -121,8 +121,11 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                         } else {
                             
                             // Event details
-                            newEvent.details = res.valueForKey("description") as! String
-                            
+                            if (res.valueForKey("description") != nil){
+                                newEvent.details = res.valueForKey("description") as! String
+                            } else {
+                                newEvent.details = "No Description Available"
+                            }
                             // Event cover photos
                             var cover = res.valueForKey("cover") as! NSDictionary
                             newEvent.picture_url = cover.valueForKey("source") as! String
