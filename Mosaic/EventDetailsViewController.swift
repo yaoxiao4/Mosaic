@@ -238,13 +238,6 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    //comgooglemaps://?saddr=Google+Inc,+8th+Avenue,+New+York,+NY&daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York&directionsmode=transit
-    
-    @IBAction func close(sender: AnyObject) {
-        let nextController = ViewController()
-        self.navigationController?.pushViewController(nextController, animated: true)
-    }
-    
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
             var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"

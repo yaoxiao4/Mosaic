@@ -19,17 +19,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var rsvp: [Event] = []
     var attending: [Event] = []
     var notGoing: [Event] = []
+    var pastAttending: [Event] = []
     var mayBe: [Event] = []
     var segmentedControl: UISegmentedControl!
+    var isSegment = false;
 
+    required init(coder aDecoder: NSCoder) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(isSegment: Bool, viewTitle: String) {
+        self.isSegment = isSegment;
+        super.init(nibName: nil, bundle: nil)
+        self.title = viewTitle
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (GlobalVariables.usertype == 2) {
-            self.title = "Events"
-        } else {
-            self.title = "Admin Events"
-        }
+//        if (GlobalVariables.usertype == 2) {
+//            self.title = "Events"
+//        } else {
+//            self.title = "Admin Events"
+//        }
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
         
@@ -68,29 +79,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
         
-        let items = ["All Events", "Favourites", "Attending", "Past Events"]
-        self.segmentedControl = UISegmentedControl(items:items)
-        self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
-        self.segmentedControl.frame.origin.y = navigationHeight + 25
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.view.addSubview(self.segmentedControl)
+        if (self.isSegment){
+            let items = ["All Events", "Favourites", "Attending", "Past Events"]
+            self.segmentedControl = UISegmentedControl(items:items)
+            self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
+            self.segmentedControl.frame.origin.y = navigationHeight + 25
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.view.addSubview(self.segmentedControl)
+            
+            self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
-        self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
-   
-        self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height + 5, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 30)
+            self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height + 5, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 30)
+            
+            
+            // Settings Button
+            let image = UIImage(named: "Settings-25") as UIImage?
+            let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+            settingsButton.frame = CGRectMake(0, 0, 25, 25)
+            settingsButton.setImage(image, forState: .Normal)
+            settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
+            var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
+            self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+        } else {
+            self.tableView.frame = CGRect(x: 0, y: 10, width: self.view.frame.width, height: self.view.frame.height - 30)
+        }
+        
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
- 
-        // Settings Button
-        let image = UIImage(named: "Settings-25") as UIImage?
-        let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        settingsButton.frame = CGRectMake(0, 0, 25, 25)
-        settingsButton.setImage(image, forState: .Normal)
-        settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
-        var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
-        self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
         
         
         self.view.backgroundColor = UIColor.whiteColor()
@@ -178,11 +196,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     } else {
                                         self.mayBe.append(object.event)
                                     }
+                                } else {
+                                    if(object.status == 1){
+                                        self.pastAttending.append(object.event)
+                                    }
                                 }
                                 
                             }
-                            if (self.segmentedControl.selectedSegmentIndex == 2){
+                            if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 2){
                                 self.events = self.attending
+                                self.tableView.reloadData()
+                            } else if (!self.isSegment){
+                                self.events = self.pastAttending
                                 self.tableView.reloadData()
                             }
                         }
@@ -215,7 +240,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     self.favourites.append(curEvent)
                                 }
                             }
-                            if (self.segmentedControl.selectedSegmentIndex == 1){
+                            if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 1){
                                 self.events = self.favourites
                                 self.tableView.reloadData()
                             }
@@ -250,7 +275,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         }
                         
                     }
-                    if (self.segmentedControl.selectedSegmentIndex == 0){
+                    if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 0){
                         self.events = self.allEvents
                         self.tableView.reloadData()
                     }
