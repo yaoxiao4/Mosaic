@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let loginViewController = LoginViewController()
         let currentUser: PFUser? = PFUser.currentUser()
-        var usertype = currentUser?.objectForKey("usertype") as! Int
+//        var usertype = currentUser?.objectForKey("usertype") as! Int
+        var usertype = 1;
         GlobalVariables.usertype = usertype
         
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {

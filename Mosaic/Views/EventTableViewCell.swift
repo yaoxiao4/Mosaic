@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 struct GlobalVariables {
+    static var fbID: String?
     static var imageCache = [String:UIImage]()
     static var firstName:String?
     static var lastName:String?
@@ -44,35 +45,39 @@ class EventTableViewCell: UITableViewCell {
         self.location.text = event.location?.name
         self.location.font = UIFont(name:"HelveticaNeue-Italic", size: 12)
         
-        let coverURL = NSURL(string: event.picture_url)
-        
-        // If this image is already cached, don't re-download
-        if let img = GlobalVariables.imageCache[event.picture_url] {
-            self.thumbnail.image = img
+        if (event.picture_url != "") {
+            let coverURL = NSURL(string: event.picture_url)
+            
+            // If this image is already cached, don't re-download
+            if let img = GlobalVariables.imageCache[event.picture_url] {
+                self.thumbnail.image = img
+            }
+            else {
+                // The image isn't cached, download the img data
+                // We should perform this in a background thread
+                let request: NSURLRequest = NSURLRequest(URL: coverURL!)
+                let mainQueue = NSOperationQueue.mainQueue()
+                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                    if error == nil {
+                        // Convert the downloaded data in to a UIImage object
+                        let image = UIImage(data: data)
+                        // Store the image in to our cache
+                        GlobalVariables.imageCache[event.picture_url] = image
+                        // Update the cell
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.thumbnail.image = image
+                        })
+                    }
+                    else {
+                        println("Error: \(error.localizedDescription)")
+                    }
+                })
+            }
+            
+            self.thumbnail.contentMode = .ScaleAspectFit
+
         }
-        else {
-            // The image isn't cached, download the img data
-            // We should perform this in a background thread
-            let request: NSURLRequest = NSURLRequest(URL: coverURL!)
-            let mainQueue = NSOperationQueue.mainQueue()
-            NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-                if error == nil {
-                    // Convert the downloaded data in to a UIImage object
-                    let image = UIImage(data: data)
-                    // Store the image in to our cache
-                    GlobalVariables.imageCache[event.picture_url] = image
-                    // Update the cell
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.thumbnail.image = image
-                    })
-                }
-                else {
-                    println("Error: \(error.localizedDescription)")
-                }
-            })
-        }
         
-        self.thumbnail.contentMode = .ScaleAspectFit
     }
     
 }

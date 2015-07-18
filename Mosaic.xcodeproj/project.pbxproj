@@ -20,6 +20,10 @@
 		20D630321B2B1FFB00EE9C59 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D6302F1B2B1FFB00EE9C59 /* FBSDKShareKit.framework */; };
 		2563C31A1B29106800C7102F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563C3191B29106800C7102F /* User.swift */; };
 		2563C31C1B2910B100C7102F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563C31B1B2910B100C7102F /* Event.swift */; };
+		2577595D1B59D15100775B33 /* FBDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2577595C1B59D15100775B33 /* FBDataController.swift */; };
+		2577595F1B59EC1600775B33 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2577595E1B59EC1600775B33 /* NewEventViewController.swift */; };
+		257759621B5A12AA00775B33 /* NewEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257759601B5A12AA00775B33 /* NewEventTableViewCell.swift */; };
+		257759631B5A12AA00775B33 /* NewEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 257759611B5A12AA00775B33 /* NewEventTableViewCell.xib */; };
 		25FF9C021B2B712900885081 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FF9C001B2B712900885081 /* EventTableViewCell.swift */; };
 		25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FF9C011B2B712900885081 /* EventTableViewCell.xib */; };
 		25FF9C071B2BB35400885081 /* RSVP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FF9C061B2BB35400885081 /* RSVP.swift */; };
@@ -70,6 +74,10 @@
 		20D6302F1B2B1FFB00EE9C59 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		2563C3191B29106800C7102F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		2563C31B1B2910B100C7102F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = Models/Event.swift; sourceTree = "<group>"; };
+		2577595C1B59D15100775B33 /* FBDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBDataController.swift; sourceTree = "<group>"; };
+		2577595E1B59EC1600775B33 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
+		257759601B5A12AA00775B33 /* NewEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewEventTableViewCell.swift; path = Views/NewEventTableViewCell.swift; sourceTree = "<group>"; };
+		257759611B5A12AA00775B33 /* NewEventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewEventTableViewCell.xib; path = Views/NewEventTableViewCell.xib; sourceTree = "<group>"; };
 		25FF9C001B2B712900885081 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventTableViewCell.swift; path = Views/EventTableViewCell.swift; sourceTree = "<group>"; };
 		25FF9C011B2B712900885081 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventTableViewCell.xib; path = Views/EventTableViewCell.xib; sourceTree = "<group>"; };
 		25FF9C061B2BB35400885081 /* RSVP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RSVP.swift; path = Models/RSVP.swift; sourceTree = "<group>"; };
@@ -159,8 +167,17 @@
 				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
 				20929EF51B16513700523691 /* EventDetailsViewController.swift */,
 				4145B26D1B2E5FBB00F5A3C7 /* SettingsViewController.swift */,
+				2577595E1B59EC1600775B33 /* NewEventViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2577595B1B59C9F800775B33 /* Data Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2577595C1B59D15100775B33 /* FBDataController.swift */,
+			);
+			name = "Data Controllers";
 			sourceTree = "<group>";
 		};
 		25FF9BFB1B2B6F5A00885081 /* Views */ = {
@@ -169,6 +186,8 @@
 				415B26DA1B13AF5700ADBE22 /* LaunchScreen.xib */,
 				25FF9C001B2B712900885081 /* EventTableViewCell.swift */,
 				25FF9C011B2B712900885081 /* EventTableViewCell.xib */,
+				257759601B5A12AA00775B33 /* NewEventTableViewCell.swift */,
+				257759611B5A12AA00775B33 /* NewEventTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -203,6 +222,7 @@
 				2563C3221B2935E700C7102F /* View Controllers */,
 				415B26D81B13AF5700ADBE22 /* Images.xcassets */,
 				415B26CF1B13AF5700ADBE22 /* Supporting Files */,
+				2577595B1B59C9F800775B33 /* Data Controllers */,
 			);
 			path = Mosaic;
 			sourceTree = "<group>";
@@ -352,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25FF9C031B2B712900885081 /* EventTableViewCell.xib in Resources */,
+				257759631B5A12AA00775B33 /* NewEventTableViewCell.xib in Resources */,
 				415B26DC1B13AF5700ADBE22 /* LaunchScreen.xib in Resources */,
 				415B26D91B13AF5700ADBE22 /* Images.xcassets in Resources */,
 			);
@@ -423,14 +444,17 @@
 				2563C31A1B29106800C7102F /* User.swift in Sources */,
 				20929EF61B16513700523691 /* EventDetailsViewController.swift in Sources */,
 				25FF9C071B2BB35400885081 /* RSVP.swift in Sources */,
+				2577595F1B59EC1600775B33 /* NewEventViewController.swift in Sources */,
 				63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */,
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
 				201AFD811B2CFA3D00C4DBC0 /* ViewController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
+				2577595D1B59D15100775B33 /* FBDataController.swift in Sources */,
 				2563C31C1B2910B100C7102F /* Event.swift in Sources */,
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,
 				201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */,
 				4145B26E1B2E5FBB00F5A3C7 /* SettingsViewController.swift in Sources */,
+				257759621B5A12AA00775B33 /* NewEventTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

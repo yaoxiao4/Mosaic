@@ -44,38 +44,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
         
-//        var event: Event = Event()
-//        event.title = "Ginger Info Session"
-//        event.fb_id = "125634fdvd"
-//        event.location = location
-//        event.weather = 99
-//        event.picture_url = "https://scontent-ord1-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11050684_946936308696701_7152001106456242296_n.jpg?oh=aecba138470a9e2e3fad36e8c7ce94aa&oe=563210F9"
-//        event.details = "This is details"
-//        event.date = NSDate()
-//        event.saveInBackground()
-        
-        
-//        let tableView = UITableView()
-//        self.view.addSubview(tableView)
-        
-//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "375003852708970", parameters: nil)
-//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//            
-//            if ((error) != nil)
-//            {
-//                // Process error
-//                println("Error: \(error)")
-//            }
-//            else
-//            {
-//                println("fetched user: \(result)")
-//                let userName : NSString = result.valueForKey("name") as! NSString
-//                println("User Name is: \(userName)")
-//                let userEmail : NSString = result.valueForKey("email") as! NSString
-//                println("User Email is: \(userEmail)")
-//            }
-//        })
-        fetch();
         
         var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
         
@@ -109,9 +77,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
         self.view.addSubview(tableView)
+ 
+        // Settings Button
+        let image = UIImage(named: "Settings-25") as UIImage?
+        let settingsButton = UIBarButtonItem(image: image, landscapeImagePhone: image, style: .Plain, target: self, action: "onSettingsClick:")
+        
+        // Add Button
+        let addButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onAddEventClick:")
+       
+        // Adding buttons to the top right
+        var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
+        
+        if (GlobalVariables.usertype != 2) {
+            btnArray.addObject(addButton)
+        }
+        
+        var btns:NSArray = btnArray
+        
+        self.navigationItem.setRightBarButtonItems(btns as! [UIBarButtonItem], animated: false)
         
         
         self.view.backgroundColor = UIColor.whiteColor()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        fetch()
         
     }
     
@@ -121,7 +113,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
-
+    
+    func onAddEventClick(sender: AnyObject) {
+       
+//        self.navigationItem.leftBarButtonItem = backBtn
+        
+        let newEventViewController =  NewEventViewController()
+        let navigationController = UINavigationController(rootViewController: newEventViewController)
+        self.navigationController?.pushViewController(newEventViewController, animated: true)
+        
+    }
+    
 //    MARK: TableView methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
