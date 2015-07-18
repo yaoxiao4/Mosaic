@@ -32,11 +32,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3fj-GI-Mn1">
-                        <rect key="frame" x="295" y="42" width="46" height="30"/>
+                        <rect key="frame" x="253" y="42" width="88" height="30"/>
                         <color key="backgroundColor" red="0.25098040699958801" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <state key="normal" title="Button">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <state key="normal" title="Button"/>
                     </button>
                 </subviews>
             </tableViewCellContentView>

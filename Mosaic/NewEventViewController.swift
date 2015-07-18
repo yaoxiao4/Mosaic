@@ -57,9 +57,7 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: NewEventTableViewCell = tableView.dequeueReusableCellWithIdentifier("NewEventTableViewCell") as! NewEventTableViewCell
-        cell.configureCellWithEvent(self.events[indexPath.row] as! Event)
-        cell.addRemoveBtn.setTitle("Add", forState: .Normal)
-        cell.addRemoveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        cell.configureCellWithEvent(self.events[indexPath.row] as! Event, status: rsvpStatus[indexPath.row] as! String)
         return cell
     }
     
@@ -88,19 +86,64 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                     dateFormatter.timeZone = NSTimeZone(name: event.valueForKey("timezone") as! String)
                     
                     var newEvent = Event()
-                    println(event)
                     newEvent.title = event.valueForKey("name") as! String
                     newEvent.fb_id = event.valueForKey("id") as! String
-                    var dateStr = event.valueForKey("start_time") as! String
-                    dateStr = dateStr.stringByReplacingOccurrencesOfString("T", withString: " ")
-                    let dateArr = dateStr.componentsSeparatedByString(" ")
-                    if (dateArr.count > 1) {
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZZZZ"
-                    } else {
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                    
+                    // Check if the event already exist
+                    let query = PFQuery(className: "Event")
+                    query.whereKey("fb_id", equalTo: newEvent.fb_id)
+                    let eventArray = query.findObjects()
+                    if (eventArray!.count > 0) {
+                        continue
                     }
                     
-                    newEvent.date = dateFormatter.dateFromString(dateStr)!
+                    // Get the date
+                    var dateStr = event.valueForKey("start_time") as! String
+                    if (dateStr != "") {
+                        dateStr = dateStr.stringByReplacingOccurrencesOfString("T", withString: " ")
+                        let dateArr = dateStr.componentsSeparatedByString(" ")
+                        if (dateArr.count > 1) {
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZZZZ"
+                        } else {
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                        }
+                        
+                        newEvent.date = dateFormatter.dateFromString(dateStr)!
+                        newEvent.hasStartDate = true
+                    }
+                    
+                    let eventDetailsRequest:FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/" + newEvent.fb_id + "?fields=cover,description,place", parameters: nil)
+                    eventDetailsRequest.startWithCompletionHandler({ (conn1: FBSDKGraphRequestConnection!, res: AnyObject!, err1: NSError!) -> Void in
+                        
+                        if (err1 != nil) {
+                            println("Couldn't fetch events info (Inner loop")
+                            println("Error: \(err)")
+                        } else {
+                            
+                            // Event details
+                            newEvent.details = res.valueForKey("description") as! String
+                            
+                            // Event cover photos
+                            var cover = res.valueForKey("cover") as! NSDictionary
+                            newEvent.picture_url = cover.valueForKey("source") as! String
+                            
+                            // Location
+                            var place = res.valueForKey("place") as! NSDictionary
+                            var locName = place.valueForKey("name") as! String
+                            var loc = place.valueForKey("location") as! NSDictionary
+                            
+                            var city = loc.valueForKey("city") as! String
+                            var country = loc.valueForKey("country") as! String
+                            var longitude = loc.valueForKey("longitude") as! CLLocationDegrees
+                            var latitude = loc.valueForKey("latitude") as! CLLocationDegrees
+
+                            newEvent.location = Location(name: locName, city: city, country: country, longitude: longitude, latitude: latitude)
+                            
+                        }
+                    
+                    })
+                    
+                    newEvent.location = nil
                     self.rsvpStatus.addObject(event.valueForKey("rsvp_status") as! String)
                     self.events.addObject(newEvent)
                 }
