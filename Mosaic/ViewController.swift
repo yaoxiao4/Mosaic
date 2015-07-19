@@ -36,11 +36,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if (GlobalVariables.usertype == 2) {
-//            self.title = "Events"
-//        } else {
-//            self.title = "Admin Events"
-//        }
 
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
@@ -89,7 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Adding buttons to the top right
         var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
         
-        if (GlobalVariables.usertype != 2) {
+        if (GlobalVariables.usertype == 2) {
             btnArray.addObject(addButton)
         }
         

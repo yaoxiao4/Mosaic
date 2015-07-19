@@ -49,6 +49,7 @@ class NewEventTableViewCell: UITableViewCell {
     }
     
     @IBAction func addEvent(sender: UIButton) {
+        event.added_by = PFUser.currentUser()!
         event.saveInBackground()
         var rsvp = RSVP()
         rsvp.user = PFUser.currentUser()!

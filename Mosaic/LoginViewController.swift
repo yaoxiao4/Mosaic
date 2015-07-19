@@ -93,6 +93,11 @@ class LoginViewController: UIViewController {
     func loginSuccessful() {
         self.getUserInfo()
         
+        let tabBarController = UITabBarController()
+        let currentUser: PFUser? = PFUser.currentUser()
+        var usertype = currentUser?.objectForKey("usertype") as! Int
+        GlobalVariables.usertype = usertype
+        
         let viewController = ViewController(isSegment: true, viewTitle: "Events")
         let navigationController = UINavigationController(rootViewController: viewController)
         

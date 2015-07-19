@@ -35,10 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginViewController = LoginViewController()
         let tabBarController = UITabBarController()
         let currentUser: PFUser? = PFUser.currentUser()
-//        var usertype = currentUser?.objectForKey("usertype") as! Int
-        var usertype = 2;
+        var usertype = 0;
+        if (currentUser != nil){
+            usertype = currentUser?.objectForKey("usertype") as! Int
+        }
 
-        GlobalVariables.usertype = usertype
+        GlobalVariables.usertype = usertype;
         
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             loginViewController.getUserInfo()
@@ -63,6 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let navigationController2 = UINavigationController(rootViewController: uwOpenDataController)
                 let controllers = [navigationController1,navigationController2]
                 tabBarController.viewControllers = controllers
+                let firstImage = UIImage(named: "Calendar-25")
+                let secondImage = UIImage(named: "University-25")
+                navigationController1.tabBarItem = UITabBarItem(title: "Events", image: firstImage, tag: 1)
+                navigationController2.tabBarItem = UITabBarItem(title: "UW Events", image: secondImage, tag: 2)
                 
                 self.window?.rootViewController = tabBarController
             }

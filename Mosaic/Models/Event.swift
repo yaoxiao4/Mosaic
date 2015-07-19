@@ -14,6 +14,7 @@ class Event: PFObject, PFSubclassing {
     @NSManaged var details: String
     @NSManaged var fb_id: String
     @NSManaged var location: Location?
+    @NSManaged var added_by: PFUser?
     @NSManaged var weather: Int
     @NSManaged var picture_url: String
     @NSManaged var date: NSDate
