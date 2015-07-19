@@ -57,7 +57,7 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
             dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
             
             for (index: String, subJson: JSON) in results {
-                if(self.items.count >= 40){
+                if(self.items.count >= 15){
                     break;
                 }
                 var object = JSON(subJson.object)

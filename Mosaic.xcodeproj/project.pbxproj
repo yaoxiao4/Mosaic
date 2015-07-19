@@ -41,6 +41,7 @@
 		415B27081B13B51D00ADBE22 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FD1B13B51D00ADBE22 /* Security.framework */; };
 		415B27091B13B51D00ADBE22 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FE1B13B51D00ADBE22 /* StoreKit.framework */; };
 		415B270A1B13B51D00ADBE22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */; };
+		418830251B5C1A6200BFCB13 /* UWWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418830241B5C1A6200BFCB13 /* UWWebViewController.swift */; };
 		63B383781B2BB15700D7A0A1 /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B383771B2BB15700D7A0A1 /* Favourite.swift */; };
 		63C98B8F1B55E89D00964DED /* UWOpenDataAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C98B8E1B55E89D00964DED /* UWOpenDataAPIManager.swift */; };
 		63C98B931B560FBE00964DED /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C98B921B560FBE00964DED /* SwiftyJSON.swift */; };
@@ -98,6 +99,7 @@
 		415B26FD1B13B51D00ADBE22 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		415B26FE1B13B51D00ADBE22 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		415B26FF1B13B51D00ADBE22 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		418830241B5C1A6200BFCB13 /* UWWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UWWebViewController.swift; sourceTree = "<group>"; };
 		6062083411CA79DF8E95328A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		63B383771B2BB15700D7A0A1 /* Favourite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		63C98B8E1B55E89D00964DED /* UWOpenDataAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UWOpenDataAPIManager.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				201AFD7E1B2BB1F500C4DBC0 /* LoginViewController.swift */,
 				201AFD751B2B959D00C4DBC0 /* GoogleMapsViewController.swift */,
 				4145B26D1B2E5FBB00F5A3C7 /* SettingsViewController.swift */,
+				418830241B5C1A6200BFCB13 /* UWWebViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				2563C31C1B2910B100C7102F /* Event.swift in Sources */,
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,
 				201AFD7F1B2BB1F500C4DBC0 /* LoginViewController.swift in Sources */,
+				418830251B5C1A6200BFCB13 /* UWWebViewController.swift in Sources */,
 				4145B26E1B2E5FBB00F5A3C7 /* SettingsViewController.swift in Sources */,
 				63C98B971B56138700964DED /* UWOpenDataViewController.swift in Sources */,
 			);

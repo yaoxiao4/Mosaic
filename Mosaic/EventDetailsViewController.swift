@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import GoogleMaps
+import WebKit
 
-class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
+class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebViewDelegate {
     var event: Event? = nil
     var scrollView: UIScrollView!
     var segmentedControl: UISegmentedControl!
@@ -19,6 +20,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     var isPastEvent: Bool = false
     var parentController: ViewController!
     var RSVPStatus: Int = 0; // 0 no res, 1 attend, 2 no, 3 maybe
+    
+    var backgroundWebView: UIWebView!;
+    var webView: UIWebView!;
     
     required init(coder aDecoder: NSCoder) {
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +76,14 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // FB Icon
         var fbIconView = UIImageView(frame: CGRectMake(self.view.frame.width/8 - 20, 10 + eventTitleLabel.frame.height/2, 40, 40));
-        var fbIcon = UIImage(named: "facebook-icon.png");
+        var fbIcon: UIImage!
+        
+        if (event?.isUWEvent == false) {
+            fbIcon = UIImage(named: "facebook-icon.png");
+        } else {
+            fbIcon = UIImage(named: "waterloo.png");
+        }
+        
         fbIconView.image = fbIcon;
         scrollView.addSubview(fbIconView);
         // End FB Icon
@@ -213,27 +224,34 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         // This block handles the description
         let eventDescriptionLabel = UILabel(frame: CGRectMake(25, 20, self.view.frame.width - 50, 30))
-       
-        if (self.event?.details == ""){
-            eventDescriptionLabel.text = "No Details Available"
-        } else {
-            eventDescriptionLabel.text =  self.event?.details
-        }
-        eventDescriptionLabel.textAlignment = NSTextAlignment.Left;
-        eventDescriptionLabel.lineBreakMode = .ByWordWrapping;
-        eventDescriptionLabel.numberOfLines = 0;
-        eventDescriptionLabel.font = UIFont(name:"HelveticaNeue", size: 12.0)
-        eventDescriptionLabel.sizeToFit();
-        
-        // This block handles the details box
-        let eventDescriptionBox = UIView(frame: CGRectMake(0, photoViewY + photoViewHeight + 20, self.view.frame.width, eventDescriptionLabel.bounds.height + 40))
-        eventDescriptionBox.backgroundColor = UIColor.whiteColor()
-        
-        eventDescriptionBox.addSubview(eventDescriptionLabel)
-        scrollView.addSubview(eventDescriptionBox)
 
-        /////////// RESIZE SCROLL VIEW TO FIT THE DESCRIPTION
-        self.scrollView.contentSize.height = eventDescriptionBox.frame.height + eventDescriptionBox.frame.origin.y
+        if (event?.isUWEvent == true) {
+            var moreDetailsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+            moreDetailsButton.frame = CGRectMake(self.view.frame.width/2 - 50, photoViewY + photoViewHeight + 20, 100, 30)
+            moreDetailsButton.setTitle("More Details", forState: .Normal)
+            moreDetailsButton.addTarget((self), action: "pushOnUWWebView", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            scrollView.addSubview(moreDetailsButton)
+        } else {
+            if (self.event?.details == ""){
+                eventDescriptionLabel.text = "No Details Available"
+            } else {
+                eventDescriptionLabel.text =  self.event?.details
+            }
+            
+            eventDescriptionLabel.textAlignment = NSTextAlignment.Left;
+            eventDescriptionLabel.lineBreakMode = .ByWordWrapping;
+            eventDescriptionLabel.numberOfLines = 0;
+            eventDescriptionLabel.font = UIFont(name:"HelveticaNeue", size: 12.0)
+            eventDescriptionLabel.sizeToFit();
+            
+            // This block handles the details box
+            let eventDescriptionBox = UIView(frame: CGRectMake(0, photoViewY + photoViewHeight + 20, self.view.frame.width, eventDescriptionLabel.bounds.height + 40))
+            eventDescriptionBox.backgroundColor = UIColor.whiteColor()
+            eventDescriptionBox.addSubview(eventDescriptionLabel)
+            scrollView.addSubview(eventDescriptionBox)
+            self.scrollView.contentSize.height = eventDescriptionBox.frame.height + eventDescriptionBox.frame.origin.y
+        }
         
         if (self.isPastEvent) {
             self.bookmarkView.hidden = true;
@@ -259,6 +277,11 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func pushOnMap(){
         let googleMapsController = GoogleMapsViewController(event: self.event!)
         self.navigationController?.pushViewController(googleMapsController, animated: true)
+    }
+    
+    @IBAction func pushOnUWWebView(){
+        let uwWebViewController = UWWebViewController(url: self.event!.details)
+        self.navigationController?.pushViewController(uwWebViewController, animated: true)
     }
 
     @IBAction func bookmarkEvent(){
