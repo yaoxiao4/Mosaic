@@ -10,74 +10,70 @@ import UIKit
 import Parse
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var events: [PFObject] = []
-    var allEvents: [PFObject] = []
-    var pastEvents: [PFObject] = []
+    var events: [Event] = []
+    var allEvents: [Event] = []
+    var pastEvents: [Event] = []
     var users: [PFUser] = []
-    var favourites: [PFObject] = []
+    var favourites: [Event] = []
     let tableView = UITableView()
     var rsvp: [Event] = []
     var attending: [Event] = []
     var notGoing: [Event] = []
+    var pastAttending: [Event] = []
     var mayBe: [Event] = []
     var segmentedControl: UISegmentedControl!
+    var isSegment = false;
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(isSegment: Bool, viewTitle: String) {
+        self.isSegment = isSegment;
+        super.init(nibName: nil, bundle: nil)
+        self.title = viewTitle
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (GlobalVariables.usertype == 2) {
-            self.title = "Events"
-        } else {
-            self.title = "Admin Events"
-        }
-        
+//        if (GlobalVariables.usertype == 2) {
+//            self.title = "Events"
+//        } else {
+//            self.title = "Admin Events"
+//        }
+
         // Adding events
         var location: Location = Location(name: "ACC", city: "Toronto", country: "Canada", longitude: -79.379278549753, latitude: 43.643263062368)
         
-//        var event: Event = Event()
-//        event.title = "Ginger Info Session"
-//        event.fb_id = "125634fdvd"
-//        event.location = location
-//        event.weather = 99
-//        event.picture_url = "https://scontent-ord1-1.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11050684_946936308696701_7152001106456242296_n.jpg?oh=aecba138470a9e2e3fad36e8c7ce94aa&oe=563210F9"
-//        event.details = "This is details"
-//        event.date = NSDate()
-//        event.saveInBackground()
-        
-        
-//        let tableView = UITableView()
-//        self.view.addSubview(tableView)
-        
-//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "375003852708970", parameters: nil)
-//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//            
-//            if ((error) != nil)
-//            {
-//                // Process error
-//                println("Error: \(error)")
-//            }
-//            else
-//            {
-//                println("fetched user: \(result)")
-//                let userName : NSString = result.valueForKey("name") as! NSString
-//                println("User Name is: \(userName)")
-//                let userEmail : NSString = result.valueForKey("email") as! NSString
-//                println("User Email is: \(userEmail)")
-//            }
-//        })
-        fetch();
         
         var navigationHeight = self.navigationController?.navigationBar == nil ? self.navigationController!.navigationBar.frame.height : 50
         
-        let items = ["All Events", "Favourites", "Attending", "Past Events"]
-        self.segmentedControl = UISegmentedControl(items:items)
-        self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
-        self.segmentedControl.frame.origin.y = navigationHeight + 25
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.view.addSubview(self.segmentedControl)
+        if (self.isSegment){
+            let items = ["All Events", "Favourites", "Attending", "Past Events"]
+            self.segmentedControl = UISegmentedControl(items:items)
+            self.segmentedControl.frame.origin.x = (self.view.frame.width - self.segmentedControl.frame.width) / 2
+            self.segmentedControl.frame.origin.y = navigationHeight + 25
+            self.segmentedControl.selectedSegmentIndex = 0
+            self.view.addSubview(self.segmentedControl)
+            
+            self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
-        self.segmentedControl.addTarget(self, action: "indexChanged:", forControlEvents: UIControlEvents.ValueChanged)
-   
-        self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height + 5, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 30)
+            self.tableView.frame = CGRect(x: 0, y: self.segmentedControl.frame.origin.y + self.segmentedControl.frame.size.height + 5, width: self.view.frame.width, height: self.view.frame.height - self.segmentedControl.frame.height - navigationHeight - 30)
+            
+            
+            // Settings Button
+            let image = UIImage(named: "Settings-25") as UIImage?
+            let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+            settingsButton.frame = CGRectMake(0, 0, 25, 25)
+            settingsButton.setImage(image, forState: .Normal)
+            settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
+            var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
+            self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+        } else {
+            self.tableView.frame = CGRect(x: 0, y: 10, width: self.view.frame.width, height: self.view.frame.height - 30)
+        }
+        
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
@@ -85,15 +81,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
         // Settings Button
         let image = UIImage(named: "Settings-25") as UIImage?
-        let settingsButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        settingsButton.frame = CGRectMake(0, 0, 25, 25)
-        settingsButton.setImage(image, forState: .Normal)
-        settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
-        var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
-        self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+        let settingsButton = UIBarButtonItem(image: image, landscapeImagePhone: image, style: .Plain, target: self, action: "onSettingsClick:")
+        
+        // Add Button
+        let addButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onAddEventClick:")
+       
+        // Adding buttons to the top right
+        var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
+        
+        if (GlobalVariables.usertype != 2) {
+            btnArray.addObject(addButton)
+        }
+        
+        var btns:NSArray = btnArray
+        
+        self.navigationItem.setRightBarButtonItems(btns as! [UIBarButtonItem], animated: false)
         
         
         self.view.backgroundColor = UIColor.whiteColor()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        fetch()
         
     }
     
@@ -102,6 +113,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let navigationController = UINavigationController(rootViewController: settingsViewController)
         
         self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
+    func onAddEventClick(sender: AnyObject) {
+       
+//        self.navigationItem.leftBarButtonItem = backBtn
+        
+        let newEventViewController =  NewEventViewController()
+        let navigationController = UINavigationController(rootViewController: newEventViewController)
+        self.navigationController?.pushViewController(newEventViewController, animated: true)
+        
+    }
+    
+//    MARK: TableView methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.events.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
+        var event: Event = self.events[indexPath.row] as Event
+        cell.configureCellWithEvent(event)
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var event: Event = self.events[indexPath.row] as Event
+        var rsvp: Int = -1
+        var isFavourite = contains(self.favourites, event)
+        var lala = self.mayBe
+        if (contains(self.attending, event)){
+            rsvp = 1
+        } else if (contains(self.notGoing, event)){
+            rsvp = 2
+        } else if (contains(self.mayBe, event)){
+            rsvp = 3
+        }
+        
+        var isPastEvent = false;
+        if (event.date.compare(NSDate()) == NSComparisonResult.OrderedAscending){
+            isPastEvent = true;
+        }
+        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self, isPast: isPastEvent)
+        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80.0
     }
     
     func fetch(){
@@ -131,7 +190,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             for object in objects {
                                 self.rsvp.append(object.event)
                                 var date = NSDate()
-                                var curEvent = object.event
+                                var curEvent = object.event as Event
                                 if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
                                     if (object.status == 1) {
                                         self.attending.append(object.event)
@@ -140,11 +199,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     } else {
                                         self.mayBe.append(object.event)
                                     }
+                                } else {
+                                    if(object.status == 1){
+                                        self.pastAttending.append(object.event)
+                                    }
                                 }
                                 
                             }
-                            if (self.segmentedControl.selectedSegmentIndex == 2){
+                            if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 2){
                                 self.events = self.attending
+                                self.tableView.reloadData()
+                            } else if (!self.isSegment){
+                                self.events = self.pastAttending
                                 self.tableView.reloadData()
                             }
                         }
@@ -172,12 +238,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             for object in objects {
                                 var favourite = object as! Favourite
                                 var date = NSDate()
-                                var curEvent = favourite.event
+                                var curEvent = favourite.event as Event
                                 if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
                                     self.favourites.append(curEvent)
                                 }
                             }
-                            if (self.segmentedControl.selectedSegmentIndex == 1){
+                            if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 1){
                                 self.events = self.favourites
                                 self.tableView.reloadData()
                             }
@@ -206,13 +272,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         var date = NSDate()
                         var curEvent = object as! Event
                         if (curEvent.date.compare(date) == NSComparisonResult.OrderedDescending){
-                            self.allEvents.append(object)
+                            self.allEvents.append(curEvent)
                         } else {
-                            self.pastEvents.append(object)
+                            self.pastEvents.append(curEvent)
                         }
                         
                     }
-                    if (self.segmentedControl.selectedSegmentIndex == 0){
+                    if (self.isSegment && self.segmentedControl.selectedSegmentIndex == 0){
                         self.events = self.allEvents
                         self.tableView.reloadData()
                     }
@@ -222,7 +288,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 println("Error: \(error!) \(error!.userInfo!)")
             }
         }
-        
     }
     
     @IBAction func indexChanged(sender: AnyObject) {
@@ -244,44 +309,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         self.tableView.reloadData()
-    }
-
-//    MARK: TableView methods
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.events.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as! Event
-        cell.configureCellWithEvent(event)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var event: Event = self.events[indexPath.row] as! Event
-        var rsvp: Int = -1
-        var isFavourite = contains(self.favourites, event)
-        var lala = self.mayBe
-        if (contains(self.attending, event)){
-            rsvp = 1
-        } else if (contains(self.notGoing, event)){
-            rsvp = 2
-        } else if (contains(self.mayBe, event)){
-            rsvp = 3
-        }
-        
-        var isPastEvent = false;
-        if (event.date.compare(NSDate()) == NSComparisonResult.OrderedAscending){
-            isPastEvent = true;
-        }
-        let eventDetailsViewController = EventDetailsViewController(event: event, isFavourite: isFavourite, rsvp: rsvp, parentController: self, isPast: isPastEvent)
-        self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0
     }
 }
 

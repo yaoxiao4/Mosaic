@@ -259,11 +259,6 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         }
     }
     
-    @IBAction func close(sender: AnyObject) {
-        let nextController = ViewController()
-        self.navigationController?.pushViewController(nextController, animated: true)
-    }
-    
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
             var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"

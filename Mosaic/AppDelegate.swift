@@ -35,13 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginViewController = LoginViewController()
         let tabBarController = UITabBarController()
         let currentUser: PFUser? = PFUser.currentUser()
-        var usertype = 2
+//        var usertype = currentUser?.objectForKey("usertype") as! Int
+        var usertype = 2;
+
         GlobalVariables.usertype = usertype
         
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             loginViewController.getUserInfo()
             if (usertype == 2){
-                let viewController = ViewController()
+                let viewController = ViewController(isSegment: true, viewTitle: "Events")
                 let uwOpenDataController = UWOpenDataViewController()
                 let navigationController1 = UINavigationController(rootViewController: viewController)
                 let navigationController2 = UINavigationController(rootViewController: uwOpenDataController)
@@ -55,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.window?.rootViewController = tabBarController
                 
             } else if (usertype == 1){
-                let viewController = ViewController()
+                let viewController = ViewController(isSegment: true, viewTitle: "Events")
                 let uwOpenDataController = UWOpenDataViewController()
                 let navigationController1 = UINavigationController(rootViewController: viewController)
                 let navigationController2 = UINavigationController(rootViewController: uwOpenDataController)
