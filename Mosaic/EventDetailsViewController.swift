@@ -128,7 +128,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
         viewMapButton.setTitle("Map", forState: .Normal)
-        viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
+        viewMapButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
         eventDetailsBox.addSubview(viewMapButton)
         
         // For Date
@@ -261,6 +261,8 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
     
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
+            var long = self.event!.location!.longitude
+            
             var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"
             var urlstringTwo = urlstringOne + "," + "\(self.event?.location?.longitude)" + "&directionsmode=driving"
             UIApplication.sharedApplication().openURL(NSURL(string:urlstringTwo)!)
