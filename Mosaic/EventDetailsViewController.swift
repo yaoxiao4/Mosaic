@@ -336,11 +336,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
     override func viewWillDisappear(animated:Bool) {
         if (self.navigationController?.topViewController is ViewController){
             var controller = self.navigationController?.topViewController as! ViewController
+            self.tabBarController?.tabBar.hidden = false
         } else if (self.navigationController?.topViewController is UWOpenDataViewController) {
             var controller = self.navigationController?.topViewController as! UWOpenDataViewController
+            self.tabBarController?.tabBar.hidden = false
         }
 
-        self.tabBarController?.tabBar.hidden = false
         super.viewWillDisappear(animated)
     }
     
