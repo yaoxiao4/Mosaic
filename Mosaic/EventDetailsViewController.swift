@@ -86,6 +86,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         
         fbIconView.image = fbIcon;
         scrollView.addSubview(fbIconView);
+        
+        var getDirectionButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        getDirectionButton.frame = CGRectMake(72, 70, 150, 30)
+        getDirectionButton.setTitle("Get Directions", forState: .Normal)
+        getDirectionButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
+        scrollView.addSubview(getDirectionButton)
         // End FB Icon
         
         if (event?.isUWEvent == false) {
