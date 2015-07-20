@@ -94,7 +94,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var btns:NSArray = btnArray
         
         self.navigationItem.setRightBarButtonItems(btns as! [UIBarButtonItem], animated: false)
-        self.navigationItem.setLeftBarButtonItem(editBtn, animated: false)
+        
+        if (self.title == "Events") {
+            self.navigationItem.setLeftBarButtonItem(editBtn, animated: false)
+        }
         
         
         self.view.backgroundColor = UIColor.whiteColor()
