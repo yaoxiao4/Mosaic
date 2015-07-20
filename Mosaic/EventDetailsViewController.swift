@@ -119,6 +119,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         let locationIconView = UIImageView(frame: CGRectMake(35, 10, 28, 23))
         var locationIcon = UIImage(named: "location-icon.png")
         locationIconView.image = locationIcon
+        // Enable Touch
+        locationIconView.userInteractionEnabled = true;
+        locationIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openMap"))
         eventDetailsBox.addSubview(locationIconView)
         
         var locationSeparator = UIView(frame: CGRectMake(35, 40, self.view.frame.width - 70, 0.5))
@@ -128,7 +131,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
         viewMapButton.setTitle("Map", forState: .Normal)
-        viewMapButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
+        viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
         
         eventDetailsBox.addSubview(viewMapButton)
         
