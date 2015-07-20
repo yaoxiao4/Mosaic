@@ -142,8 +142,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell") as! EventTableViewCell
-        var event: Event = self.events[indexPath.row] as Event
-        cell.configureCellWithEvent(event)
+        if (self.events.count > 0){
+            var event: Event = self.events[indexPath.row] as Event
+            cell.configureCellWithEvent(event)
+        }
         return cell
     }
     
