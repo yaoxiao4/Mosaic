@@ -37,6 +37,7 @@ class NewEventTableViewCell: UITableViewCell {
         self.locationLabel.text = "\(dateFormatter.stringFromDate(event.date))"
         self.dateLabel.hidden = true
         self.addRemoveBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.selectionStyle = .None
     }
     
     func configureCellWithEvent(event: Event, status: String) {
