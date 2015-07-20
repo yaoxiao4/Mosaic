@@ -104,7 +104,8 @@ class EventTableViewCell: UITableViewCell {
         var s = event["title"].string as String?
         var s1 = s?.stringByReplacingOccurrencesOfString("&#039;", withString: "'", options: NSStringCompareOptions.LiteralSearch, range: nil)
         var s2 = s1?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        self.title.text = s2
+        var s3 = s2?.stringByReplacingOccurrencesOfString("&amp;", withString: "&", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.title.text = s3
         
     }
     
