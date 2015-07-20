@@ -86,12 +86,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         
         fbIconView.image = fbIcon;
         scrollView.addSubview(fbIconView);
-        
-        var getDirectionButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        getDirectionButton.frame = CGRectMake(72, 70, 150, 30)
-        getDirectionButton.setTitle("Get Directions", forState: .Normal)
-        getDirectionButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
-        scrollView.addSubview(getDirectionButton)
+
         // End FB Icon
         
         if (event?.isUWEvent == false) {
@@ -153,6 +148,14 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         var dateIcon = UIImage(named: "calendar-icon.png")
         dateIconView.image = dateIcon
         eventDetailsBox.addSubview(dateIconView)
+        
+        
+        var getDirectionButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        getDirectionButton.frame = CGRectMake(230, 45, 150, 30)
+        getDirectionButton.setTitle("Get Directions", forState: .Normal)
+        getDirectionButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        eventDetailsBox.addSubview(getDirectionButton)
 
         eventDetailsBox.addSubview(eventDateLabel)
         var dateSeparator = UIView(frame: CGRectMake(35, eventLocationLabel.frame.origin.y + 67, self.view.frame.width - 70, 0.5))
