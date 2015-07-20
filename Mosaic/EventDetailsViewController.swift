@@ -86,6 +86,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         
         fbIconView.image = fbIcon;
         scrollView.addSubview(fbIconView);
+        
+        var getDirectionButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        getDirectionButton.frame = CGRectMake(72, 70, 150, 30)
+        getDirectionButton.setTitle("Get Directions", forState: .Normal)
+        getDirectionButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
+        scrollView.addSubview(getDirectionButton)
         // End FB Icon
         
         if (event?.isUWEvent == false) {
@@ -119,6 +125,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         let locationIconView = UIImageView(frame: CGRectMake(35, 10, 28, 23))
         var locationIcon = UIImage(named: "location-icon.png")
         locationIconView.image = locationIcon
+        // Enable Touch
+        locationIconView.userInteractionEnabled = true;
+        locationIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openMap"))
         eventDetailsBox.addSubview(locationIconView)
         
         var locationSeparator = UIView(frame: CGRectMake(35, 40, self.view.frame.width - 70, 0.5))
@@ -129,6 +138,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
         viewMapButton.setTitle("Map", forState: .Normal)
         viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
+        
         eventDetailsBox.addSubview(viewMapButton)
         
         // For Date
@@ -261,8 +271,10 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
     
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-            var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"
-            var urlstringTwo = urlstringOne + "," + "\(self.event?.location?.longitude)" + "&directionsmode=driving"
+            //var long = self.event!.location!.longitude
+            
+            var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event!.location!.latitude)"
+            var urlstringTwo = urlstringOne + "," + "\(self.event!.location!.longitude)" + "&directionsmode=driving"
             UIApplication.sharedApplication().openURL(NSURL(string:urlstringTwo)!)
         } else {
             NSLog("Can't use comgooglemaps://");
@@ -336,11 +348,12 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
     override func viewWillDisappear(animated:Bool) {
         if (self.navigationController?.topViewController is ViewController){
             var controller = self.navigationController?.topViewController as! ViewController
+            self.tabBarController?.tabBar.hidden = false
         } else if (self.navigationController?.topViewController is UWOpenDataViewController) {
             var controller = self.navigationController?.topViewController as! UWOpenDataViewController
+            self.tabBarController?.tabBar.hidden = false
         }
 
-        self.tabBarController?.tabBar.hidden = false
         super.viewWillDisappear(animated)
     }
     

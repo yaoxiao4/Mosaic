@@ -26,6 +26,8 @@ class UWWebViewController: UIViewController {
         
         self.title = "More Details";
         
+        self.tabBarController?.tabBar.hidden = true
+        
         var webview = UIWebView(frame:CGRectMake(0, 0, self.view.frame.width, self.view.frame.height));
         var url = NSURL(string: self.url);
         var request = NSURLRequest(URL: url!);
