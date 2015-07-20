@@ -81,6 +81,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Add Button
         let addButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onAddEventClick:")
        
+        // Edit Button
+        let editBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "onEditEventClick:")
+        
         // Adding buttons to the top right
         var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
         
@@ -91,6 +94,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var btns:NSArray = btnArray
         
         self.navigationItem.setRightBarButtonItems(btns as! [UIBarButtonItem], animated: false)
+        self.navigationItem.setLeftBarButtonItem(editBtn, animated: false)
         
         
         self.view.backgroundColor = UIColor.whiteColor()
@@ -115,13 +119,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func onAddEventClick(sender: AnyObject) {
-       
-//        self.navigationItem.leftBarButtonItem = backBtn
-        
         let newEventViewController =  NewEventViewController()
         let navigationController = UINavigationController(rootViewController: newEventViewController)
         self.navigationController?.pushViewController(newEventViewController, animated: true)
         
+    }
+    
+    func onEditEventClick(sender: AnyObject) {
+        let delEventViewController = DeleteEventViewController()
+        let navigationController = UINavigationController(rootViewController: delEventViewController)
+        self.navigationController?.pushViewController(delEventViewController, animated: true)
     }
     
 //    MARK: TableView methods
