@@ -119,6 +119,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         let locationIconView = UIImageView(frame: CGRectMake(35, 10, 28, 23))
         var locationIcon = UIImage(named: "location-icon.png")
         locationIconView.image = locationIcon
+        // Enable Touch
+        locationIconView.userInteractionEnabled = true;
+        locationIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openMap"))
         eventDetailsBox.addSubview(locationIconView)
         
         var locationSeparator = UIView(frame: CGRectMake(35, 40, self.view.frame.width - 70, 0.5))
@@ -129,6 +132,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
         viewMapButton.setTitle("Map", forState: .Normal)
         viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
+        
         eventDetailsBox.addSubview(viewMapButton)
         
         // For Date
@@ -261,8 +265,10 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
     
     @IBAction func openMap(){
         if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-            var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event?.location?.latitude)"
-            var urlstringTwo = urlstringOne + "," + "\(self.event?.location?.longitude)" + "&directionsmode=driving"
+            //var long = self.event!.location!.longitude
+            
+            var urlstringOne =  "comgooglemaps://?daddr=" + "\(self.event!.location!.latitude)"
+            var urlstringTwo = urlstringOne + "," + "\(self.event!.location!.longitude)" + "&directionsmode=driving"
             UIApplication.sharedApplication().openURL(NSURL(string:urlstringTwo)!)
         } else {
             NSLog("Can't use comgooglemaps://");
