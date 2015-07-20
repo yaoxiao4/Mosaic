@@ -99,6 +99,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        if(self.title == "Past Events"){
+            self.tabBarController?.tabBar.hidden = true
+             self.navigationItem.setRightBarButtonItem(nil, animated: false)
+        }
         fetch()
         
     }
