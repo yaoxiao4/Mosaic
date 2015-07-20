@@ -19,6 +19,7 @@
 		20D630301B2B1FFB00EE9C59 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D6302D1B2B1FFB00EE9C59 /* FBSDKCoreKit.framework */; };
 		20D630311B2B1FFB00EE9C59 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D6302E1B2B1FFB00EE9C59 /* FBSDKLoginKit.framework */; };
 		20D630321B2B1FFB00EE9C59 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D6302F1B2B1FFB00EE9C59 /* FBSDKShareKit.framework */; };
+		254A76161B5C7AA20058CF2A /* DeleteEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A76151B5C7AA20058CF2A /* DeleteEventViewController.swift */; };
 		2563C31A1B29106800C7102F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563C3191B29106800C7102F /* User.swift */; };
 		2563C31C1B2910B100C7102F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2563C31B1B2910B100C7102F /* Event.swift */; };
 		2577595F1B59EC1600775B33 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2577595E1B59EC1600775B33 /* NewEventViewController.swift */; };
@@ -76,6 +77,7 @@
 		20D6302D1B2B1FFB00EE9C59 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		20D6302E1B2B1FFB00EE9C59 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		20D6302F1B2B1FFB00EE9C59 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		254A76151B5C7AA20058CF2A /* DeleteEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEventViewController.swift; sourceTree = "<group>"; };
 		2563C3191B29106800C7102F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		2563C31B1B2910B100C7102F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = Models/Event.swift; sourceTree = "<group>"; };
 		2577595E1B59EC1600775B33 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				4145B26D1B2E5FBB00F5A3C7 /* SettingsViewController.swift */,
 				418830241B5C1A6200BFCB13 /* UWWebViewController.swift */,
 				2577595E1B59EC1600775B33 /* NewEventViewController.swift */,
+				254A76151B5C7AA20058CF2A /* DeleteEventViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				201AFD761B2B959D00C4DBC0 /* GoogleMapsViewController.swift in Sources */,
 				207B25241B56D5E200FAF1B9 /* EventTableViewCell.swift in Sources */,
 				201AFD811B2CFA3D00C4DBC0 /* ViewController.swift in Sources */,
+				254A76161B5C7AA20058CF2A /* DeleteEventViewController.swift in Sources */,
 				415B26D21B13AF5700ADBE22 /* AppDelegate.swift in Sources */,
 				2563C31C1B2910B100C7102F /* Event.swift in Sources */,
 				203992711B2A566600ABDEF6 /* Location.swift in Sources */,
