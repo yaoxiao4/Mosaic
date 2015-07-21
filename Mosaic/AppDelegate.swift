@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tabBarController.viewControllers = controllers
                 let firstImage = UIImage(named: "Calendar-25")
                 let secondImage = UIImage(named: "University-25")
-                navigationController1.tabBarItem = UITabBarItem(title: "Events", image: firstImage, tag: 1)
+                navigationController1.tabBarItem = UITabBarItem(title: "FB Events", image: firstImage, tag: 1)
                 navigationController2.tabBarItem = UITabBarItem(title: "UW Events", image: secondImage, tag: 2)
                 
                 self.window?.rootViewController = tabBarController
