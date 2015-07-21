@@ -87,7 +87,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Adding buttons to the top right
         var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
         
-        if (GlobalVariables.usertype == 2) {
+        if (GlobalVariables.usertype == 2 && self.title! != "Past Events") {
             btnArray.addObject(addButton)
         }
         
