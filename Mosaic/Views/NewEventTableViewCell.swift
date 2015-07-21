@@ -103,6 +103,7 @@ class NewEventTableViewCell: UITableViewCell {
         self.dateLabel.hidden = false
         self.dateLabel.text = "Deleted Successfully!"
         self.dateLabel.textColor = UIColor.blueColor()
+        self.event.location?.delete()
         self.event.delete()
     }
 
