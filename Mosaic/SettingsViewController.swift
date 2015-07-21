@@ -94,14 +94,14 @@ class SettingsViewController: UIViewController, FBSDKLoginButtonDelegate {
         //let viewController = ViewController()
         //let navigationController = UINavigationController(rootViewController: loginViewController)
         //navigationController.navigationBar.backgroundColor = UIColor.blueColor()
-        let currentUser: PFUser? = PFUser.currentUser()
-        
-        let viewController = ViewController(isSegment: false, viewTitle: "Events")
-        let navigationController = UINavigationController(rootViewController: viewController)
+//        let currentUser: PFUser? = PFUser.currentUser()
+//        
+//        let viewController = ViewController(isSegment: false, viewTitle: "Events")
+//        let navigationController = UINavigationController(rootViewController: viewController)
 
         self.window?.rootViewController = loginViewController
 
-        presentViewController(navigationController, animated: true, completion: nil)
+        presentViewController(loginViewController, animated: true, completion: nil)
         println("User Logged Out")
     }
     
