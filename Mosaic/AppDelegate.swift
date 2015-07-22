@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(currentUser != nil && PFFacebookUtils.isLinkedWithUser(currentUser!)) {
             loginViewController.getUserInfo()
             if (usertype == 2){
+                
+                UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+                
                 let viewController = ViewController(isSegment: true, viewTitle: "Events")
                 let uwOpenDataController = UWOpenDataViewController()
                 let navigationController1 = UINavigationController(rootViewController: viewController)
@@ -55,6 +58,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let secondImage = UIImage(named: "University-25")
                 navigationController1.tabBarItem = UITabBarItem(title: "Events", image: firstImage, tag: 1)
                 navigationController2.tabBarItem = UITabBarItem(title: "UW Events", image: secondImage, tag: 2)
+                
+                navigationController1.navigationBar.barTintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
+                navigationController1.navigationBar.tintColor = UIColor.whiteColor()
+                navigationController1.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+                
+                navigationController2.navigationBar.barTintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
+                navigationController2.navigationBar.tintColor = UIColor.whiteColor()
+                navigationController2.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+                
+                tabBarController.tabBar.barTintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
+                tabBarController.tabBar.tintColor = UIColor.whiteColor();
+                
+                for item in tabBarController.tabBar.items as! [UITabBarItem] {
+                    if let image = item.image {
+                        item.image = image.imageWithColor(UIColor.lightGrayColor()).imageWithRenderingMode(.AlwaysOriginal)
+                    }
+                }
+                
+                UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGrayColor()], forState:.Normal)
+                UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Selected)
                 
                 self.window?.rootViewController = tabBarController
                 
@@ -117,5 +140,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+}
+
+extension UIImage {
+    func imageWithColor(tintColor: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        
+        let context = UIGraphicsGetCurrentContext() as CGContextRef
+        CGContextTranslateCTM(context, 0, self.size.height)
+        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextSetBlendMode(context, kCGBlendModeNormal)
+        
+        let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
+        CGContextClipToMask(context, rect, self.CGImage)
+        tintColor.setFill()
+        CGContextFillRect(context, rect)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
 }
 

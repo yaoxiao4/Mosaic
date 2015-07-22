@@ -132,6 +132,7 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         var viewMapButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         viewMapButton.frame = CGRectMake(295, 10, 50, 30)
         viewMapButton.setTitle("Map", forState: .Normal)
+        viewMapButton.setTitleColor(UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1), forState: UIControlState.Normal)
         viewMapButton.addTarget((self), action: "pushOnMap", forControlEvents: UIControlEvents.TouchUpInside)
         
         eventDetailsBox.addSubview(viewMapButton)
@@ -151,8 +152,9 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
         
         
         var getDirectionButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        getDirectionButton.frame = CGRectMake(230, 45, 150, 30)
+        getDirectionButton.frame = CGRectMake(213, 45, 150, 30)
         getDirectionButton.setTitle("Get Directions", forState: .Normal)
+        getDirectionButton.setTitleColor(UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1), forState: UIControlState.Normal)
         getDirectionButton.addTarget((self), action: "openMap", forControlEvents: UIControlEvents.TouchUpInside)
         
         eventDetailsBox.addSubview(getDirectionButton)
@@ -197,6 +199,15 @@ class EventDetailsViewController: UIViewController, UIScrollViewDelegate, UIWebV
             
             let items = ["Not Going", "Maybe", "Going"]
             self.segmentedControl = UISegmentedControl(items:items)
+            
+            let segmentedControlAttr: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)]
+            //let segmentedControlAttr2: NSDictionary = [NSBackgroundColorAttributeName: UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1), NSForegroundColorAttributeName: UIColor.whiteColor()]
+            self.segmentedControl.tintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
+            //apply to self.<segmentControlOutletName>.setTitle........
+            self.segmentedControl.setTitleTextAttributes(segmentedControlAttr as [NSObject : AnyObject], forState: UIControlState.Normal)
+            //self.segmentedControl.setTitleTextAttributes(segmentedControlAttr as [NSObject : AnyObject], forState: UIControlState.Selected)
+
+            
             segmentedControl.frame.origin.x = (actionButtonsBox.frame.width - segmentedControl.frame.width) / 2
             segmentedControl.frame.origin.y = (actionButtonsBox.frame.height - segmentedControl.frame.height) / 2
             actionButtonsBox.addSubview(segmentedControl)
