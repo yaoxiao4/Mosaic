@@ -60,7 +60,7 @@ class NewEventTableViewCell: UITableViewCell {
         
         self.addRemoveBtn.setTitle("Remove", forState: .Normal)
         self.addRemoveBtn.setTitle("Removing", forState: UIControlState.Selected)
-        
+        self.addRemoveBtn.backgroundColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
         self.addRemoveBtn.addTarget(self, action: "removeEvent:", forControlEvents: .TouchUpInside)
     }
     
