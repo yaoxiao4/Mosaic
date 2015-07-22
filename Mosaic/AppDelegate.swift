@@ -67,8 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 navigationController2.navigationBar.tintColor = UIColor.whiteColor()
                 navigationController2.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
                 
-                tabBarController.tabBar.barTintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
-                tabBarController.tabBar.tintColor = UIColor.whiteColor();
+                tabBarController.tabBar.barTintColor = UIColor.whiteColor()
+                tabBarController.tabBar.tintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1);
                 
                 for item in tabBarController.tabBar.items as! [UITabBarItem] {
                     if let image = item.image {
@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightGrayColor()], forState:.Normal)
-                UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Selected)
+                UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)], forState:.Selected)
                 
                 self.window?.rootViewController = tabBarController
                 
