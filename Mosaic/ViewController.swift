@@ -64,6 +64,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             settingsButton.addTarget(self, action: "onSettingsClick:", forControlEvents: .TouchUpInside)
             var rightButtonItem : UIBarButtonItem = UIBarButtonItem(customView: settingsButton)
             self.navigationItem.setRightBarButtonItem(rightButtonItem, animated: false)
+            
+            let segmentedControlAttr: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)]
+            //let segmentedControlAttr2: NSDictionary = [NSBackgroundColorAttributeName: UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1), NSForegroundColorAttributeName: UIColor.whiteColor()]
+            self.segmentedControl.tintColor = UIColor(red: 245/255, green: 67/255, blue: 60/255, alpha: 1)
+            //apply to self.<segmentControlOutletName>.setTitle........
+            self.segmentedControl.setTitleTextAttributes(segmentedControlAttr as [NSObject : AnyObject], forState: UIControlState.Normal)
+            //self.segmentedControl.setTitleTextAttributes(segmentedControlAttr as [NSObject : AnyObject], forState: UIControlState.Selected)
+            
         } else {
             self.tableView.frame = CGRect(x: 0, y: 10, width: self.view.frame.width, height: self.view.frame.height - 30)
         }
@@ -77,12 +85,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Settings Button
         let image = UIImage(named: "Settings-25") as UIImage?
         let settingsButton = UIBarButtonItem(image: image, landscapeImagePhone: image, style: .Plain, target: self, action: "onSettingsClick:")
+        settingsButton.tintColor = UIColor.whiteColor();
         
         // Add Button
         let addButton  = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "onAddEventClick:")
-       
+        addButton.tintColor = UIColor.whiteColor();
+        
         // Edit Button
         let editBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "onEditEventClick:")
+        editBtn.tintColor = UIColor.whiteColor();
         
         // Adding buttons to the top right
         var btnArray: NSMutableArray = NSMutableArray(object: settingsButton)
