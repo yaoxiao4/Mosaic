@@ -53,7 +53,8 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
             let dateFormatter = NSDateFormatter()
             
             // Check date
-            var today = NSDate()
+            let calendar = NSCalendar.currentCalendar()
+            let today = calendar.dateByAddingUnit(.CalendarUnitDay, value: -1, toDate: NSDate(), options: nil)
             dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
             
             for (index: String, subJson: JSON) in results {
@@ -62,13 +63,13 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
                 }
                 var object = JSON(subJson.object)
                 
-                for (var a = 0; a <  object["times"].count; a++){
+                for (var a = 0; a < object["times"].count; a++){
                     let dateString = object["times"][a]["start"].string!
                     
                     let date = dateString.substringWithRange(Range(start: dateString.startIndex,
                         end: advance(dateString.startIndex, 19)))
                     var realDate = dateFormatter.dateFromString(date)!
-                    if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+                    if (today?.compare(realDate) == NSComparisonResult.OrderedAscending){
                         self.items.addObject(subJson.object)
                         break;
                     }
@@ -117,7 +118,8 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
         
         var event: Event = Event()
         
-        var today = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let today = calendar.dateByAddingUnit(.CalendarUnitDay, value: -1, toDate: NSDate(), options: nil)
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
@@ -127,7 +129,7 @@ class UWOpenDataViewController: UIViewController, UITableViewDataSource, UITable
             let date = dateString.substringWithRange(Range(start: dateString.startIndex,
                 end: advance(dateString.startIndex, 19)))
             var realDate = dateFormatter.dateFromString(date)!
-            if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+            if (today?.compare(realDate) == NSComparisonResult.OrderedAscending){
                 dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
                 event.date = realDate
                 break;

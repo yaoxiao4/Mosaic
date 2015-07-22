@@ -81,7 +81,8 @@ class EventTableViewCell: UITableViewCell {
     }
     
     func configureJsonEvent(event: JSON){
-        var today = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let today = calendar.dateByAddingUnit(.CalendarUnitDay, value: -1, toDate: NSDate(), options: nil)
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss";
@@ -91,7 +92,7 @@ class EventTableViewCell: UITableViewCell {
             let date = dateString.substringWithRange(Range(start: dateString.startIndex,
                 end: advance(dateString.startIndex, 19)))
             var realDate = dateFormatter.dateFromString(date)!
-            if (today.compare(realDate) == NSComparisonResult.OrderedAscending){
+            if (today?.compare(realDate) == NSComparisonResult.OrderedAscending){
                 dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
                 self.info.text = "\(dateFormatter.stringFromDate(realDate))"
                 break;
